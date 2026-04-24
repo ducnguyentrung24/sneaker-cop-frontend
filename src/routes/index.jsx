@@ -1,13 +1,38 @@
 import { Routes, Route } from "react-router-dom";
+import MainLayout from "../components/layout/MainLayout";
 
-function HomePage() {
-    return <h1 className="text-center mt-10">Sneaker Cop</h1>
-}
+import HomePage from "../pages/home/HomePage";
+import LoginPage from "../pages/auth/LoginPage";
 
-export default function AppRoutes() {
+import ProtectedRoute from "./ProtectedRoute";
+
+function AppRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route 
+                path="/" 
+                element={
+                    <MainLayout>
+                        <HomePage />
+                    </MainLayout>
+                } 
+            />
+
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Protected routes */}
+            <Route 
+                path="/profile"
+                element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <h1>Profile Page</h1>
+                        </MainLayout>
+                    </ProtectedRoute>
+                }
+            />
         </Routes>
     );
 }
+
+export default AppRoutes;
