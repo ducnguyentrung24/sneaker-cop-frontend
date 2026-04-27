@@ -33,7 +33,7 @@ function Header() {
     }, []);
 
     return (
-        <header className='bg-white shadow-sm'>
+        <header className='bg-white shadow-sm sticky top-0 z-50'>
             <div className='max-w-7xl mx-auto px-6 py-3 flex items-center'>
 
                 {/* LEFT: LOGO */}

@@ -1,24 +1,26 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../services/auth.service';
-import { useAuth } from '../../context/AuthContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
+import { useAuth } from '../../context/AuthContext';
+
 function LoginPage() {
     const navigate = useNavigate();
-
+    const { loginUser } = useAuth();
+    
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
 
-    const { loginUser } = useAuth();
-
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    
     const [showPassword, setShowPassword] = useState(false);
+
+    const [error, setError] = useState('');
     const [errors, setErrors] = useState({
         email: '',
         password: '',
