@@ -94,7 +94,7 @@ function RegisterPage() {
             {/* CARD */}
             <div className='w-full max-w-md bg-white p-8 shadow-md rounded py-10'>
 
-                <h2 className='text-2xl font-bold text-center mb-2'>ĐĂNG KÝ TÀI KHOẢN</h2>
+                <h2 className='text-2xl font-bold text-center text-orange-500 mb-2'>ĐĂNG KÝ TÀI KHOẢN</h2>
                 <p className='text-center text-gray-500 text-sm mb-6'>
                     Tạo tài khoản để có trải nghiệm mua sắm tốt hơn tại <br/> Sneaker Cop!
                 </p>
@@ -185,7 +185,7 @@ function RegisterPage() {
                                 type='button'
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer'>
-                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                             </button>
                         </div>
 

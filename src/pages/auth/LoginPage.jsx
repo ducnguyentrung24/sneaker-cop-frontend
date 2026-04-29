@@ -81,7 +81,7 @@ function LoginPage() {
             {/* CARD */}
             <div className='w-full max-w-md bg-white p-8 shadow-md rounded py-15'>
 
-                <h2 className='text-2xl font-bold text-center mb-2'>ĐĂNG NHẬP</h2>
+                <h2 className='text-2xl font-bold text-center text-orange-500 mb-2'>ĐĂNG NHẬP</h2>
                 <p className='text-center text-gray-500 text-sm mb-6'>
                     Chào mừng bạn đến với Sneaker Cop!
                 </p>
