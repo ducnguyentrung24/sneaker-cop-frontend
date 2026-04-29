@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import ProductSlider from "./ProductSlider";
 
 import { getProducts } from "../../services/product.service";
+
+import ProductSlider from "../product/ProductSlider";
 
 const brands = [
     { id: 1, name: "Nike" },

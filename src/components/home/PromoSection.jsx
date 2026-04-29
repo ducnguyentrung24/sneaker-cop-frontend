@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import ProductSlider from "./ProductSlider";
 
 import { getProducts } from "../../services/product.service";
+
+import ProductSlider from "../product/ProductSlider";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +26,7 @@ function PromoSection() {
     }, []);
 
     return (
-        <div className="py-14 bg-gradient-to-r from-[#67081d] to-[#9F1239] relative overflow-hidden">
+        <div className="py-14 bg-linear-to-r from-[#67081d] to-[#9F1239] relative overflow-hidden">
             {/* Top label */}
             <p className="text-center text-xs text-white/60 tracking-[4px] mb-3">
                 SPECIAL OFFER
@@ -43,7 +44,7 @@ function PromoSection() {
             </div>
 
             {/* Product slider */}
-            <div className="max-w-7xl mx-auto mt-10 px-6">
+            <div className="max-w-7xl mx-auto mt-10">
                 <ProductSlider products={products} />
             </div>
 

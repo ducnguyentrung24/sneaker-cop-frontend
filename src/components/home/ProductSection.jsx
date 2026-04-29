@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import ProductSlider from "./ProductSlider";
+
 import { getProducts } from "../../services/product.service";
+
+import ProductSlider from "../product/ProductSlider";
 
 function ProductSection({ title }) {
     const [products, setProducts] = useState([]);

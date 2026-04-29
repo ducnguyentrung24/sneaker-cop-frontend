@@ -12,7 +12,7 @@ const slides = [
     },
     {
         id:2,
-        image: "https://giaycaosmartmen.com/wp-content/uploads/2020/09/giay-nam-sneaker-la-gi.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_dKw_q6CZJSfXNrsFq7eURWS9quzo71bt0A&s",
         title: "NEW",
         highlight: "ARRIVAL",
         desc: "KHÁM PHÁ BỘ SƯU TẬP MỚI NHẤT",
@@ -39,14 +39,14 @@ function Hero() {
     const slide = slides[index];
 
     return (
-        <div className="relative h-[520px] overflow-hidden">
+        <div className="relative h-130 overflow-hidden">
             <img src={slide.image} className="w-full h-full object-cover" />
 
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/50"></div>
 
             {/* Content */}
-            <div className="absolute right-20 top-1/2 -translate-y-1/2 text-white max-w-[400px]">
+            <div className="absolute right-20 top-1/2 -translate-y-1/2 text-white max-w-100">
                 <h1 className="text-6xl font-bold leading-none">
                     {slide.title} <span className="text-red-500">{slide.highlight}</span>
                 </h1>
