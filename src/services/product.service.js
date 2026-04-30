@@ -4,3 +4,8 @@ export const getProducts = async (params = {}) => {
     const res = await axiosInstance.get("/products", { params });
     return res.data;
 };
+
+export const getProductById = async (id) => {
+    const res = await axiosInstance.get(`/products/${id}`);
+    return res.data;
+};
