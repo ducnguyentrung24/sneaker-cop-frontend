@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ArrowButton from "../common/ArrowButton";
 
@@ -20,6 +21,7 @@ const slides = [
 ];
 
 function Hero() {
+    const navigate = useNavigate();
     const [index, setIndex] = useState(0);
 
     const next = () => {
@@ -55,8 +57,10 @@ function Hero() {
                     {slide.desc}
                 </p>
 
-                <button className="mt-6 bg-white text-black px-6 py-3 rounded-lg text-sm font-medium flex items-center gap-2 hover:opacity-90 transition">
-                    MUA NGAY
+                <button 
+                    onClick={() => navigate("/products")}
+                    className="mt-6 bg-white text-black px-6 py-3 rounded-lg text-sm font-medium flex items-center gap-2 hover:opacity-90 transition">
+                        MUA NGAY
                 </button>
             </div>
 

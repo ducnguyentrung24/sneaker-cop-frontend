@@ -13,7 +13,7 @@ const brands = [
 ];
 
 function BrandSection() {
-    const [selected, setSelected] = useState("Nike");
+    const [selected, setSelected] = useState(brands[0]);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {

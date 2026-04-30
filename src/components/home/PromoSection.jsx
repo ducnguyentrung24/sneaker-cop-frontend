@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getProducts } from "../../services/product.service";
 
@@ -10,6 +11,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 function PromoSection() {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetch = async () => {
@@ -50,9 +52,13 @@ function PromoSection() {
 
             {/* Button */}
             <div className="text-center mt-10">
-                <button className="inline-flex items-center gap-2 bg-yellow-400 text-[#67081d] px-7 py-3 text-sm font-semibold tracking-wide rounded shadow hover:shadow-lg hover:scale-[1.02] transition">
-                    KHÁM PHÁ TOÀN BỘ ƯU ĐÃI
-                    <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
+                <button 
+                    onClick={() => navigate("/products", {
+                        state: { filter: "discount" }
+                    })}
+                    className="inline-flex items-center gap-2 bg-yellow-400 text-[#67081d] px-7 py-3 text-sm font-semibold tracking-wide rounded shadow hover:shadow-lg hover:scale-[1.02] transition">
+                        KHÁM PHÁ TOÀN BỘ ƯU ĐÃI
+                        <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
                 </button>
             </div>
         </div>
