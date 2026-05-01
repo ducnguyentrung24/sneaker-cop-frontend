@@ -30,6 +30,12 @@ function ProductDetailPage() {
 
     const [actieveTab, setActiveTab] = useState("description");
 
+    const [reviewFilters, setReviewFilters] = useState({
+        page: 1,
+        limit: 10,
+        rating: null,
+    });
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -43,24 +49,28 @@ function ProductDetailPage() {
         fetchProduct();
     }, [id]);
 
+    // Reviews (load more, filter by rating)
     useEffect(() => {
         if (!id) return;
         const fetchReviews = async () => {
             try {
-                const res = await getReviewsByProductId(id);
-                setReviewData({
+                const res = await getReviewsByProductId(id, reviewFilters);
+                setReviewData(prev => ({
                     average_rating: res.data.average_rating,
                     total_reviews: res.data.total_reviews,
-                    reviews: res.data.reviews,
                     rating_distribution: res.data.rating_distribution,
-                });
+                    reviews:
+                        reviewFilters.page === 1
+                            ? res.data.reviews
+                            : [...prev.reviews, ...res.data.reviews],
+                }));
             } catch(error) {
                 console.error("Failed to fetch reviews: ", error);
             }
         };
 
         fetchReviews();
-    }, [id]);
+    }, [id, reviewFilters]);
 
     useEffect(() => {
         if (!product) return;
@@ -147,6 +157,8 @@ function ProductDetailPage() {
                 <ProductReView
                     productId={id}
                     reviewData={reviewData}
+                    reviewFilters={reviewFilters}
+                    setReviewFilters={setReviewFilters}
                 />
             )}  
 

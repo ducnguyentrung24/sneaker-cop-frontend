@@ -1,7 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect, useRef } from 'react';
 
-function ProductReview({ reviewData }) {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { use } from 'react';
+
+function ProductReview({ productId, reviewData, reviewFilters, setReviewFilters }) {
     const {
         average_rating = 0,
         total_reviews = 0,
@@ -15,10 +18,7 @@ function ProductReview({ reviewData }) {
             ? (count / total_reviews) * 100
             : 0;
 
-        return {
-            star,
-            percent,
-        };
+        return { star, percent };
     });
 
     return (
@@ -28,9 +28,35 @@ function ProductReview({ reviewData }) {
                 <div className='flex justify-between items-center mb-4'>
                     <h3 className='font-bold text-sm font'>ĐÁNH GIÁ TỪ KHÁCH HÀNG</h3>
 
-                    <button className='text-xs text-black font-bold pb-1 mr-2 border-b-3 border-black hover:border-orange-500 hover:text-orange-500'>
-                        XEM TẤT CẢ
-                    </button>
+                    {/* Dropdown Filter */}
+                    <div className='flex items-center gap-2'>
+                        <span className='text-sm font-bold text-black'>
+                            Lọc theo:
+                        </span>
+
+                        <select
+                            value={reviewFilters?.rating ?? ""}
+                            onChange={(e) => {
+                                const value = e.target.value === "" ? null : Number(e.target.value);
+
+                                console.log("Rating: ", value, typeof value);
+                                setReviewFilters(prev => ({
+                                    ...prev,
+                                    rating: value,
+                                    page: 1
+                                }));
+
+                            }}
+                            className='px-3 py-1 border rounded text-xs focus:outline-none focus:ring-1 focus:ring-black'
+                        >
+                            <option value="">Tất cả</option>
+                            <option value="5">5 sao</option>
+                            <option value="4">4 sao</option>
+                            <option value="3">3 sao</option>
+                            <option value="2">2 sao</option>
+                            <option value="1">1 sao</option>
+                        </select>
+                    </div>
                 </div>
 
                 {/* Reviews */}
@@ -64,6 +90,26 @@ function ProductReview({ reviewData }) {
                         </p>
                     </div>
                 ))}
+
+                {/* Load more */}
+                {reviews.length < (
+                    reviewFilters.rating
+                        ? rating_distribution[reviewFilters.rating] || 0
+                        : total_reviews
+                ) && (
+                    <div className='text-center mt-6'>
+                        <button
+                            onClick={() => setReviewFilters(prev => ({
+                                ...prev,
+                                page: prev.page + 1,
+                            }))}
+                            className='px-6 py-2 border rounded text-sm hover:bg-gray-100'
+                        >
+                            XEM THÊM
+                            <FontAwesomeIcon icon={faChevronDown} className='text-xs' />
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* Right */}
