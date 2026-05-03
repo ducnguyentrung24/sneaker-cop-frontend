@@ -206,7 +206,7 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
                     <button
                         onClick={() => {
                             if (!selectedVariant) {
-                                toast.error("Vui lòng chọn màu và size");
+                                toast.error("Vui lòng chọn màu và size trước");
                                 return;
                             }
 
