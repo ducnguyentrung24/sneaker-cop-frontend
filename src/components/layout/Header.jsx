@@ -1,6 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
+
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
+
 import logo from "../../assets/images/logo.png";
 
 // Font Awesome
@@ -19,8 +22,12 @@ function Header() {
     const isActive = (path) => location.pathname === path;
 
     const { user, logoutUser } = useAuth();
+    const { cart } = useCart();
+
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef();
+
+    const totalQuantity = cart.items.reduce((sum, i) => sum + i.quantity, 0);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -60,21 +67,17 @@ function Header() {
                 </nav>
 
                 {/* RIGHT */}
-                <div className='flex items-center gap-4'>
-
-                    {/* SEARCH */}
-                    {/* <div className='flex items-center border rounded-md px-2 hover:border-orange-500'>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} className='text-gray-400 mr-2'/>
-                        <input 
-                            type="text" 
-                            placeholder='Tìm kiếm sản phẩm' 
-                            className='py-1 text-sm outline-none w-40'
-                        />
-                    </div> */}
-
+                <div className='flex items-center gap-8'>
                     {/* CART */}
-                    <Link to='/cart' className='text-lg hover:text-orange-500'>
+                    <Link to='/cart' className='relative text-lg hover:text-orange-500'>
                         <FontAwesomeIcon icon={faCartShopping} />
+
+                        {/* Badge */}
+                        {totalQuantity > 0 && (
+                            <span className='absolute -top-1.5 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full'>
+                                {totalQuantity > 99 ? '99+' : totalQuantity}
+                            </span>
+                        )}
                     </Link>
 
                     {/* USER */}
