@@ -1,5 +1,9 @@
 import { useMemo, useState } from "react";
 
+import { useCart } from "../../context/CartContext";
+
+import toast from "react-hot-toast";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
     faCartShopping, 
@@ -10,8 +14,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) {
+    const { addToCart } = useCart();
+
     const [ selectedSize, setSelectedSize ] = useState(null);
     const [ quantity, setQuantity ] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     const variants = product.variants || [];
 
@@ -42,6 +49,25 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
     const final_price = price !== null
         ? Math.round(price * (1 - product.discount_percent / 100))
         : product.final_price;
+
+    const handleAddToCart = async () => {
+        if (!selectedVariant) {
+            toast.error("Vui lòng chọn màu và size");
+            return;
+        }
+
+        if (loading) return;
+
+        try {
+            setLoading(true);
+            await addToCart(selectedVariant.id, quantity);
+            toast.success(`Đã thêm vào giỏ hàng`);
+        } catch (error) {
+            toast.error("Thêm vào giỏ hàng thất bại");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div>
@@ -94,12 +120,12 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
             {/* Price */}
             <div className="mt-3 flex gap-3 items-center">
                 <span className="text-orange-500 text-2xl font-bold">
-                    {Math.round(final_price).toLocaleString()}đ
+                    {Math.round(final_price).toLocaleString('vi-VN')}đ
                 </span>
 
                 {product.discount_percent > 0 && (
                     <span className="line-through text-gray-400 text-md">
-                        {Math.round(price).toLocaleString()}đ
+                        {Math.round(price).toLocaleString('vi-VN')}đ
                     </span>
                 )}
             </div>
@@ -163,7 +189,13 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
 
                 <div className="flex border border-gray-400 rounded-md w-fit">
                     <button 
-                        onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                        onClick={() => {
+                            if (quantity <= 1) {
+                                toast.error("Số lượng phải lớn hơn 0");
+                                return;
+                            }
+                            setQuantity(q => Math.max(1, q - 1))
+                        }}
                         className="p-2 hover:bg-gray-200"
                     >
                         <FontAwesomeIcon icon={faMinus} className="text-xs" />
@@ -172,7 +204,19 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
                     <span className="px-4 py-2">{quantity}</span>
 
                     <button
-                        onClick={() => setQuantity(q => q + 1)}
+                        onClick={() => {
+                            if (!selectedVariant) {
+                                toast.error("Vui lòng chọn màu và size");
+                                return;
+                            }
+
+                            if (quantity >= selectedVariant.stock) {
+                                toast.error("Số lượng vượt quá tồn kho");
+                                return;
+                            }
+
+                            setQuantity(q => q + 1)
+                        }}
                         className="p-2 hover:bg-gray-200"
                     >
                         <FontAwesomeIcon icon={faPlus} className="text-xs" />
@@ -182,7 +226,13 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
 
             {/* Button */}
             <div className="mt-6 flex flex-col gap-3">
-                <button className="bg-black text-white font-bold py-3 rounded flex items-center justify-center gap-1">
+                <button
+                    onClick={handleAddToCart}
+                    disabled={loading}
+                    className={`bg-black text-white font-bold py-3 rounded flex items-center justify-center gap-1 hover:bg-gray-800 transition
+                        ${loading ? 'cursor-not-allowed opacity-50' : ''}
+                    `}
+                >
                     <FontAwesomeIcon icon={faCartShopping} />
                     Thêm vào giỏ hàng
                 </button>
