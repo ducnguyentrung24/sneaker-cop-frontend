@@ -39,12 +39,12 @@ function ProductCard({ product }) {
             {/* Price */}
             <div className="mt-1 flex items-center justify-between gap-2">
                 <span className="text-red-500 font-bold text-md">
-                    {Math.round(final_price).toLocaleString()}đ
+                    {Math.round(final_price).toLocaleString('vi-VN')}đ
                 </span>
 
                 {hasDiscount && (
                     <span className="text-gray-400 text-sm line-through">
-                        {Math.round(base_price).toLocaleString()}đ
+                        {Math.round(base_price).toLocaleString('vi-VN')}đ
                     </span>
                 )}
             </div>

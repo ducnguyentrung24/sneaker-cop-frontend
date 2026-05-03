@@ -6,6 +6,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import ProductPage from "../pages/product/ProductPage";
 import ProductDetailPage from "../pages/product/ProductDetailPage";
+import CartPage from "../pages/cart/CartPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -33,6 +34,8 @@ function AppRoutes() {
                     <ProductDetailPage />
                 </MainLayout>
             } />
+
+            <Route path="/cart" element={ <CartPage /> } />
 
             {/* Protected routes */}
             <Route path="/" element={
