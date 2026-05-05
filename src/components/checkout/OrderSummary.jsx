@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-function OrderSummary({ items, total, loading, onSubmit }) {
+function OrderSummary({ items, total, loading, onSubmit }) { 
     return (
         <div className="lg:col-span-5">
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -14,9 +14,12 @@ function OrderSummary({ items, total, loading, onSubmit }) {
                 {/* ITEMS */}
                 <div className="p-6 space-y-4 max-h-80 overflow-y-auto scroll-smooth scrollbar-hide">
                     {items.map((item) => (
-                        <div key={item.id} className="flex gap-4">
+                        <div 
+                            key={item.variant_id || item.id} 
+                            className="flex gap-4"
+                        >
                             <img
-                                src={item.product.thumbnail}
+                                src={item.product?.thumbnail}
                                 className="w-16 h-16 object-cover rounded"
                             />
 
@@ -26,7 +29,7 @@ function OrderSummary({ items, total, loading, onSubmit }) {
                                 </p>
 
                                 <p className="text-xs text-gray-500">
-                                    Màu: {item.variant.color} | Size: {item.variant.size}
+                                    Màu: {item.variant?.color} | Size: {item.variant.size}
                                 </p>
 
                                 <p className="text-xs text-gray-500">
@@ -68,13 +71,7 @@ function OrderSummary({ items, total, loading, onSubmit }) {
                 <div className="p-6">
                     <button
                         disabled={loading}
-                        onClick={() =>
-                            onSubmit({
-                                receiver_name: "Nguyễn Văn An",
-                                phone: "0901234567",
-                                address: "TP.HCM",
-                            })
-                        }
+                        onClick={onSubmit}
                         className="w-full bg-black text-white py-4 rounded-lg font-bold uppercase tracking-wide hover:opacity-90 disabled:opacity-60"
                     >
                         {loading ? "Đang xử lý..." : "Đặt hàng ngay"}{" "}

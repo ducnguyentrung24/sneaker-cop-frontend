@@ -81,7 +81,7 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
         navigate("/checkout", {
             state: {
                 items: [{
-                    id: selectedVariant.id,
+                    variant_id: selectedVariant.id,
                     product: {
                         name: product.name,
                         thumbnail: product.thumbnail,

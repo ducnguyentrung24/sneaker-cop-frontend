@@ -2,16 +2,22 @@ import { Routes, Route } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 
 import HomePage from "../pages/home/HomePage";
+
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+
 import ProductPage from "../pages/product/ProductPage";
 import ProductDetailPage from "../pages/product/ProductDetailPage";
+
 import CartPage from "../pages/cart/CartPage";
+
 import ProfilePage from "../pages/profile/ProfilePage";
 import AddressPage from "../pages/profile/AddressPage";
 import ChangePasswordPage from "../pages/profile/ChangePasswordPage";
 
 import CheckoutPage from "../pages/checkout/CheckoutPage";
+import CheckoutSuccess from "../pages/checkout/CheckoutSuccess";
+import CheckoutFail from "../pages/checkout/CheckoutFail";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -67,6 +73,10 @@ function AppRoutes() {
             } />
 
             <Route path="/checkout" element={<CheckoutPage />} />
+
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+
+            <Route path="/checkout/fail" element={<CheckoutFail />} />
 
             {/* Protected routes */}
             <Route path="/" element={
