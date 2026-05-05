@@ -49,7 +49,7 @@ function AddressPage() {
 
     const handleAdd = () => {
         if (addresses.length >= 5) {
-            toast.error("Bạn chỉ có thể thêm tối đa 3 địa chỉ!");
+            toast.error("Bạn chỉ có thể thêm tối đa 5 địa chỉ!");
             return;
         }
 

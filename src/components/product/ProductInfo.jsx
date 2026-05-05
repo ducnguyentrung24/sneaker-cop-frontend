@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useCart } from "../../context/CartContext";
 
@@ -14,6 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) {
+    const navigate = useNavigate();
+
     const { addToCart } = useCart();
 
     const [ selectedSize, setSelectedSize ] = useState(null);
@@ -67,6 +70,31 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleBuyNow = () => {
+        if (!selectedVariant) {
+            toast.error("Vui lòng chọn màu và size");
+            return;
+        }
+
+        navigate("/checkout", {
+            state: {
+                items: [{
+                    id: selectedVariant.id,
+                    product: {
+                        name: product.name,
+                        thumbnail: product.thumbnail,
+                    },
+                    variant: {
+                        color: selectedVariant.color,
+                        size: selectedVariant.size,
+                    },
+                    quantity,
+                    total: final_price * quantity,
+                }]
+            }
+        });
     };
 
     return (
@@ -237,7 +265,10 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
                     Thêm vào giỏ hàng
                 </button>
 
-                <button className="font-bold border py-3 rounded flex items-center justify-center gap-1 hover:bg-gray-100 transition">
+                <button 
+                    onClick={handleBuyNow}
+                    className="font-bold border py-3 rounded flex items-center justify-center gap-1 hover:bg-gray-100 transition"
+                >
                     <FontAwesomeIcon icon={faBolt} />
                     Mua ngay
                 </button>

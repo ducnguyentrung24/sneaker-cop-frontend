@@ -46,6 +46,21 @@ function CartPage() {
         .filter(i => selected.includes(i.id))
         .reduce((sum, i) => sum + i.total, 0);
 
+    const handleCheckout = () => {
+        if (!selected.length) {
+            toast.error("Vui lòng chọn sản phẩm để thanh toán");
+            return;
+        }
+
+        const selectedItems = cart.items.filter(i => 
+            selected.includes(i.id)
+        );
+
+        navigate("/checkout", { 
+            state: { items: selectedItems } 
+        });
+    };
+
     return (
         <div className="h-screen flex flex-col bg-white">
             {/* Header */}
@@ -68,6 +83,7 @@ function CartPage() {
                 </span>
             </div>
 
+            {/* Content */}
             {cart.items.length ? (
                 <div className="flex-1 overflow-y-auto px-8 py-8">
                     <div className="max-w-5xl mx-auto px-6">
@@ -251,6 +267,7 @@ function CartPage() {
                 </div>
 
                 <button
+                    onClick={handleCheckout}
                     disabled={!selected.length}
                     className={`px-15 py-3 rounded-lg flex items-center gap-2 text-sm font-medium
                         ${selected.length
