@@ -18,7 +18,7 @@ import {
 function CartPage() {
     const navigate = useNavigate();
 
-    const { cart, updateQuantity, removeItem, removeManyItems } = useCart();
+    const { cart, loading, updateQuantity, removeItem, removeManyItems } = useCart();
     const [selected, setSelected] = useState([]);
 
     useEffect(() => {
@@ -28,6 +28,14 @@ function CartPage() {
             setSelected([]);
         }
     }, [cart.items]);
+
+    if (loading) {
+        return (
+            <div className="h-screen flex items-center justify-center">
+                <p className="text-gray-500">Đang tải giỏ hàng...</p>
+            </div>
+        );
+    }
 
     const toggle = (id) => {
         setSelected(prev =>

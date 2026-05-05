@@ -9,6 +9,8 @@ import {
     deleteManyCartItems,
 } from '../services/cart.service';
 
+import toast from "react-hot-toast";
+
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -19,17 +21,29 @@ export const CartProvider = ({ children }) => {
         total_price: 0,
     });
 
+    const [loading, setLoading] = useState(true);
+
     const fetchCart = async () => {
         try {
+            setLoading(true);
             const res = await getCart();
             setCart(res.data);
         } catch(error) {
             console.error("Failed to fetch cart:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (!user) return;
+        if (user === null ) return;
+
+        if (!user) {
+            setCart({ items: [], total_price: 0 });
+            setLoading(false);
+            return;
+        }
+
         fetchCart();
     }, [user]);
 
@@ -58,9 +72,8 @@ export const CartProvider = ({ children }) => {
 
         } catch(error) {
             console.error("Failed to update cart item:", error);
-            
             const message = error.response?.data?.message || "Vượt quá số lượng tồn kho";
-            alert(message);
+            toast.error(message);
         }
     };
 
@@ -91,6 +104,7 @@ export const CartProvider = ({ children }) => {
     return (
         <CartContext.Provider value = {{
             cart,
+            loading,
             fetchCart,
             addToCart: add,
             updateQuantity: update,
