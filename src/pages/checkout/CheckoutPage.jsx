@@ -7,6 +7,8 @@ import CheckoutForm from "../../components/checkout/CheckoutForm";
 import OrderSummary from "../../components/checkout/OrderSummary";
 
 import { checkoutFromCart, checkoutFromBuyNow } from "../../services/order.service";
+import { createVNPayPayment } from "../../services/payment.service";
+
 import toast from "react-hot-toast";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +20,8 @@ function CheckoutPage() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
-    const items = state?.items || [];
+    // const items = state?.items || [];
+    const items = state?.items || JSON.parse(sessionStorage.getItem("pending_checkout") || "[]");
 
     const [loading, setLoading] = useState(false);
     const [payment, setPayment] = useState("COD");
@@ -62,13 +65,28 @@ function CheckoutPage() {
                 });
             }
 
-            await fetchCart();
+            if (payment === "COD") {
+                await fetchCart();
 
-            navigate("/checkout/success", {
-                state: {
-                orderCode: res.data.order_code,
-                }
-            });
+                navigate("/checkout/success", {
+                    state: {
+                        orderCode: res.data.order_code,
+                    }
+                });
+
+                return;
+            }
+
+            if (payment === "VNPAY") {
+                sessionStorage.setItem(
+                    "pending_checkout",
+                    JSON.stringify(items)
+                );
+
+                const paymentRes = await createVNPayPayment(res.data.id);
+
+                window.location.href = paymentRes.payment_url;
+            }
         } catch (error) {
             navigate("/checkout/fail", {
                 state: {

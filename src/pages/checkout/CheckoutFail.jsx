@@ -7,6 +7,10 @@ function CheckoutFail() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
+    const pendingItems = JSON.parse(
+        sessionStorage.getItem("pending_checkout") || "[]"
+    );
+
     const message =
         state?.message ||
         "Rất tiếc, đã có lỗi xảy ra trong quá trình thanh toán.";
@@ -42,7 +46,11 @@ function CheckoutFail() {
                     </button>
 
                     <button
-                        onClick={() => navigate("/cart")}
+                        onClick={() => navigate("/cart", {
+                            state: {
+                                items: pendingItems,
+                            }
+                        })}
                         className="flex-1 border border-black py-3 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
                     >
                         QUAY LẠI GIỎ HÀNG
