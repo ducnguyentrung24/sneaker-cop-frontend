@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 
 import toast from "react-hot-toast";
@@ -17,6 +18,7 @@ import {
 function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) {
     const navigate = useNavigate();
 
+    const { user } = useAuth();
     const { addToCart } = useCart();
 
     const [ selectedSize, setSelectedSize ] = useState(null);
@@ -54,6 +56,11 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
         : product.final_price;
 
     const handleAddToCart = async () => {
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+
         if (!selectedVariant) {
             toast.error("Vui lòng chọn màu và size");
             return;
@@ -73,6 +80,11 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
     };
 
     const handleBuyNow = () => {
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+
         if (!selectedVariant) {
             toast.error("Vui lòng chọn màu và size");
             return;
