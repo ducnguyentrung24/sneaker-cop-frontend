@@ -36,7 +36,7 @@ export const CartProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (user === null ) return;
+        if (user === undefined ) return;
 
         if (!user) {
             setCart({ items: [], total_price: 0 });
