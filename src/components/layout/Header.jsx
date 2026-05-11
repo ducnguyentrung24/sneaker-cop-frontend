@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
 import { useAuth } from '../../context/AuthContext';
@@ -9,17 +9,19 @@ import logo from "../../assets/images/logo.png";
 // Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-    faMagnifyingGlass, 
+    faMagnifyingGlass,
     faCartShopping,
-    faUser, 
-    faBox, 
-    faGear, 
-    faRightFromBracket 
+    faUser,
+    faBox,
+    faGear,
+    faRightFromBracket
 } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
     const location = useLocation();
     const isActive = (path) => location.pathname === path;
+
+    const navigate = useNavigate();
 
     const { user, logoutUser } = useAuth();
     const { cart } = useCart();
@@ -69,7 +71,10 @@ function Header() {
                 {/* RIGHT */}
                 <div className='flex items-center gap-8'>
                     {/* CART */}
-                    <Link to='/cart' className='relative text-lg hover:text-orange-500'>
+                    <button
+                        onClick={() => navigate(user ? "/cart" : "login")}
+                        className='relative text-lg hover:text-orange-500'
+                    >
                         <FontAwesomeIcon icon={faCartShopping} />
 
                         {/* Badge */}
@@ -78,7 +83,7 @@ function Header() {
                                 {totalQuantity > 99 ? '99+' : totalQuantity}
                             </span>
                         )}
-                    </Link>
+                    </button>
 
                     {/* USER */}
                     <div className='relative' ref={dropdownRef}>
