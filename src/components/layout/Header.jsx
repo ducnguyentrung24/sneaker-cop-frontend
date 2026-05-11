@@ -121,7 +121,7 @@ function Header() {
                                             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 text-sm"
                                         >
                                             <FontAwesomeIcon icon={faBox} />
-                                            Đơn hàng của bạn
+                                            Đơn hàng của tôi
                                         </Link>
 
                                         {/* ADMIN */}

@@ -19,6 +19,8 @@ import CheckoutPage from "../pages/checkout/CheckoutPage";
 import CheckoutSuccess from "../pages/checkout/CheckoutSuccess";
 import CheckoutFail from "../pages/checkout/CheckoutFail";
 
+import OrderPage from "../pages/order/OrderPage";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
@@ -77,6 +79,16 @@ function AppRoutes() {
             <Route path="/checkout/success" element={<CheckoutSuccess />} />
 
             <Route path="/checkout/fail" element={<CheckoutFail />} />
+
+            <Route path="/orders" element={
+                <ProtectedRoute>
+                    <MainLayout>
+                        <OrderPage />
+                    </MainLayout>
+                </ProtectedRoute>
+            } />
+
+
 
             {/* Protected routes */}
             <Route path="/" element={

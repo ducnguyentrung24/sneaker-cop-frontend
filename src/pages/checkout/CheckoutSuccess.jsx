@@ -1,13 +1,13 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 function CheckoutSuccess() {
-    const { state } = useLocation();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
-    const orderCode = state?.orderCode || "N/A";
+    const orderCode = searchParams.get("orderCode") || "N/A";
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#F3F3F4] px-4">
