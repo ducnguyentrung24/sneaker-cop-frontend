@@ -86,7 +86,7 @@ function OrderPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#F3F3F4] pt-24 pb-12 px-6">
+        <div className="min-h-screen bg-[#F3F3F4] pt-10 pb-12 px-6">
             <div className="max-w-6xl mx-auto">
                 <div className="mb-10">
                     <h1 className="text-4xl font-bold uppercase tracking-tight">Đơn hàng của tôi</h1>

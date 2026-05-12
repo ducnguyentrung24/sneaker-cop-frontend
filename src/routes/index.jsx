@@ -20,6 +20,7 @@ import CheckoutSuccess from "../pages/checkout/CheckoutSuccess";
 import CheckoutFail from "../pages/checkout/CheckoutFail";
 
 import OrderPage from "../pages/order/OrderPage";
+import OrderDetailPage from "../pages/order/OrderDetailPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -88,7 +89,13 @@ function AppRoutes() {
                 </ProtectedRoute>
             } />
 
-
+            <Route path="/orders/:id" element={
+                <ProtectedRoute>
+                    <MainLayout>
+                        <OrderDetailPage />
+                    </MainLayout>
+                </ProtectedRoute>
+            } />
 
             {/* Protected routes */}
             <Route path="/" element={
