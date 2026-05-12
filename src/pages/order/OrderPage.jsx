@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import OrderCard from "../../components/order/OrderCard";
 import Pagination from "../../components/common/Pagination";
 
-import { getMyOrders } from "../../services/order.service";
+import { getMyOrders, cancelOrder } from "../../services/order.service";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -62,6 +62,26 @@ function OrderPage() {
             console.error(error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleCancelOrder = async (orderId) => {
+        try {
+            await cancelOrder(orderId);
+
+            setOrders(prev =>
+                prev.map(order =>
+                    order.id === orderId
+                        ? { ...order, status: "CANCELLED" }
+                        : order
+                )
+            );
+            
+            toast.success("Hủy đơn hàng thành công!");
+        } catch(error) {
+            toast.error(
+                error.response?.data?.message || "Hủy đơn hàng thất bại!"
+            );
         }
     };
 
@@ -124,7 +144,8 @@ function OrderPage() {
                     {!loading && orders.map(order => (
                         <OrderCard 
                             key={order.id} 
-                            order={order} 
+                            order={order}
+                            onCancel={handleCancelOrder}
                         />
                     ))}
                 </div>

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function OrderCard({ order }) {
+function OrderCard({ order, onCancel }) {
     const navigate = useNavigate();
 
     const statusMap = {
@@ -101,6 +101,13 @@ function OrderCard({ order }) {
 
                     {(order.status === "PENDING" || order.status === "PROCESSING") && (
                         <button
+                            onClick={() => {
+                                const confirmCancel = window.confirm("Bạn có chắc muốn hủy đơn hàng này?");
+                                if (confirmCancel) {
+                                    onCancel(order.id);
+                                }
+                                }
+                            }
                             className=" h-10 px-6 border border-red-500 text-red-500 text-xs font-bold uppercase rounded-sm hover:bg-red-500 hover:text-white transition"
                         >
                             Hủy đơn hàng
