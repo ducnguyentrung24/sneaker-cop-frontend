@@ -3,6 +3,10 @@ import { useEffect, useMemo, useState } from "react";
 function ProductGallery({ product, selectedColor }) {
     const [selectedImg, setSelectedImg] = useState(product.thumbnail);
 
+    useEffect(() => {
+        setSelectedImg(product.thumbnail);
+    }, [product]);
+
     const images = useMemo(() => [
         product.thumbnail,
         ...(product.images || []).map(i => i.image_url)
