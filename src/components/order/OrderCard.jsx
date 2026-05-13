@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function OrderCard({ order, onCancel }) {
+function OrderCard({ order, onCancel, onBuyAgain }) {
     const navigate = useNavigate();
 
     const statusMap = {
@@ -123,6 +123,7 @@ function OrderCard({ order, onCancel }) {
                             </button>
 
                             <button
+                                onClick={() => onBuyAgain(order)}
                                 className="h-10 px-6 bg-black text-white text-xs font-bold uppercase rounded-sm hover:opacity-60 transition"
                             >
                                 Mua lại
@@ -132,6 +133,7 @@ function OrderCard({ order, onCancel }) {
 
                     {order.status === "CANCELLED" && (
                         <button
+                            onClick={() => onBuyAgain(order)}
                             className="h-10 px-6 bg-black text-white text-xs font-bold uppercase rounded-sm hover:opacity-90 transition"
                         >
                             Mua lại

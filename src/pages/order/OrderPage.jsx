@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import OrderCard from "../../components/order/OrderCard";
 import Pagination from "../../components/common/Pagination";
 
 import { getMyOrders, cancelOrder } from "../../services/order.service";
 
+import toast from "react-hot-toast";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function OrderPage() {
+    const navigate = useNavigate();
+
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -85,6 +90,36 @@ function OrderPage() {
         }
     };
 
+    const handleBuyAgain = (order) => {
+        const checkoutItems = order.items.map(item => ({
+            variant_id: item.variant_id,
+
+            product: {
+                name: item.product_name,
+                thumbnail: item.image,
+            },
+            variant: {
+                color: item.color,
+                size: item.size,
+            },
+
+            quantity: item.quantity,
+            total: Number(item.price) * Number(item.quantity),
+        }));
+
+        sessionStorage.setItem(
+            "pending_checkout",
+            JSON.stringify(checkoutItems)
+        );
+
+        navigate("/checkout", {
+            state: {
+                type: "REORDER",
+                items: checkoutItems,
+            }
+        });
+    };
+
     return (
         <div className="min-h-screen bg-[#F3F3F4] pt-10 pb-12 px-6">
             <div className="max-w-6xl mx-auto">
@@ -146,6 +181,7 @@ function OrderPage() {
                             key={order.id} 
                             order={order}
                             onCancel={handleCancelOrder}
+                            onBuyAgain={handleBuyAgain}
                         />
                     ))}
                 </div>

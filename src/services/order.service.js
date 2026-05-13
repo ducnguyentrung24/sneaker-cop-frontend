@@ -10,6 +10,11 @@ export const checkoutFromBuyNow = async (data) => {
     return res.data;
 };
 
+export const checkoutFromReorder = async (data) => {
+    const res = await axiosInstance.post("/orders/checkout/reorder", data);
+    return res.data;
+};
+
 export const getMyOrders = async (params = {}) => {
     const res = await axiosInstance.get("/orders", { params });
     return res.data;

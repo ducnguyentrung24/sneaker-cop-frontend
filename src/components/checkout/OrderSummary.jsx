@@ -6,16 +6,16 @@ function OrderSummary({ items, total, loading, onSubmit }) {
         <div className="lg:col-span-5">
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
 
-                {/* HEADER */}
+                {/* Header */}
                 <div className="bg-black text-white text-center py-4 font-bold tracking-widest">
                     ĐƠN HÀNG
                 </div>
 
-                {/* ITEMS */}
+                {/* Items */}
                 <div className="p-6 space-y-4 max-h-80 overflow-y-auto scroll-smooth scrollbar-hide">
-                    {items.map((item) => (
+                    {items.map((item, index) => (
                         <div 
-                            key={item.variant_id || item.id} 
+                            key={`${item.variant_id || item.id}-${index}`} 
                             className="flex gap-4"
                         >
                             <img
@@ -67,7 +67,7 @@ function OrderSummary({ items, total, loading, onSubmit }) {
                     </span>
                 </div>
 
-                {/* BUTTON */}
+                {/* Button */}
                 <div className="p-6">
                     <button
                         disabled={loading}

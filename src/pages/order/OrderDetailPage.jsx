@@ -58,6 +58,36 @@ function OrderDetailPage() {
         }
     };
 
+    const handleBuyAgain = () => {
+        const checkoutItems = order.items.map(item => ({
+            variant_id: item.variant_id,
+
+            product: {
+                name: item.product_name,
+                thumbnail: item.image,
+            },
+            variant: {
+                color: item.color,
+                size: item.size,
+            },
+
+            quantity: item.quantity,
+            total: Number(item.price) * Number(item.quantity),
+        }));
+
+        sessionStorage.setItem(
+            "pending_checkout",
+            JSON.stringify(checkoutItems)
+        );
+
+        navigate("/checkout", {
+            state: {
+                type: "REORDER",
+                items: checkoutItems,
+            },
+        });
+    };
+
     const statusSteps = [
         { key: "PENDING", label: "Chờ xử lý", icon: faClock },
         { key: "PROCESSING", label: "Đang xử lý", icon: faBox },
@@ -269,36 +299,9 @@ function OrderDetailPage() {
                     </div>
                 </div>
 
-                {/* Total */}
-                {/* <div className="flex justify-end">
-                    <div className="w-full max-w-md bg-white rounded-2xl p-8 shadow-lg border border-orange-100">
-                        <div className="space-y-4 border-b border-gray-300 pb-6">
-                            <div className="flex justify-between">
-                                <span className="text-gray-600 uppercase text-sm">Tạm tính</span>
-                                <span className="font-bold">
-                                    {Math.round(order.total_price).toLocaleString("vi-VN")}đ
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between">
-                                <span className="text-gray-600 uppercase text-sm">Phí vận chuyển</span>
-                                <span className="font-bold text-orange-500">MIỄN PHÍ</span>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-between items-center mt-6">
-                            <p className="text-sm font-semibold uppercase">Tổng cộng</p>
-
-                            <div className="text-3xl font-bold text-orange-500">
-                                {Math.round(order.final_price).toLocaleString("vi-VN")}đ
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-
                 {/* Total + Actions */}
                 <div className="flex justify-end">
-                    <div w-full max-w-md>
+                    <div className="w-full max-w-md">
                         {/* Total */}
                         <div className="bg-white rounded-2xl p-8 shadow-lg border border-orange-100">
                             <div className="space-y-4 border-b border-gray-300 pb-6">
@@ -345,6 +348,7 @@ function OrderDetailPage() {
                                     </button>
 
                                     <button
+                                        onClick={handleBuyAgain}
                                         className="flex-1 h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
                                     >
                                         Mua lại
@@ -354,6 +358,7 @@ function OrderDetailPage() {
 
                             {order.status === "CANCELLED" && (
                                 <button
+                                    onClick={handleBuyAgain}
                                     className="w-full h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
                                 >
                                     Mua lại

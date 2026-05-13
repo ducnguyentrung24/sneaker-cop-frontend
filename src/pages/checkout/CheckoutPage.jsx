@@ -6,7 +6,7 @@ import { useState } from "react";
 import CheckoutForm from "../../components/checkout/CheckoutForm";
 import OrderSummary from "../../components/checkout/OrderSummary";
 
-import { checkoutFromCart, checkoutFromBuyNow } from "../../services/order.service";
+import { checkoutFromCart, checkoutFromBuyNow, checkoutFromReorder } from "../../services/order.service";
 import { createVNPayPayment } from "../../services/payment.service";
 
 import toast from "react-hot-toast";
@@ -36,6 +36,9 @@ function CheckoutPage() {
 
     const isCart = items[0]?.id && !items[0]?.variant_id;
 
+    const checkoutType = state?.type;
+    const isReorder = checkoutType === "REORDER";
+
     const handleSubmit = async () => {
         if (!addressData) {
             toast.error("Vui lòng chọn địa chỉ giao hàng!");
@@ -53,7 +56,18 @@ function CheckoutPage() {
                     note,
                     selected_item_ids: items.map(i => i.id),
                 });
-            } else {
+            } else if (isReorder) {
+                res = await checkoutFromReorder({
+                    address_id: addressData.id,
+                    payment_method: payment,
+                    note,
+                    items: items.map(i => ({
+                        variant_id: i.variant_id,
+                        quantity: i.quantity,
+                    })),
+                });
+            }
+            else {
                 const item = items[0];
 
                 res = await checkoutFromBuyNow({
@@ -137,4 +151,4 @@ function CheckoutPage() {
     );
 }
 
-export default CheckoutPage;    
+export default CheckoutPage;
