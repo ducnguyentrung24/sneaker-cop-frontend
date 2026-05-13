@@ -342,6 +342,7 @@ function OrderDetailPage() {
                             {order.status === "COMPLETED" && (
                                 <div className="flex gap-3">
                                     <button
+                                        onClick={() => navigate(`/reviews/write/${order.id}`)}
                                         className="flex-1 h-12 border border-black text-black text-sm font-bold uppercase rounded-md hover:bg-black hover:text-white transition"
                                     >
                                         Đánh giá

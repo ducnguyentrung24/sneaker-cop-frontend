@@ -22,6 +22,8 @@ import CheckoutFail from "../pages/checkout/CheckoutFail";
 import OrderPage from "../pages/order/OrderPage";
 import OrderDetailPage from "../pages/order/OrderDetailPage";
 
+import WriteReviewPage from "../pages/review/WriteReviewPage";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
@@ -93,6 +95,14 @@ function AppRoutes() {
                 <ProtectedRoute>
                     <MainLayout>
                         <OrderDetailPage />
+                    </MainLayout>
+                </ProtectedRoute>
+            } />
+
+            <Route path="/reviews/write/:orderId" element={
+                <ProtectedRoute>
+                    <MainLayout>
+                        <WriteReviewPage />
                     </MainLayout>
                 </ProtectedRoute>
             } />

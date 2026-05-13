@@ -117,6 +117,7 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
                     {order.status === "COMPLETED" && (
                         <>
                             <button
+                                onClick={() => navigate(`/reviews/write/${order.id}`)}
                                 className="h-10 px-6 border border-orange-500 text-orange-500 text-xs font-bold uppercase rounded-sm hover:bg-orange-500 hover:text-white transition"
                             >
                                 Đánh giá

@@ -8,3 +8,13 @@ export const getReviewsByProductId = async (productId, params = {}) => {
     );
     return res.data;
 };
+
+export const getReviewsByOrder = async (orderId) => {
+    const res = await axiosInstance.get(`/reviews/order/${orderId}`);
+    return res.data;
+};
+
+export const createReview = async (data) => {
+    const res = await axiosInstance.post(`/reviews`, data);
+    return res.data;
+};
