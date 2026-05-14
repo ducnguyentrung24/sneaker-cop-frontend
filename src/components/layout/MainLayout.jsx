@@ -6,7 +6,7 @@ function MainLayout({ children }) {
         <div className="min-h-screen flex flex-col">
             <Header />
             
-            <main className="flex-1 container">
+            <main className="flex-1 w-full overflow-x-hidden">
                 {children}
             </main>
 
