@@ -35,9 +35,17 @@ function AppRoutes() {
                 </MainLayout>
             } />
 
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={
+                <MainLayout>
+                    <LoginPage />
+                </MainLayout>
+            } />
             
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/register" element={
+                <MainLayout>
+                    <RegisterPage />
+                </MainLayout>
+            } />
 
             <Route path="/products" element={
                 <MainLayout>

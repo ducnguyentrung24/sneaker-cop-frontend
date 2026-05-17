@@ -94,23 +94,23 @@ function AddressPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F3F3F4] px-6 pt-10">
-            <div className="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+        <div className="min-h-screen bg-[#F3F3F4] px-4 sm:px-6 py-8 sm:py-10">
+            <div className="max-w-6xl mx-auto grid grid-cols-12 gap-6 lg:gap-8">
                 <ProfileSidebar />
 
-                <div className="col-span-9">
+                <div className="col-span-12 lg:col-span-9">
                     {/* Header */}
-                    <div className="flex justify-between items-center mb-8">
-                        <div>
-                            <h1 className="text-3xl font-bold mb-2">Địa chỉ nhận hàng</h1> 
-                            <p className="text-sm text-gray-500">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4 sm:mb-8">
+                        <div className="text-center sm:text-left">
+                            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Địa chỉ nhận hàng</h1> 
+                            <p className="text-xs sm:text-sm text-gray-500">
                                 Quản lý địa chỉ giao hàng để thuận tiện hơn khi mua sắm.
                             </p>
                         </div>
 
                         <button 
                             onClick={handleAdd}
-                            className="flex gap-2 bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-orange-500 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:opacity-90 transition"
                         >
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />
                             Thêm địa chỉ mới
@@ -118,21 +118,21 @@ function AddressPage() {
                     </div>
 
                     {/* List */}
-                    <div className="space-y-5">
+                    <div className="space=y=4 sm:space-y-5">
                         {addresses.map((address) => (
                             <div
                                 key={address.id}
-                                className={`bg-white rounded-xl px-6 py-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] border-l-4
+                                className={`bg-white rounded-lg px-5 sm:px-6 py-5 sm:py-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] border-l-4
                                     ${address.is_default
                                         ? "border-orange-500"
                                         : "border-transparent"
                                     }
                                 `}
                             >
-                                <div className="flex justify-between items-stretch">
+                                <div className="flex flex-col sm:flex-row justify-between sm:items-stretch gap-4">
                                     {/* Left */}
-                                    <div className="space-y-2.5 max-w-[75%]">
-                                        <p className="font-semibold text-md">{address.receiver_name}</p>
+                                    <div className="space-y-2.5 min-w-0 sm:max-w-[75%]">
+                                        <p className="font-semibold text-sm sm:text-md">{address.receiver_name}</p>
 
                                         <p className="flex items-center gap-2 text-xs text-gray-600">
                                             <FontAwesomeIcon icon={faPhone} className="text-xs" />
@@ -146,7 +146,7 @@ function AddressPage() {
                                     </div>
 
                                     {/* Right */}
-                                    <div className="flex flex-col items-end justify-between">
+                                    <div className="flex flex-row sm:flex-col sm:items-end justify-between pt-2 sm:pt-0">
                                         {/* Badge */}
                                         {address.is_default ? (
                                             <span className="text-xs text-orange-700 font-bold bg-orange-50 px-2 py-1 rounded">

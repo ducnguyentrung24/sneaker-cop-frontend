@@ -11,6 +11,31 @@ function Pagination({ pagination = {}, onPageChange }) {
 
     if (total_pages <= 1) return null;
 
+    const getPage = () => {
+        const pages = [];
+        if (total_pages <= 5) {
+            for (let i = 1; i <= total_pages; i++) pages.push(i);
+            return pages;
+        }
+
+        pages.push(1);
+
+        if (page > 3) pages.push('...');
+
+        const start = Math.max(2, page - 1);
+        const end = Math.min(total_pages - 1, page + 1);
+
+        for (let i = start; i <= end; i++) pages.push(i);
+
+        if (page < total_pages - 2) pages.push('...');
+
+        pages.push(total_pages);
+
+        return pages;
+    };
+
+    const pages = getPage();
+
     return (
         <div className="flex justify-center mt-8 gap-2 text-sm items-center">
             {/* Prev */}

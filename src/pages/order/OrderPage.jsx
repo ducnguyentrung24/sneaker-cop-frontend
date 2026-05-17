@@ -121,10 +121,10 @@ function OrderPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#F3F3F4] pt-10 pb-12 px-6">
+        <div className="min-h-screen bg-[#F3F3F4] pt-10 pb-12 px-4 sm:px-6 py-8 sm:py-10">
             <div className="max-w-6xl mx-auto">
-                <div className="mb-10">
-                    <h1 className="text-4xl font-bold uppercase tracking-tight">Đơn hàng của tôi</h1>
+                <div className="mb-6 sm:mb-10 text-center sm:text-left">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight">Đơn hàng của tôi</h1>
                     <p className="text-gray-500 mt-2">Theo dõi trạng thái đơn hàng của bạn</p>
                 </div>
 
@@ -145,12 +145,12 @@ function OrderPage() {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex flex-wrap gap-3 mb-8">
+                <div className="flex gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     {tabs.map(tab => (
                         <button
                             key={tab.key}
                             onClick={() => setActiveTab(tab.key)}
-                            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition
+                            className={`shrink-0 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition
                                 ${activeTab === tab.key
                                     ? "bg-black text-white"
                                     : "bg-white text-black hover:bg-gray-100"
@@ -163,19 +163,19 @@ function OrderPage() {
 
                 {/* Loading */}
                 {loading && (
-                    <div className="bg-white rounded-2xl p-10 text-center shadow-sm">Đang tải đơn hàng</div>
+                    <div className="bg-white rounded-2xl p-8 sm:p-10 text-center shadow-sm">Đang tải đơn hàng</div>
                 )}
 
                 {/* Empty */}
                 {!loading && orders.length === 0 && (
-                    <div className="bg-white rounded-2xl p-14 text-center shadow-sm">
-                        <h2 className="text-xl font-bold">Không có đơn hàng nào</h2>
-                        <p className="text-gray-500 mt-2">Đơn hàng của ban sẽ hiển thị tại đây</p>
+                    <div className="bg-white rounded-2xl p-8 sm:p-14 text-center shadow-sm">
+                        <h2 className="text-lg sm:text-lg font-bold">Không có đơn hàng nào</h2>
+                        <p className="text-sm text-gray-500 mt-2">Đơn hàng của ban sẽ hiển thị tại đây</p>
                     </div>
                 )}
 
                 {/* List */}
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                     {!loading && orders.map(order => (
                         <OrderCard 
                             key={order.id} 

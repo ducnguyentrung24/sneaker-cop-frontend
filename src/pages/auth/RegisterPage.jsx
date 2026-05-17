@@ -90,12 +90,12 @@ function RegisterPage() {
     };
 
     return (
-        <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-            {/* CARD */}
-            <div className='w-full max-w-md bg-white p-8 shadow-md rounded py-10'>
+        <div className='min-h-screen flex items-center justify-center bg-gray-100 px-4'>
+            {/* Card */}
+            <div className='w-full max-w-md bg-white px-5 sm:px-8 py-8 sm:py-12 md:py-15 shadow-md rounded-xl'>
 
-                <h2 className='text-2xl font-bold text-center text-orange-500 mb-2'>ĐĂNG KÝ TÀI KHOẢN</h2>
-                <p className='text-center text-gray-500 text-sm mb-6'>
+                <h2 className='text-xl sm:text-2xl font-bold text-center text-orange-500 mb-2'>ĐĂNG KÝ TÀI KHOẢN</h2>
+                <p className='text-center text-gray-500 text-xs sm:text-sm mb-6'>
                     Tạo tài khoản để có trải nghiệm mua sắm tốt hơn tại <br/> Sneaker Cop!
                 </p>
 
@@ -217,7 +217,7 @@ function RegisterPage() {
                 </form>
 
                 {/* Register */}
-                <p className='text-center text-sm text-gray-500 mt-4'>
+                <p className='text-center text-xs sm:text-sm text-gray-500 mt-4'>
                     Đã có tài khoản?{' '}
                     <Link to='/login' className='text-black font-medium cursor-pointer hover:text-blue-500'>
                         Đăng nhập ngay

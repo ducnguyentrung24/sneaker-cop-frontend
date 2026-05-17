@@ -138,36 +138,45 @@ function OrderDetailPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F5F5F5] px-6 py-16">
+        <div className="min-h-screen bg-[#F5F5F5] px-4 sm:px-6 py-8 sm:py-16">
             <div className="max-w-5xl mx-auto">
+                {/* Back */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-sm font-semibold mb-8"
+                    className="flex items-center gap-2 text-sm font-semibold mb-6 sm:mb-8"
                 >
                     <FontAwesomeIcon icon={faArrowLeft} />
                     Quay lại
                 </button>
 
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-2">
-                    <h1 className="text-2xl font-bold uppercase tracking-tight">
-                        Chi tiết đơn hàng #{order.order_code}
-                    </h1>
+                <div className="flex items-start justify-between gap-3 sm:gap-4 mb-8 sm:mb-12">
+                    <div className="min-w-0 flex-1">
+                        <h1 className="text-lg sm:text-xl font-bold uppercase tracking-tight leading-snug">
+                            Chi tiết đơn hàng
+                        </h1>
 
-                    <div className={`px-3 py-1 rounded-full text-xs font-bold
-                        ${statusMap[order.status]?.className}
-                    `}>
-                        {statusMap[order.status]?.label}
+                        <p className="text-md sm:text-lg font-bold uppercase tracking-tight leading-snug break-all">
+                            #{order.order_code}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col items-end gap-2 shrink-0">
+                        <p className="text-sm sm:text-base whitespace-nowrap">
+                            Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")}
+                        </p>
+
+                        <div className={`w-fit px-3 py-1 rounded-full text-xs font-bold
+                            ${statusMap[order.status]?.className}
+                        `}>
+                            {statusMap[order.status]?.label}
+                        </div>
                     </div>
                 </div>
 
-                <p className="text-gray-500 mb-12">
-                    Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")}
-                </p>
-
                 {/* Status */}
-                <div className="flex items-center justify-between mb-14 relative">
-                    <div className="absolute top-5 left-[10%] right-[10%] h-1 bg-gray-300 z-0" />
+                <div className="flex items-start sm:items-center justify-start sm:justify-between mb-10 sm:mb-14 relative overflow-hidden gap-2 sm:gap-0 pb-3 sm:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
 
                     {statusSteps.map((step, index) => {
                         const active = order.status === "CANCELLED"
@@ -177,9 +186,9 @@ function OrderDetailPage() {
                         return (
                             <div
                                 key={step.key}
-                                className="relative z-10 flex flex-col items-center flex-1"
+                                className="relative z-10 flex flex-col items-center flex-none sm:flex-1 w-22 sm:w-auto"
                             >
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center border-2
+                                <div className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl flex items-center justify-center border-2
                                     ${active 
                                             ? "bg-orange-500 border-orange-500 text-white"
                                             : "bg-white border-gray-300 text-gray-400"
@@ -188,7 +197,7 @@ function OrderDetailPage() {
                                     <FontAwesomeIcon icon={step.icon} />
                                 </div>
 
-                                <p className={`mt-3 text-xs font-bold uppercase text-center
+                                <p className={`mt-2 sm:mt-3 text-[10px] sm:text-xs font-medium uppercase text-center
                                     ${active ? "text-orange-500" : "text-gray-400"}
                                 `}>
                                     {step.label}
@@ -201,10 +210,10 @@ function OrderDetailPage() {
                 {/* Info */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 z-10  ">
                     {/* Receiver */}
-                    <div className="bg-white rounded-2xl p-8 shadow-sm border-gray-100">
+                    <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm border-gray-100">
                         <div className="flex items-center gap-3 mb-6">
                             <FontAwesomeIcon icon={faLocationDot} />
-                            <h2 className="font-bold uppercase">Thông tin người nhận</h2>
+                            <h2 className="font-bold uppercase text-sm sm:text-base">Thông tin người nhận</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -226,10 +235,10 @@ function OrderDetailPage() {
                     </div>
 
                     {/* Payment */}
-                    <div className="bg-white rounded-2xl p-8 shadow-sm border-gray-100">
+                    <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm border-gray-100">
                         <div className="flex items-center gap-3 mb-6">
                             <FontAwesomeIcon icon={faCreditCard} />
-                            <h2 className="font-bold uppercase">Thanh toán</h2>
+                            <h2 className="font-bold uppercase text-sm sm:text-base">Thanh toán</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -254,44 +263,49 @@ function OrderDetailPage() {
                 </div>
 
                 {/* Products */}
-                <div className="my-14">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-bold uppercase">
+                <div className="my-10 sm:my-14">
+                    <div className="flex items-center justify-between gap-4 mb-5 sm:mb-6">
+                        <h2 className="text-lg sm:text-2xl font-bold uppercase">
                             Danh sách sản phẩm ({order.items.length})
                         </h2>
 
-                        <p className="text-md text-gray-500">
+                        <p className="text-sm sm:text-md text-gray-500 whitespace-nowrap">
                             {order.items.length} sản phẩm
                         </p>
                     </div>
 
-                    <div className="space-y-3 max-h-100 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <div className="space-y-3 max-h-100 overflow-y-auto pr-0 sm:pr-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                         {order.items.map(item => (
                             <div
                                 key={item.id}
-                                className="bg-white rounded-2xl px-5 py-4 flex items-center justify-between shadow-sm border border-gray-100"
+                                className="bg-white rounded-2xl px-3 sm:px-5 py-4 flex items-start sm:items-center justify-between gap-3 sm:gap-5 shadow-sm border border-gray-100"
                             >
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                                     <img
                                         src={item.image}
                                         alt={item.product_name}
-                                        className="w-24 h-24 rounded-xl object-cover border border-gray-200"
+                                        className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl object-cover border border-gray-200 shrink-0"
                                     />
 
-                                    <div>
-                                        <h3 className="font-bold text-base">{item.product_name}</h3>
-                                        <p className="text-sm text-gray-500 mt-2">
-                                            Màu sắc: {item.color} | Size: {item.size}
-                                        </p>
+                                    <div className="min-w-0 flex-1">
+                                        <h3 className="font-bold text-sm sm:text-base line-clamp-2 leading-5">{item.product_name}</h3>
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                                                Màu: {item.color}
+                                            </span>
+
+                                            <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                                                Size: {item.size}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col items-center min-w-20">
-                                    <p className="text-xs text-gray-400 uppercase">Số lượng</p>
-                                    <p className="font-semibold text-base mt-1">{item.quantity}</p>
+                                <div className="flex items-center justify-between shrink-0 min-w-12 sm:min-w-20">
+                                    <p className="font-semibold text-sm sm:text-base mt-1">x{item.quantity}</p>
                                 </div>
 
-                                <div className="text-lg font-bold text-orange-500">
+                                <div className="text-md sm:text-lg font-bold text-orange-500 whitespace-nowrap shrink-0 text-right">
                                     {Math.round(item.price).toLocaleString("vi-VN")}đ
                                 </div>
                             </div>
@@ -318,13 +332,15 @@ function OrderDetailPage() {
                                 </div>
                             </div>
 
-                            <div className="flex justify-between items-end mt-6">
-                                <p className="text-sm uppercase">Tổng cộng</p>
-                                <p className="text-xs text-gray-400 mt-2 uppercase">Giá đã bao gồm VAT</p>
-                            </div>
-
-                            <div className="text-3xl font-bold text-orange-500">
-                                {Math.round(order.final_price).toLocaleString("vi-VN")}đ
+                            <div className="flex justify-between items-start mt-6">
+                                <div>
+                                    <p className="text-sm uppercase">Tổng cộng</p>
+                                    <p className="text-xs text-gray-400 mt-2 uppercase">Giá đã bao gồm VAT</p>
+                                </div>
+                                    
+                                <div className="text-2xl sm:text-3xl font-bold text-orange-500">
+                                    {Math.round(order.final_price).toLocaleString("vi-VN")}đ
+                                </div>
                             </div>
                         </div>
 
@@ -340,17 +356,17 @@ function OrderDetailPage() {
                             )}
 
                             {order.status === "COMPLETED" && (
-                                <div className="flex gap-3">
+                                <div className="flex flex-col sm:flex-row gap-3">
                                     <button
                                         onClick={() => navigate(`/reviews/write/${order.id}`)}
-                                        className="flex-1 h-12 border border-black text-black text-sm font-bold uppercase rounded-md hover:bg-black hover:text-white transition"
+                                        className="w-full sm:flex-1 sm:w-auto h-12 border border-black text-black text-sm font-bold uppercase rounded-md hover:bg-black hover:text-white transition"
                                     >
                                         Đánh giá
                                     </button>
 
                                     <button
                                         onClick={handleBuyAgain}
-                                        className="flex-1 h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
+                                        className="w-full sm:flex-1 sm:w-auto h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
                                     >
                                         Mua lại
                                     </button>

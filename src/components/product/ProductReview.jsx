@@ -22,17 +22,15 @@ function ProductReview({ productId, reviewData, reviewFilters, setReviewFilters 
     });
 
     return (
-        <div className='mt-8 grid grid-cols-12 gap-10'>
+        <div className='mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10'>
             {/* Left */}
-            <div className='col-span-8'>
-                <div className='flex justify-between items-center mb-4'>
+            <div className='order-2 lg:order-1 lg:col-span-8'>
+                <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4'>
                     <h3 className='font-bold text-sm font'>ĐÁNH GIÁ TỪ KHÁCH HÀNG</h3>
 
                     {/* Dropdown Filter */}
                     <div className='flex items-center gap-2'>
-                        <span className='text-sm font-bold text-black'>
-                            Lọc theo:
-                        </span>
+                        <span className='text-xs sm:text-sm font-bold text-black'>Lọc theo:</span>
 
                         <select
                             value={reviewFilters?.rating ?? ""}
@@ -113,9 +111,9 @@ function ProductReview({ productId, reviewData, reviewFilters, setReviewFilters 
             </div>
 
             {/* Right */}
-            <div className='col-span-4 bg-gray-50 p-6 rounded'>
+            <div className='order-1 lg:order-2 lg:col-span-4 bg-gray-50 p-3 lg:p-6 rounded'>
                 {/* Avg */}
-                <div className='text-5xl font-bold text-center'>
+                <div className='text-4xl sm:text-5xl font-bold text-center'>
                     {average_rating.toFixed(1)}
                 </div>
 

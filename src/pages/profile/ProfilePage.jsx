@@ -63,27 +63,29 @@ function ProfilePage() {
     if (loading) return <div className="p-10 text-center">Đang tải...</div>;
 
     return (
-        <div className="min-h-screen bg-[#F3F3F4] px-6 py-10">
-            <div className="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+        <div className="min-h-screen bg-[#F3F3F4] px-4 sm:px-6 py-8 sm:py-10">
+            <div className="max-w-6xl mx-auto grid grid-cols-12 gap-6 lg:gap-8">
                 <ProfileSidebar />
 
                 {/* Content */}
-                <div className="col-span-9">
-                    <h1 className="text-3xl font-bold mb-2">Thông tin cá nhân</h1>
+                <div className="col-span-12 lg:col-span-9">
+                    <div className="text-center lg:text-left">
+                        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Thông tin cá nhân</h1>
 
-                    <p className="text-sm text-gray-500 mb-8">
-                        Cập nhật chi tiết hồ sơ của bạn để có trải nghiệm mua sắm tốt nhất.
-                    </p>
+                        <p className="text-xs sm:text-sm text-gray-500 mb-6 sm:mb-8">
+                            Cập nhật chi tiết hồ sơ của bạn để có trải nghiệm mua sắm tốt nhất.
+                        </p>
+                    </div>
 
                     {/* Card */}
-                    <div className="bg-white rounded-2xl p-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] max-w-2xl">
+                    <div className="bg-white rounded-2xl p-5 sm:p-8 lg:p-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] w-full max-w-2xl">
                         {/* Avatar */}
-                        <div className="flex flex-col items-center mb-8">
-                            <div className="w-20 h-20 bg-black text-white flex items-center justify-center rounded-xl text-2xl font-bold shadow">
+                        <div className="flex flex-col items-center mb-6 sm:mb-8">
+                            <div className="w-18 h-18 sm:w-20 sm:h-20 bg-black text-white flex items-center justify-center rounded-xl text-2xl font-bold shadow">
                                 {form.full_name?.charAt(0).toUpperCase()}
                             </div>
 
-                            <p className="mt-4 font-semibold text-lg">
+                            <p className="mt-4 font-semibold text-base sm:text-lg text-center">
                                 {form.full_name}
                             </p>
 
@@ -101,7 +103,7 @@ function ProfilePage() {
                         </div>
 
                         {/* Form */}
-                        <div className="space-y-6">
+                        <div className="space-y-5 sm:space-y-6">
                             <div>
                                 <label className="text-xs uppercase tracking-wide font-semibold text-gray-400">
                                     Họ và tên
@@ -141,11 +143,11 @@ function ProfilePage() {
                                 />
                             </div>
 
-                            <div className="pt-4 flex justify-center">
+                            <div className="pt-3 sm:pt-4 flex justify-center">
                                 <button
                                     onClick={handleSubmit}
                                     disabled={saving}
-                                    className="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold shadow hover:opacity-90 trasition disabled:opacity-60"
+                                    className="w-full sm:w-auto bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold shadow hover:opacity-90 trasition disabled:opacity-60"
                                 >
                                     Lưu thay đổi
                                 </button>

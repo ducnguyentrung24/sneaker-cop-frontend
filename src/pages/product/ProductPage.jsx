@@ -78,18 +78,18 @@ function ProductPage() {
     }, [location.state]);
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="max-w-7xl mx-auto sm:px-6 py-10">
             {/* Recommend Section */}
-            <div className="bg-[#FFEDD5] border border-orange-500 rounded-2xl p-6 mb-12">
+            <div className="bg-[#FFEDD5] border border-orange-500 rounded-2xl p-4 sm:p-6 mb-8 sm:mb-12 overflow-hidden">
                 {/* Title */}
-                <div className="flex items-center gap-2 mb-2 mx-5">
-                    <FontAwesomeIcon icon={faStar } className="text-orange-500 text-xl" />
-                    <p className="text-orange-500 font-bold text-xl">
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-2 sm:mx-5">
+                    <FontAwesomeIcon icon={faStar } className="text-orange-500 text-lg sm:text-xl" />
+                    <p className="text-orange-500 font-bold text-lg sm:text-xl">
                         DÀNH RIÊNG CHO BẠN
                     </p>
                 </div>
                 
-                <p className="text-sm text-gray-500 mb-4 mx-13">
+                <p className="text-[12px] sm:text-sm text-gray-500 text-center sm:text-left mb-4 sm:mx-13 leading-relaxed">
                     KHÁM PHÁ NHỮNG MẪU GIÀY ĐƯỢC TUYỂN CHỌN RIÊNG CHO PHONG CÁCH CỦA BẠN.
                 </p>
 
@@ -97,16 +97,27 @@ function ProductPage() {
             </div>
 
             {/* Main Content */}
-            <div className="flex gap-8">
-                {/* Sidebar */}
-                <SidebarFilter
-                    filters={filters}
-                    setFilters={setFilters}
-                />
+            <div className="flex flex-col lg:flex-row p-6 sm:p-0 gap-6">
+                {/* Desktop filter */}
+                <div className="hidden lg:block shrink-0">
+                    <SidebarFilter
+                        filters={filters}
+                        setFilters={setFilters}
+                    />
+                </div>
 
                 {/* Content */}
-                <div className="flex-1 py-5">
-                    <h2 className="text-lg font-bold mb-4">DANH SÁCH SẢN PHẨM</h2>
+                <div className="flex-1 min-w-0 py-3 lg:py-5">
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                        <h2 className="text-base sm:text-lg font-bold">DANH SÁCH SẢN PHẨM</h2>
+
+                        <div className="lg:hidden">
+                            <SidebarFilter
+                                filters={filters}
+                                setFilters={setFilters}
+                            />
+                        </div>
+                    </div>
 
                     {/* Loading */}
                     {loading ? (

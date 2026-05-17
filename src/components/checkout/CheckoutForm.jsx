@@ -40,16 +40,16 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
     };
 
     return (
-        <div className="lg:col-span-7 space-y-6">
+        <div className="col-span-12 lg:col-span-7 space-y-5 sm:space-y-6">
             {/* Address */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center gap-3">
                         <span className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold rounded-lg">
                             1
                         </span>
 
-                        <h2 className="text-sm font-bold uppercase">Thông tin giao hàng</h2>
+                        <h2 className="text-sm font-bold uppercase line-clamp-1">Thông tin giao hàng</h2>
                     </div>
 
                     <button
@@ -62,8 +62,8 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
 
                 {/* Adress selected */}
                 {selected && (
-                    <div className="bg-[#F3F3F4] p-5 rounded-lg flex justify-between">
-                        <div className="text-sm">
+                    <div className="bg-[#F3F3F4] p-4 sm:p-5 rounded-lg flex flex-row sm:justify-between gap-3">
+                        <div className="text-sm min-w-0">
                             <p className="font-semibold">{selected.receiver_name}</p>
 
                             <p className="flex items-center gap-2 text-gray-500 mt-1">
@@ -71,14 +71,14 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
                                 {selected.phone}
                             </p>
 
-                            <p className="flex items-center gap-2 text-gray-500 mt-1">
+                            <p className="flex items-center gap-2 text-gray-500 mt-1 leading-relaxed">
                                 <FontAwesomeIcon icon={faLocationDot} className="text-xs" />
                                 {selected.detail_address}, {selected.ward}, {selected.city}
                             </p>
                         </div>
 
                         {selected.is_default && (
-                            <span className="bg-black text-white text-xs px-3 py-1 rounded h-fit">
+                            <span className="bg-black text-white text-[10px] sm:text-xs px-3 py-1 rounded h-fit whitespace-nowrap">
                                 Mặc định
                             </span>
                         )}
@@ -86,20 +86,20 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
                 )}
             </div>
 
-            {/* PAYMENT */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            {/* Payment */}
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
-                        <span className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold rounded-lg">
+                        <span className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold rounded-lg shrink-0">
                             2
                         </span>
 
                         <h2 className="text-sm font-bold uppercase">Phương thức thanh toán</h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <button
                         onClick={() => setPayment("COD")}
-                        className={`p-5 border-2 rounded
+                        className={`p-4 sm:p-5 border-2 rounded
                             ${payment === "COD"
                                 ? "border-orange-500 bg-orange-50"
                                 : "border-gray-300"
@@ -113,7 +113,7 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
 
                     <button
                         onClick={() => setPayment("VNPAY")}
-                        className={`p-5 border-2 rounded
+                        className={`p-4 sm:p-5 border-2 rounded
                             ${payment === "VNPAY"
                                 ? "border-orange-500 bg-orange-50"
                                 : "border-gray-300"
@@ -127,8 +127,8 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
                 </div>
             </div>
 
-            {/* NOTE */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            {/* Note */}
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
                         <span className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold rounded-lg">
                             3
@@ -141,7 +141,7 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi đến..."
-                    className="w-full border border-gray-400 p-3 rounded text-sm"
+                    className="w-full border border-gray-400 p-3 rounded text-sm resize-none"
                     rows={4}
                 />
             </div>

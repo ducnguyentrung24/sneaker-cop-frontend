@@ -41,36 +41,36 @@ function Hero() {
     const slide = slides[index];
 
     return (
-        <div className="relative h-130 overflow-hidden">
+        <div className="relative h-130 sm:h-150 md:h-165 overflow-hidden">
             <img src={slide.image} className="w-full h-full object-cover" />
 
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/50"></div>
 
             {/* Content */}
-            <div className="absolute right-20 top-1/2 -translate-y-1/2 text-white max-w-100">
-                <h1 className="text-6xl font-bold leading-none">
+            <div className="absolute left-6 right-6 sm:left-10 sm:right-auto md:left-auto md:right-20 top-1/2 -translate-y-1/2 text-white max-w-full md:max-w-md">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-none">
                     {slide.title} <span className="text-red-500">{slide.highlight}</span>
                 </h1>
 
-                <p className="mt-2 text-sm">
+                <p className="mt-2 text-sm sm:text-base md:text-lg">
                     {slide.desc}
                 </p>
 
                 <button 
                     onClick={() => navigate("/products")}
-                    className="mt-6 bg-white text-black px-6 py-3 rounded-lg text-sm font-medium flex items-center gap-2 hover:opacity-90 transition">
+                    className="mt-6 bg-white text-black px-5 sm:px-6 py-3 rounded-lg text-sm sm:text-base font-medium flex items-center gap-2 hover:opacity-90 transition">
                         MUA NGAY
                 </button>
             </div>
 
             {/* Button arrow left */}
-            <ArrowButton direction="left" onClick={prev} className="text-white" />
+            <ArrowButton direction="left" onClick={prev} className="text-white hidden sm:block" />
 
             {/* Button arrow right */}
-            <ArrowButton direction="right" onClick={next} className="text-white" />
+            <ArrowButton direction="right" onClick={next} className="text-white hidden sm:block" />
 
-            {/* DOTS */}
+            {/* Dots */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
                 {slides.map((_, i) => (
                     <div

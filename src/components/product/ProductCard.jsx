@@ -18,10 +18,10 @@ function ProductCard({ product }) {
     return (
         <div
             onClick={() => navigate(`/products/${id}`)}
-            className="bg-white rounded-2xl p-4 shadow-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer">
+            className="bg-white rounded-2xl p-3 sm:p-4 shadow-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer">
             {/* Image */}
-            <div className="relative bg-gray-100 rounded-xl p-3">
-                <img src={thumbnail} className="w-full h-45 object-cover rounded-md" />
+            <div className="relative bg-gray-100 rounded-xl p-2 sm:p-3">
+                <img src={thumbnail} className="w-full h-36 sm:h-40 md:h-45 object-cover rounded-md" />
 
                 {/* Sale badge */}
                 {discount_percent > 0 && (
@@ -32,18 +32,18 @@ function ProductCard({ product }) {
             </div>
 
             {/* Name */}
-            <h3 className="text-md mt-3 font-bold line-clamp-1">
+            <h3 className="text-sm sm:text-md mt-3 font-bold line-clamp-1">
                 {name}
             </h3>
 
             {/* Price */}
             <div className="mt-1 flex items-center justify-between gap-2">
-                <span className="text-red-500 font-bold text-md">
+                <span className="text-red-500 font-bold text-sm sm:text-md">
                     {Math.round(final_price).toLocaleString('vi-VN')}đ
                 </span>
 
                 {hasDiscount && (
-                    <span className="text-gray-400 text-sm line-through">
+                    <span className="text-gray-400 text-xs sm:text-sm line-through">
                         {Math.round(base_price).toLocaleString('vi-VN')}đ
                     </span>
                 )}

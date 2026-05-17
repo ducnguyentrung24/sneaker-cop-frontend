@@ -92,8 +92,8 @@ function ProductDetailPage() {
     if (!product) return <div>Đang tải...</div>;
 
     return (
-        <div className='max-w-7xl mx-auto px-6 py-10'>
-            {/* Button back */}
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10'>
+            {/* Back */}
             <div className='mb-4'>
                 <button
                     onClick={() => navigate(-1)}
@@ -105,15 +105,15 @@ function ProductDetailPage() {
             </div>
 
             {/* Product */}
-            <div className='grid grid-cols-12 gap-10'>
-                <div className='col-span-7'>
+            <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10'>
+                <div className='lg:col-span-7'>
                     <ProductGallery 
                         product={product} 
                         selectedColor={selectedColor}
                     />
                 </div>
 
-                <div className='col-span-5'>
+                <div className='lg:col-span-5'>
                     <ProductInfo 
                         product={product} 
                         selectedColor={selectedColor}
@@ -124,7 +124,7 @@ function ProductDetailPage() {
             </div>
 
             {/* Tabs */}
-            <div className='mt-10 flex gap-6 text-xs font-semibold'>
+            <div className='mt-10 flex gap-4 sm:gap-6 overflow-x-auto text-xs font-semibold [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
                 <button
                     onClick={() => setActiveTab("description")}
                     className={`pb-2 
@@ -164,7 +164,7 @@ function ProductDetailPage() {
 
             {/* Related */}
             <div className='mt-10'>
-                <h2 className='font-bold mb-4'>SẢN PHẨM TƯƠNG TỰ</h2>
+                <h2 className='font-bold mb-4 text-base sm:text-lg'>SẢN PHẨM TƯƠNG TỰ</h2>
                 <ProductSlider products={related} />
             </div>
         </div>

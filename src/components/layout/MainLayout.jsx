@@ -3,10 +3,16 @@ import Footer from "./Footer";
 
 function MainLayout({ children }) {
     return (
-        <div className="min-h-screen flex flex-col">
+        <div
+            className="h-screen flex flex-col overflow-x-hidden overflow-y-auto
+                max-lg:[-ms-overflow-style:none]
+                max-lg:[scrollbar-width:none]
+                max-lg:[&::-webkit-scrollbar]:hidden
+            "
+        >
             <Header />
-            
-            <main className="flex-1 w-full overflow-x-hidden">
+
+            <main className="flex-1 w-full">
                 {children}
             </main>
 

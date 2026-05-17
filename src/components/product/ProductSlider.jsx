@@ -10,9 +10,7 @@ function ProductSlider({ products = [] }) {
 
     if (!products || products.length === 0) {
         return (
-            <div className="text-center py-10 text-gray-400">
-                Không có sản phẩm
-            </div>
+            <div className="text-center py-10 text-gray-400">Không có sản phẩm</div>
         );
     }
 
@@ -25,6 +23,7 @@ function ProductSlider({ products = [] }) {
     };
 
     const visibleProducts = [];
+
     for (let i = 0; i < visibleCount; i++) {
         visibleProducts.push(products[(index + i) % products.length]);
     }
@@ -32,23 +31,24 @@ function ProductSlider({ products = [] }) {
     return (
         <div className="relative">
             {/* List */}
-            <div className="flex gap-4 px-8">
-                {visibleProducts.map((p,i) => (
-                    <div key={i} className="w-1/5">
-                        <ProductCard product={p} />
+            <div className="flex gap-4 px-4 md:px-8 overflow-x-auto md:overflow-visible pb-3 md:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {visibleProducts.map((product, i) => (
+                    <div
+                        key={`${product.id}-${i}`}
+                        className="shrink-0 w-[50%] sm:w-[45%] md:w-1/5"
+                    >
+                        <ProductCard product={product} />
                     </div>
                 ))}
             </div>
-            
-            {/* Button arrow left */}
-            <ArrowButton direction="left" onClick={prev} />
 
-            {/* Button arrow right */}
-            <ArrowButton direction="right" onClick={next} />
-            
-
+            {/* Arrow button */}
+            <div className="hidden md:block">
+                <ArrowButton direction="left" onClick={prev} />
+                <ArrowButton direction="right" onClick={next} />
+            </div>
         </div>
     );
-};
+}
 
 export default ProductSlider;

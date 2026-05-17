@@ -25,18 +25,13 @@ function ProductSection({ title }) {
     }, []);
 
     return (
-        <div className="bg-gray-100 py-14">
-            {/* Label */}
-            <p className="text-center text-xs font-bold text-orange-500 tracking-widest mb-2">
-                TOP TRENDING
-            </p>
+        <div className="bg-gray-100 py-10 sm:py-12 md:py-14 overflow-hidden">
+            <p className="text-center text-xs font-bold text-orange-500 tracking-widest mb-2">TOP TRENDING</p>
 
-            {/* Title */}
-            <h2 className="text-center text-xl font-bold mb-8 tracking-widest">
+            <h2 className="text-center text-lg sm:text-xl md:text-2xl font-bold mb-8 tracking-widest">
                 {title}
             </h2>
 
-            {/* Slider */}
             <div className="max-w-7xl mx-auto px-6">
                 <ProductSlider products={products} />
             </div>

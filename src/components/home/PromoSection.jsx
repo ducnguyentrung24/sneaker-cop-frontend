@@ -28,35 +28,33 @@ function PromoSection() {
     }, []);
 
     return (
-        <div className="py-14 bg-linear-to-r from-[#67081d] to-[#9F1239] relative overflow-hidden">
+        <div className="py-10 sm:py-12 md:py-14 bg-linear-to-r from-[#67081d] to-[#9F1239] relative overflow-hidden">
             {/* Top label */}
-            <p className="text-center text-xs text-white/60 tracking-[4px] mb-3">
-                SPECIAL OFFER
-            </p>
+            <p className="text-center text-xs text-white/60 tracking-[4px] mb-3">SPECIAL OFFER</p>
 
             {/* Title */}
-            <h2 className="text-white text-3xl md:text-5xl font-extrabold text-center leading-none">
+            <h2 className="text-white text-2xl sm:text-3xl md:text-5xl font-extrabold text-center leading-tight md:leading-none">
                 SIÊU KHUYẾN MÃI
             </h2>
 
             {/* Top deal badge */}
-            <div className="absolute right-1/2 translate-x-70 top-8 bg-yellow-400 text-black text-xs font-bold px-2 py-2 rounded-lg shadow-lg flex items-center gap-1 -rotate-20">
+            <div className="absolute right-4 sm:right-10 md:right-1/2 md:translate-x-70 top-5 sm:top=7 md:top-8 bg-yellow-400 text-black text-xs font-bold px-1.5 py-1.5 sm:py-2 rounded-lg shadow-lg flex items-center gap-1 -rotate-20">
                 <FontAwesomeIcon icon={faFire} />
                 TOP DEAL
             </div>
 
             {/* Product slider */}
-            <div className="max-w-7xl mx-auto mt-10">
+            <div className="max-w-7xl mx-auto mt-8 sm:mt-10 px-4 sm:px=6">
                 <ProductSlider products={products} />
             </div>
 
             {/* Button */}
-            <div className="text-center mt-10">
+            <div className="text-center mt-8 sm:mt-10 px-4">
                 <button 
                     onClick={() => navigate("/products", {
                         state: { filter: "discount" }
                     })}
-                    className="inline-flex items-center gap-2 bg-yellow-400 text-[#67081d] px-7 py-3 text-sm font-semibold tracking-wide rounded shadow hover:shadow-lg hover:scale-[1.02] transition">
+                    className="inline-flex items-center gap-2 bg-yellow-400 text-[#67081d] px-7 py-3 text-xs sm:text-sm font-semibold tracking-wide rounded shadow hover:shadow-lg hover:scale-[1.02] transition">
                         KHÁM PHÁ TOÀN BỘ ƯU ĐÃI
                         <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
                 </button>

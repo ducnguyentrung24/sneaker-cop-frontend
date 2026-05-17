@@ -74,22 +74,22 @@ function ChangePasswordPage() {
     };
 
     return (
-        <div className="h-min-screen bg-[#F3F3F4] px-6 py-10">
-            <div className="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+        <div className="h-min-screen bg-[#F3F3F4] px-4 sm:px-6 py-8 sm:py-10">
+            <div className="max-w-6xl mx-auto grid grid-cols-12 gap-6 lg:gap-8">
                 <ProfileSidebar active="change-password" />
 
-                <div className="col-span-9">
+                <div className="col-span-12 lg:col-span-9">
                     {/* Header */}
-                    <div className="mb-6">
-                        <h1 className="text-2xl font-bold mb-2">Thay đổi mật khẩu</h1>
+                    <div className="mb-6 text-center lg:text-left">
+                        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Thay đổi mật khẩu</h1>
 
-                        <p className="text-sm text-gray-500">
+                        <p className="text-xs sm:text-sm text-gray-500 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                             Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác và thường xuyên cập nhật mật khẩu mới.
                         </p>
                     </div>
 
                     {/* Form */}
-                    <div className="bg-white rounded-xl p-8 shadow-sm max-w-xl">
+                    <div className="bg-white rounded-xl p-5 sm:p-8 shadow-sm w-full max-w-xl mx-auto lg:mx-0">
                         {/* Old password */}
                         <div className="mb-5">
                             <label className="mb-1 block text-sm text-gray-500">Mật khẩu hiện tại:</label>
@@ -164,7 +164,7 @@ function ChangePasswordPage() {
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading}
-                                className="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90"
+                                className="w-full sm:w-auto bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-60"
                             >
                                 Lưu thay đổi
                             </button>

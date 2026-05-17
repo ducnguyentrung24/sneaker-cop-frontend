@@ -110,14 +110,14 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
     };
 
     return (
-        <div>
+        <div className="w-full">
             {/* Badge */}
             {product.discount_percent > 0 && (
-                <div className="flex items-center gap-2">
-                    <span className="text-sm bg-orange-600 text-white font-semibold px-2 rounded-xl">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs sm:text-sm bg-orange-600 text-white font-semibold px-2 rounded-xl">
                         Khuyến mãi
                     </span>
-                    <span className="text-sm text-orange-700 font-semibold">
+                    <span className="text-xs sm:text-sm text-orange-700 font-semibold">
                         -{product.discount_percent}%
                     </span>
                 </div>
@@ -125,12 +125,12 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
             )}
 
             {/* Name */}
-            <h1 className="text-2xl font-bold uppercase">
+            <h1 className="text-xl sm:text-2xl font-bold uppercase">
                 {product.name}
             </h1>
 
             {/* Rate and Sold */}
-            <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center gap-2 mt-2 text-xs sm:text-sm text-gray-500">
                 <div className="flex text-orange-500">
                     {[...Array(5)].map((_, i) => (
                         <FontAwesomeIcon
@@ -148,13 +148,8 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
                     ({reviewStats.average_rating?.toFixed(1) || "0.0"})
                 </span>
 
-                <span>
-                    | {reviewStats.total_reviews || 0} đánh giá
-                </span>
-
-                <span>
-                    | {product.sold} đã bán
-                </span>
+                <span>| {reviewStats.total_reviews || 0} đánh giá</span>
+                <span>| {product.sold} đã bán</span>
             </div>
 
             {/* Price */}
@@ -208,7 +203,7 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
                             disabled={v.stock === 0}
                             title={v.stock === 0 ? "Hết hàng" : ""}
                             onClick={() => setSelectedSize(v.size)}
-                            className={`border px-10 py-2 text-sm rounded
+                            className={`border px-5 sm:px-8 lg:px-10 py-2 text-sm rounded transition
                                 ${v.stock === 0
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                                     : selectedSize === v.size 
@@ -227,7 +222,7 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
             <div className="mt-5">
                 <p className="text-sm mb-2">Số lượng</p>
 
-                <div className="flex border border-gray-400 rounded-md w-fit">
+                <div className="flex border border-gray-400 rounded-md w-fit overflow-hidden">
                     <button 
                         onClick={() => {
                             if (quantity <= 1) {
@@ -241,7 +236,7 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
                         <FontAwesomeIcon icon={faMinus} className="text-xs" />
                     </button>
 
-                    <span className="px-4 py-2">{quantity}</span>
+                    <span className="px-4 py-2 min-w-11 text-center">{quantity}</span>
 
                     <button
                         onClick={() => {

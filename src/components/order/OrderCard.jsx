@@ -27,19 +27,19 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
     };
 
     return (
-        <div className="bg-white border border-gray-200 rounded-lg">
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-5 border-b border-gray-200 flex items-start justify-between">
+            <div className="px-4 sm:px-6 py-5 border-b border-gray-200 flex items-start justify-between">
                 <div>
-                    <p className="text-sm uppercase tracking-widest text-gray-600 font-semibold">Mã đơn hàng</p>
-                    <h2 className="text-xl font-bold tracking-tight mt-1">#{order.order_code}</h2>
+                    <p className="text-xs sm:text-sm uppercase tracking-widest text-gray-600 font-semibold">Mã đơn hàng</p>
+                    <h2 className="text-base sm:text-xl font-bold tracking-tight mt-1">#{order.order_code}</h2>
 
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-xs sm:text-sm text-gray-600 mt-1">
                         Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")}
                     </p>
                 </div>
 
-                <div className={`px-3 py-1 text-xs font-bold rounded-sm tracking-wide
+                <div className={`px-2 sm:px-3 py-1 text-xs font-bold rounded-sm tracking-wide whitespace-nowrap shrink-0
                     ${statusMap[order.status]?.className}
                 `}>  
                     {statusMap[order.status]?.label}    
@@ -47,32 +47,32 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
             </div>
 
             {/* Items */}
-            <div className="max-h-65 overflow-y-auto divide-y divide-gray-100">
+            <div className="max-h-65 overflow-y-auto divide-y divide-gray-100 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {order.items.map((item, index) => (
-                    <div key={index} className="px-6 py-5 flex items-start justify-between gap-4">
+                    <div key={index} className="px-4 sm:px-6 py-4 sm:py-5 flex items-start justify-between gap-3 sm:gap-4">
                         {/* Left */}
-                        <div className="flex gap-7">
+                        <div className="flex gap-3 sm:gap-7 min-w-0">
                             <img
                                 src={item.image}
                                 alt={item.product_name}
-                                className="w-20 h-20 object-cover rounded"
+                                className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded shrink-0"
                             />
 
-                            <div>
-                                <h3 className="font-bold text-lg leading-5">{item.product_name}</h3>
+                            <div className="min-w-0">
+                                <h3 className="font-bold text-sm sm:text-lg leading-5 line-clamp-2">{item.product_name}</h3>
 
-                                <p className="text-sm text-gray-700 mt-2">
+                                <p className="text-xs sm:text-sm text-gray-700 mt-2">
                                     Màu: {item.color} | Size: {item.size}
                                 </p>
 
-                                <p className="text-sm text-black font-semibold mt-1">
+                                <p className="text-xs sm:text-sm text-black font-semibold mt-1">
                                     x{item.quantity}
                                 </p>
                             </div>
                         </div>
 
                         {/* Right */}
-                        <div className="font-bold text-lg whitespace-nowrap">
+                        <div className="font-bold text-sm sm:text-lg whitespace-nowrap text-right">
                             {Math.round(item.price).toLocaleString("vi-VN")}đ
                         </div>
                     </div>
@@ -80,21 +80,21 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-5 border-t border-gray-200 flex items-end justify-between">
+            <div className="px-4 sm:px-6 py-4 sm:py-5 border-t border-gray-200 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
                 {/* Total price */}
                 <div>
-                    <p className="text-sm uppercase tracking-widest text-gray-500 font-semibold">Tổng cộng</p>
+                    <p className="text-xs sm:text-sm uppercase tracking-widest text-gray-500 font-semibold">Tổng cộng</p>
 
-                    <h3 className="text-2xl text-orange-500 font-bold mt-1 tracking-tight">
+                    <h3 className="text-xl sm:text-2xl text-orange-500 font-bold mt-1 tracking-tight">
                         {Math.round(order.total_price).toLocaleString("vi-VN")}đ
                     </h3>
                 </div>
 
                 {/* Action buttons */}
-                <div className="flex items-center gap-3">
+                <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-3">
                     <button
                         onClick={() => navigate(`/orders/${order.id}`)}
-                        className="h-10 px-6 border border-black text-xs font-bold uppercase rounded-sm hover:bg-black hover:text-white transition"
+                        className="h-10 px-4 sm:px-6 border border-black text-xs font-bold uppercase rounded-sm hover:bg-black hover:text-white transition"
                     >
                         Chi tiết
                     </button>
@@ -108,7 +108,7 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
                                 }
                                 }
                             }
-                            className=" h-10 px-6 border border-red-500 text-red-500 text-xs font-bold uppercase rounded-sm hover:bg-red-500 hover:text-white transition"
+                            className=" h-10 px-4 sm:px-6 border border-red-500 text-red-500 text-xs font-bold uppercase rounded-sm hover:bg-red-500 hover:text-white transition"
                         >
                             Hủy đơn hàng
                         </button>
@@ -118,14 +118,14 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
                         <>
                             <button
                                 onClick={() => navigate(`/reviews/write/${order.id}`)}
-                                className="h-10 px-6 border border-orange-500 text-orange-500 text-xs font-bold uppercase rounded-sm hover:bg-orange-500 hover:text-white transition"
+                                className="h-10 px-4 sm:px-6 border border-orange-500 text-orange-500 text-xs font-bold uppercase rounded-sm hover:bg-orange-500 hover:text-white transition"
                             >
                                 Đánh giá
                             </button>
 
                             <button
                                 onClick={() => onBuyAgain(order)}
-                                className="h-10 px-6 bg-black text-white text-xs font-bold uppercase rounded-sm hover:opacity-60 transition"
+                                className="h-10 px-4 col-span-2 sm:col-span-1 sm:px-6 bg-black text-white text-xs font-bold uppercase rounded-sm hover:opacity-60 transition"
                             >
                                 Mua lại
                             </button>
@@ -135,7 +135,7 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
                     {order.status === "CANCELLED" && (
                         <button
                             onClick={() => onBuyAgain(order)}
-                            className="h-10 px-6 bg-black text-white text-xs font-bold uppercase rounded-sm hover:opacity-90 transition"
+                            className="h-10 px-4 sm:px-6 bg-black text-white text-xs font-bold uppercase rounded-sm hover:opacity-90 transition"
                         >
                             Mua lại
                         </button>

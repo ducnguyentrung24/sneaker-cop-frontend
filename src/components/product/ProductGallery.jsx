@@ -23,16 +23,19 @@ function ProductGallery({ product, selectedColor }) {
     }, [selectedColor, product]);
 
     return (
-        <div className="flex gap-6 imtes-start">
+        <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6 items-center md:items-start w-full">
             {/* Images */}
-            <div className="flex flex-col gap-4">
+            <div className="flex md:flex-col gap-3 md:gap-4 w-full md:w-auto overflow-x-auto md:overflow-visible pb-2 md:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {images.map((img, i) => (
                     <img
                         key={i}
                         src={img}
                         onClick={() => setSelectedImg(img)}
-                        className={`w-25 h-25 object-cover border hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer rounded
-                            ${selectedImg === img ? 'border-black shadow-xl -translate-y-1 scale-[1.02]' : "border-gray-300"}
+                        className={`shrink-0 w-18 h-18 sm:22 sm:h-22 md:w-25 md:h-25 object-cover border hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer rounded
+                            ${selectedImg === img 
+                                ? 'border-black shadow-xl' 
+                                : "border-gray-300"
+                            }
                         `}
                     />
                 ))}
@@ -41,7 +44,7 @@ function ProductGallery({ product, selectedColor }) {
             {/* Main image */}
             <img 
                 src={selectedImg} 
-                className="w-150 max-h-115 object-cover rounded-lg" 
+                className="w-full md:w-150 max-h-115 object-cover rounded-lg" 
             />
         </div>
     );

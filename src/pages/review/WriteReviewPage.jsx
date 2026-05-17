@@ -142,46 +142,39 @@ function WriteReviewPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F3F3F4] pt-10 pb-14 px-6">
+        <div className="min-h-screen bg-[#F3F3F4] pt-8 sm:pt-10 pb-10 sm:pb-14 px-4 sm:px-6">
             <div className="max-w-3xl mx-auto">
-
                 {/* Header */}
-                <div className="grid grid-cols-3 items-center mb-8">
+                <div className="flex flex-col sm:grid sm:grid-cols-3 sm:items-center gap-4 sm:gap-0 mb-6 sm:mb-8">
+                    <div className="flex items-center justify-between sm:contents">
+                        {/* Back */}
+                        <div className="flex justify-start">
+                            <button
+                                onClick={() => navigate(-1)}
+                                className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 hover:text-black transition"
+                            >
+                                <FontAwesomeIcon icon={faArrowLeft} />
+                                Quay lại
+                            </button>
+                        </div>
 
-                    {/* Back */}
-                    <div className="flex justify-start">
-                        <button
-                            onClick={() => navigate(-1)}
-                            className="flex items-center gap-2 text-sm text-gray-500 hover:text-black transition"
-                        >
-                            <FontAwesomeIcon icon={faArrowLeft} />
-                            Quay lại
-                        </button>
-                    </div>
-
-                    {/* Title */}
-                    <div className="text-center">
-                        <h1 className="text-xl font-bold uppercase tracking-tight">
-                            Đánh giá sản phẩm
-                        </h1>
-                    </div>
-
-                    {/* ORDER CODE */}
-                    <div className="flex justify-end">
-                        <div className="text-right">
-                            <p className="text-[11px] text-gray-400 uppercase font-semibold tracking-wide">
-                                Mã đơn hàng
-                            </p>
-                            <p className="text-sm font-bold">
-                                #{order.order_code}
-                            </p>
+                        {/* ORDER CODE */}
+                        <div className="flex justify-end sm:order-3">
+                            <div className="text-right">
+                                <p className="text-[10px] text-gray-400 uppercase font-semibold tracking-wide">Mã đơn hàng</p>
+                                <p className="text-xs sm:text-sm font-bold">#{order.order_code}</p>
+                            </div>
                         </div>
                     </div>
 
+                    {/* Title */}
+                    <div className="text-center sm:order-2">
+                        <h1 className="text-xl font-bold uppercase tracking-tight">Đánh giá sản phẩm</h1>
+                    </div>
                 </div>
 
                 {/* Review cards */}
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                     {order.items.map((item) => {
                         const review = reviews[item.id] || {};
                         const isSubmitted = review.submitted;
@@ -194,25 +187,31 @@ function WriteReviewPage() {
                             >
 
                                 {/* Product */}
-                                <div className="flex gap-5 mb-5">
+                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-5">
                                     <img
                                         src={item.image}
                                         alt={item.product_name}
-                                        className="w-28 h-24 object-cover rounded-lg bg-gray-100 border border-gray-200"
+                                        className="w-full h-45 sm:w-28 sm:h-24 object-cover rounded-lg bg-gray-100 border border-gray-200"
                                     />
 
-                                    <div className="flex-1">
-                                        <div className="flex justify-between gap-4">
-                                            <div>
-                                                <h2 className="text-lg font-bold leading-snug">{item.product_name}</h2>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div className="min-w-0">
+                                                <h2 className="text-base sm:text-lg font-bold leading-snug line-clamp-2">{item.product_name}</h2>
 
-                                                <p className="text-xs text-gray-500 mt-1">
-                                                    Màu sắc: {item.color} / Size: {item.size}
-                                                </p>
+                                                <div className="flex flex-wrap gap-2 mt-2">
+                                                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                                        Màu: {item.color}
+                                                    </span>
+
+                                                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                                        Size: {item.size}
+                                                    </span>
+                                                </div>
                                             </div>
 
                                             {isSubmitted && (
-                                                <span className="h-fit bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold">
+                                                <span className="shrink-0 h-fit bg-green-50 text-green-600 px-2 sm:px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
                                                     Đã đánh giá
                                                 </span>
                                             )}
@@ -254,7 +253,7 @@ function WriteReviewPage() {
 
                                 </div>
 
-                                {/* COMMENT */}
+                                {/* Comment */}
                                 <div className="mb-4">
                                     <label className="block text-xs font-bold uppercase mb-2">
                                         Nhận xét:
@@ -272,39 +271,15 @@ function WriteReviewPage() {
                                         }
                                         placeholder="Nhập cảm nhận của bạn về sản phẩm"
                                         rows={4}
-                                        className="
-                                            w-full
-                                            border border-gray-200
-                                            bg-gray-50
-                                            rounded-lg
-                                            p-3
-                                            text-sm
-                                            outline-none
-                                            resize-none
-                                            focus:border-orange-500
-                                            focus:bg-white
-                                            disabled:opacity-60
-                                        "
+                                        className="w-full border border-gray-200 bg-gray-50 rounded-lg p-3 text-sm outline-none resize-none focus:border-orange-500 focus:bg-white disabled:opacity-60"
                                     />
                                 </div>
 
-                                {/* SUBMIT */}
+                                {/* Submit */}
                                 <button
                                     disabled={isSubmitted || isSubmitting}
                                     onClick={() => handleSubmitReview(item)}
-                                    className="
-                                        w-full h-11
-                                        bg-orange-500
-                                        text-white
-                                        rounded-lg
-                                        text-sm
-                                        font-bold
-                                        uppercase
-                                        tracking-wide
-                                        hover:opacity-90
-                                        disabled:opacity-50
-                                        transition
-                                    "
+                                    className="w-full h-11 bg-orange-500 text-white rounded-lg text-xs sm:text-sm font-bold uppercase tracking-wide hover:opacity-90 disabled:opacity-50 transition"
                                 >
                                     {isSubmitted
                                         ? "Đã gửi đánh giá"
@@ -312,13 +287,10 @@ function WriteReviewPage() {
                                             ? "Đang gửi..."
                                             : "Gửi đánh giá"}
                                 </button>
-
                             </div>
                         );
                     })}
-
                 </div>
-
             </div>
         </div>
     );

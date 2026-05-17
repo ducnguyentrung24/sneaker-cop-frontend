@@ -92,11 +92,11 @@ function AddressModal({ open, onClose, onSubmit, initialData }) {
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-white w-full max-w-xl rounded-xl p-6 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4 sm:px-0">
+            <div className="bg-white w-full max-w-xl rounded-xl p-6 max-h-[90vh] overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="font-bold text-lg">
+                <div className="flex justify-between items-center mb-5 sm:mb-6">
+                    <h2 className="font-bold text-base sm:text-lg">
                         {initialData ? "CẬP NHẬT ĐỊA CHỈ" : "THÊM ĐỊA CHỈ MỚI"}
                     </h2>
 
@@ -201,20 +201,20 @@ function AddressModal({ open, onClose, onSubmit, initialData }) {
                 </div>
 
                 {/* Footer */}
-                <div className="flex justify-end gap-3 mt-6">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-6">
                     <button
                         onClick={() => {
                             setForm(defaultForm);
                             onClose();
                         }}
-                        className="px-4 py-2 border rounded-lg text-sm"
+                        className="w-full sm:w-auto px-4 py-2 border rounded-lg text-sm font-bold"
                     >
                         Hủy
                     </button>
 
                     <button
                         onClick={() => onSubmit(form)}
-                        className="bg-orange-500 text-white px-5 py-2 rounded-lg text-sm font-semibold"
+                        className="w-full sm:w-auto bg-orange-500 text-white px-5 py-2 rounded-lg text-sm font-semibold"
                     >
                         Lưu địa chỉ
                     </button>

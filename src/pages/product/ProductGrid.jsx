@@ -54,9 +54,9 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
     };
 
     return (
-        <div className="flex-1">
+        <div className="flex-1 min-w-8">
             {/* Search */}
-            <div className="mb-4 flex gap-2">
+            <div className="mb-4 flex flex-col sm:flex-row gap-2">
                 <input 
                     type="text"
                     placeholder="Tìm kiếm sản phẩm..."
@@ -76,9 +76,9 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
                 </button>
             </div>
 
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center gap-3 mb-4">
                 {/* TabS */}
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-2 sm:gap-4">
                     {[
                         { key: "all", label: "Tất cả" },
                         { key: "best_seller", label: "Bán chạy" },
@@ -87,7 +87,7 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
                         <button
                             key={tab.key}
                             onClick={() => handleTab(tab.key)}
-                            className={`px-3 py-1 text-sm  rounded-lg border transition
+                            className={`px-3 py-1 text-xs sm:text-sm rounded-lg border transition
                                 ${
                                     activeTab === tab.key
                                         ? 'bg-black text-white border-black'
@@ -103,7 +103,7 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
                 <select
                     value={filters.sort || "newest"}
                     onChange={(e) => handleSort(e.target.value)}
-                    className="border px-3 py-1.5 text-sm rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-black"
+                    className="w-20 md:w-auto border px-2 sm:px3 py-0.5 text-xs sm:text-sm rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-black"
                 >
                     <option value="newest">Mới nhất</option>
                     <option value="price_asc">Giá: Thấp đến Cao</option>
@@ -112,7 +112,7 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-4 gap-x-6 gap-y-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-6 sm:gap-y-8">
                 {products.map((p) => (
                     <ProductCard key={p.id} product={p} />
                 ))}

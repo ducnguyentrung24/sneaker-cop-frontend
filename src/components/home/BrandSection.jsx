@@ -35,24 +35,20 @@ function BrandSection() {
     }, [selected]);
 
     return (
-        <div className="bg-gray-100 py-14">
-            {/* Label */}
+        <div className="bg-gray-100 py-10 sm:py-12 md:py-14 overflow-hidden">
             <p className="text-center text-xs font-bold text-orange-500 tracking-widest mb-2">
                 POPULAR BRANDS
             </p>
 
-            {/* Title */}
-            <h2 className="text-center text-xl font-bold mb-6 tracking-wide">
-                THƯƠNG HIỆU NỔI TIẾNG
-            </h2>
+            <h2 className="text-center text-lg sm:text-xl md:text-2xl font-bold mb-6 tracking-wide">THƯƠNG HIỆU NỔI TIẾNG</h2>
 
             {/* Tabs */}
-            <div className="flex justify-center gap-3 mb-8">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 px-4 max-w-3xl mx-auto">
                 {brands.map((brand => (
                     <button
                         key={brand.id}
                         onClick={() => setSelected(brand)}
-                        className={`px-4 py-1 text-sm font-semibold rounded-lg border transition
+                        className={`px-4 py-1 text-xs sm:text-sm font-semibold rounded-lg border transition
                             ${
                                 selected === brand
                                     ? 'bg-black text-white'

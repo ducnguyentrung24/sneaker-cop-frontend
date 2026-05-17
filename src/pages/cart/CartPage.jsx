@@ -72,10 +72,10 @@ function CartPage() {
     return (
         <div className="h-screen flex flex-col bg-white">
             {/* Header */}
-            <div className="flex justify-between items-center px-8 py-4 text-sm shadow-md">
+            <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4 text-sm shadow-md">
                 <span
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 cursor-pointer font-semibold"
+                    className="flex items-center gap-2 cursor-pointer font-semibold shrink-0"
                 >
                     <FontAwesomeIcon icon={faArrowLeft} />
                     Quay lại
@@ -86,15 +86,16 @@ function CartPage() {
                     GIỎ HÀNG
                 </span>
 
-                <span className="font-semibold">
-                    Bạn đang có: {cart.items.length} sản phẩm
+                <span className="font-semibold text-right shrink-0">
+                    <span className="hidden sm:inline">Bạn đang có: </span>
+                    {cart.items.length} sản phẩm
                 </span>
             </div>
 
             {/* Content */}
             {cart.items.length ? (
-                <div className="flex-1 overflow-y-auto px-8 py-8">
-                    <div className="max-w-5xl mx-auto px-6">
+                <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8">
+                    <div className="max-w-5xl mx-auto">
                         {/* Select + delete all */}
                         <div className="flex justify-between items-center mb-4 px-4">
                             <div className="flex items-center gap-3">
@@ -104,7 +105,7 @@ function CartPage() {
                                     onChange={selectAll}
                                     className="w-4 h-4"
                                 />
-                                <span className="text-sm font-medium">CHỌN TẤT CẢ</span>
+                                <span className="text-xs sm:text-sm font-medium">CHỌN TẤT CẢ</span>
                             </div>
 
                             <button
@@ -114,7 +115,7 @@ function CartPage() {
                                     toast.success("Đã xóa các sản phẩm đã chọn");
                                 }}
                                 disabled={!selected.length}
-                                className={`text-xs px-5 py-2 rounded flex items-center gap-1 font-medium
+                                className={`text-xs px-3 sm:px-5 py-2 rounded flex items-center gap-1 font-medium
                                     ${selected.length
                                         ? 'bg-red-500 text-white cursor-pointer'
                                         : 'bg-gray-200 text-gray-400 cursor-not-allowed'
@@ -127,28 +128,28 @@ function CartPage() {
                         </div>
 
                         {/* List */}
-                        <div className="space-y-6">
+                        <div className="space-y-4 sm:space-y-6">
                             {cart.items.map(item => (
                                 <div 
                                     key={item.id} 
-                                    className="flex justify-between items-center px-5 pb-6 pt-4 shadow"
+                                    className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-4 sm:px-5 py-4 sm:pt-4 sm:pb-6 pt-4 rounded-xl shadow-md"
                                 >
                                     {/* Left */}
-                                    <div className="flex items-center gap-5">
+                                    <div className="flex items-start sm:items-center gap-3 sm:gap-5 min-w-0">
                                         <input
                                             type="checkbox"
                                             checked={selected.includes(item.id)}
                                             onChange={() => toggle(item.id)}
-                                            className="w-4 h-4"
+                                            className="w-4 h-4 mt-8 sm:mt-0 shrink-0"
                                         />
 
                                         <img 
                                             src={item.product.thumbnail} 
-                                            className="w-20 h-20 object-cover rounded-md"
+                                            className="w-18 h-18 sm:w-20 sm:h-20 object-cover rounded-md shrink-0"
                                         />
 
-                                        <div className="space-y-1">
-                                            <p className="font-semibold text-sm">{item.product.name}</p>
+                                        <div className="space-y-1 min-w-0">
+                                            <p className="font-semibold text-sm line-clamp-2">{item.product.name}</p>
 
                                             <p className="text-xs font-semibold text-gray-500">
                                                 Màu: {item.variant.color} | Size: {item.variant.size}
@@ -215,7 +216,7 @@ function CartPage() {
                                     </div>
 
                                     {/* Right */}
-                                    <div className="flex flex-col justify-between items-end min-w-30 h-20">
+                                    <div className="flex sm:flex-col justify-between items-center sm:items-end sm:min-w-30 sm:h-20 border-t border-gray-400 sm:border-t-0 pt-3 sm:pt-0">
                                         <button
                                             onClick={() => {
                                                 removeItem(item.id);
@@ -227,7 +228,7 @@ function CartPage() {
                                             Xóa
                                         </button>
 
-                                        <p className="font-semibold text-lg">
+                                        <p className="font-semibold text-base lg:text-lg">
                                             {Math.round(item.total).toLocaleString('vi-VN')}đ
                                         </p>
                                     </div>
@@ -261,11 +262,11 @@ function CartPage() {
             )}
         
             {/* Footer */}
-            <div className="flex justify-between items-center px-8 py-5 bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.12)]">
-                <div>
-                    <p className="text-md font-bold">TỔNG CỘNG THANH TOÁN</p>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-4 sm:px-6 lg:px-8 py-8 sm:py-5 bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.12)]">
+                <div className="w-full sm:w-auto">
+                    <p className="text-sm sm:text-md font-bold">TỔNG CỘNG THANH TOÁN</p>
 
-                    <p className="text-orange-500 text-2xl font-bold mt-1">
+                    <p className="text-orange-500 text-xl sm:text-2xl font-bold mt-1">
                         {Math.round(total).toLocaleString('vi-VN')}đ
                     </p>
                     
@@ -277,7 +278,7 @@ function CartPage() {
                 <button
                     onClick={handleCheckout}
                     disabled={!selected.length}
-                    className={`px-15 py-3 rounded-lg flex items-center gap-2 text-sm font-medium
+                    className={`w-full sm:w-auto justify-center px-8 sm:px-2 lg:px-15 py-3 rounded-lg flex items-center gap-2 text-sm font-medium
                         ${selected.length
                             ? 'bg-black text-white'
                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
