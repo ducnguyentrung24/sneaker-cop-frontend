@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { getProducts } from "../../services/product.service";
+import { getRecommendations } from "../../services/recommendation.service";
 
 import SidebarFilter from "./SidebarFilter";
 import ProductGrid from "./ProductGrid";
@@ -35,14 +36,22 @@ function ProductPage() {
     useEffect(() => {
         const fetchRecommend = async () => {
             try {
-                const res = await getProducts({
+                const res = await getRecommendations({
                     limit: 10,
-                    sort: "sold_desc",
                 });
 
-                setRecommend(res.data.data);
+                setRecommend(res.data || []);
             } catch(error) {
-                console.error("Fetch recommend products error: ", error);
+                try {
+                    const fallbackRes = await getProducts({
+                        limit: 10,
+                        sort: "sold_desc",
+                    });
+
+                    setRecommend(fallbackRes.data.data || []);
+                } catch(fallbackError) {
+                    console.error("Fetch fallback recommend products error: ", fallbackError);
+                }
             }
         };
 
