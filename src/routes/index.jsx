@@ -27,12 +27,14 @@ import WriteReviewPage from "../pages/review/WriteReviewPage";
 import AdminLayout from "../components/layout/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
+import AdminOrderDetail from "../pages/admin/AdminOrderDetail";
 
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
     return (
         <Routes>
+            {/* Customer */}
             <Route path="/" element={
                 <MainLayout>
                     <HomePage />
@@ -119,6 +121,7 @@ function AppRoutes() {
                 </ProtectedRoute>
             } />
 
+            {/* Admin */}
             <Route path="/admin" element={
                 <AdminLayout>
                     <AdminDashboard />
@@ -130,6 +133,16 @@ function AppRoutes() {
                     <AdminOrders />
                 </AdminLayout>
             } />
+
+            <Route path="/admin/orders/:id" element={
+                <AdminLayout>
+                    <AdminOrderDetail />
+                </AdminLayout>
+            } />
+
+
+
+
 
             {/* Protected routes */}
             <Route path="/" element={
