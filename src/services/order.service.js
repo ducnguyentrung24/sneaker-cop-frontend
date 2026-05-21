@@ -30,7 +30,18 @@ export const cancelOrder = async (orderId) => {
     return res.data;
 };
 
+// Admin
 export const getAllOrders = async (params = {}) => {
     const res = await axiosInstance.get("/orders/orders", { params });
+    return res.data;
+};
+
+export const getAdminOrderDetail = async (orderId) => {
+    const res = await axiosInstance.get(`/orders/orders/${orderId}`);
+    return res.data;
+};
+
+export const updateOrderStatus = async (orderId, status) => {
+    const res = await axiosInstance.patch(`/orders/orders/${orderId}/status`, { status });
     return res.data;
 };

@@ -77,9 +77,7 @@ function AdminLayout({ children }) {
                             Sneaker<span className="text-orange-500">Cop</span>
                         </h1>
 
-                        <p className="text-[11px] text-gray-400 font-semibold tracking-widest">
-                            ADMIN CONSOLE
-                        </p>
+                        <p className="text-[11px] text-gray-400 font-semibold tracking-widest">ADMIN CONSOLE</p>
                     </div>
 
                     {/* Menu */}
@@ -127,10 +125,7 @@ function AdminLayout({ children }) {
                             <h1 className="font-black">
                                 Sneaker<span className="text-orange-500">Cop</span>
                             </h1>
-
-                            <p className="text-[10px] text-gray-400 font-semibold tracking-widest">
-                                ADMIN CONSOLE
-                            </p>
+                            <p className="text-[10px] text-gray-400 font-semibold tracking-widest">ADMIN CONSOLE</p>
                         </div>
 
                         <div className="flex items-center gap-3">

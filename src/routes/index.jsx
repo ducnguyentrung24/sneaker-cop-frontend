@@ -26,6 +26,7 @@ import WriteReviewPage from "../pages/review/WriteReviewPage";
 
 import AdminLayout from "../components/layout/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminOrders from "../pages/admin/AdminOrders";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -121,6 +122,12 @@ function AppRoutes() {
             <Route path="/admin" element={
                 <AdminLayout>
                     <AdminDashboard />
+                </AdminLayout>
+            } />
+
+            <Route path="/admin/orders" element={
+                <AdminLayout>
+                    <AdminOrders />
                 </AdminLayout>
             } />
 

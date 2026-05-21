@@ -48,20 +48,28 @@ function Pagination({ pagination = {}, onPageChange }) {
             </button>
 
             {/* Page Numbers */}
-            {Array.from({ length: total_pages }).map((_, i) => (
-                <button
-                    key={i}
-                    onClick={() => onPageChange(i+1)}
-                    className={`px-3 py-1 border rounded
-                        ${
-                            page === i + 1
-                                ? 'bg-black text-white'
+            {pages.map((item, index) => (
+                item === '...' ? (
+                    <span
+                        key={`dots-${index}`}
+                        className="w-9 h-9 flex items-center justify-center text-gray-400"
+                    >
+                        ...
+                    </span>
+                ) : (
+                    <button
+                        key={item}
+                        onClick={() => onPageChange(item)}
+                        className={`w-9 h-9 border rounded-lg font-bold
+                            ${page === item
+                                ? "bg-black text-white"
                                 : "hover:bg-gray-100"
-                        }
-                    `}
-                >
-                    {i + 1}
-                </button>
+                            }    
+                        `}
+                    >
+                        {item}
+                    </button>
+                )
             ))}
 
             {/* Next */}
