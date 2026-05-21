@@ -271,7 +271,7 @@ function Header() {
                 <div className="md:hidden bg-white border-t border-gray-200 shadow-md">
                     <div className="px-4 py-4 space-y-2">
 
-                        <Link to="/profile" className="flex items-center justify-between w-full px-4 py-3 rounded-xltext-sm font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+                        <Link to="/profile" className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
                             <span>Tài khoản</span>
 
                             <span className="text-xs opacity-60">

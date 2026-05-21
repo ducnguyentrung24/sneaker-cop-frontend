@@ -24,6 +24,9 @@ import OrderDetailPage from "../pages/order/OrderDetailPage";
 
 import WriteReviewPage from "../pages/review/WriteReviewPage";
 
+import AdminLayout from "../components/layout/AdminLayout";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
@@ -113,6 +116,12 @@ function AppRoutes() {
                         <WriteReviewPage />
                     </MainLayout>
                 </ProtectedRoute>
+            } />
+
+            <Route path="/admin" element={
+                <AdminLayout>
+                    <AdminDashboard />
+                </AdminLayout>
             } />
 
             {/* Protected routes */}
