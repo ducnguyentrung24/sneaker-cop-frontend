@@ -38,6 +38,10 @@ function AdminOrders() {
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState(defaultFilters);
 
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [cancelReason, setCancelReason] = useState("");
+    const [cancelOrderId, setCancelOrderId] = useState(null);
+
     useEffect(() => {
         fetchOrders();
     }, [page, filters.status]);
@@ -76,9 +80,19 @@ function AdminOrders() {
         fetchOrders(defaultFilters, 1);
     };
 
-    const handleStatusChange = async (orderId, newStatus) => {
+    const handleStatusChange = async (orderId, newStatus, currentStatus) => {
+        if (newStatus === currentStatus) return;
+        if (newStatus === "CANCELLED") {
+            setCancelOrderId(orderId);
+            setCancelReason("");
+            setShowCancelModal(true);
+            return;
+        }
+
         try {
             await updateOrderStatus(orderId, newStatus);
+            toast.success("Cập nhật trạng thái đơn hàng thành công!");
+
             fetchOrders();
         } catch(error) {
             console.error("Update order status error: ", error);
@@ -86,14 +100,30 @@ function AdminOrders() {
         }
     };
 
-    const formatCurrency = (value) => {
-        return Math.round(Number(value || 0)).toLocaleString("vi-VN") + "₫";
-    };
+    const handleConfirmCancel = async () => {
+        if (!cancelReason.trim()) {
+            toast.error("Vui lòng nhập lý do hủy đơn hàng");
+            return;
+        }
 
-    const formatDate = (date) => {
-        if (!date) return "N/A";
-        return new Date(date).toLocaleString("vi-VN");
-    }
+        try {
+            await updateOrderStatus(
+                cancelOrderId,
+                "CANCELLED",
+                cancelReason.trim()
+            );
+
+            setShowCancelModal(false);
+            setCancelReason("");
+            setCancelOrderId(null);
+            toast.success("Hủy đơn hàng thành công!");
+
+            fetchOrders();
+        } catch(error) {
+            console.error("Cancel order error: ", error);
+            toast.error("Hủy đơn hàng thất bại!");
+        }
+    };
 
     const statusTabs = [
         { key: "", label: "Tất cả" },
@@ -285,10 +315,7 @@ function AdminOrders() {
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td
-                                        colSpan={7}
-                                        className="px-6 py-12 text-center text-gray-400"
-                                    >
+                                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
                                         Đang tải đơn hàng
                                     </td>
                                 </tr>
@@ -311,15 +338,19 @@ function AdminOrders() {
                                             key={order.id}
                                             className="border-t border-gray-100 hover:bg-gray-50 transition"
                                         >
-                                            <td className="px-6 py-4 font-bold">#{order.order_code}</td>
+                                            <td className="px-6 py-4 font-bold">{order.order_code}</td>
                                             <td className="px-6 py-4 font-semibold">{order.receiver_name}</td>
-                                            <td className="px-6 py-4 text-gray-500">{formatDate(order.order_date)}</td>
+                                            <td className="px-6 py-4 text-gray-500">
+                                                {new Date(order.order_date).toLocaleString("vi-VN") || "N/A"}
+                                            </td>
                                             <td className="px-6 py-4">
                                                 <span className={`text-[10px] font-bold px-3 py-1 rounded-full whitespace-nowrap ${payment.className}`}>
                                                     {payment.label}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 font-bold">{formatCurrency(order.total_price)}</td>
+                                            <td className="px-6 py-4 font-bold">
+                                                {Math.round(Number(order.total_price)).toLocaleString("vi-VN") + "đ"}
+                                            </td>
                                             <td className="px-6 py-4">
                                                 {isFinalStatus ? (
                                                     <span className={`text-[10px] font-bold px-3 py-1 rounded-full whitespace-nowrap ${status.className}`}>
@@ -374,6 +405,47 @@ function AdminOrders() {
                 pagination={pagination}
                 onPageChange={setPage}
             />
+
+            {/* Cancel Modal */}
+            {showCancelModal && (
+                <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+                        <h2 className="text-lg text-center font-bold uppercase mb-2">Hủy đơn hàng</h2>
+                        <p className="text-sm text-center text-gray-500 mb-5">
+                            Vui lòng nhập lý do hủy đơn hàng. Lý do này sẽ được lưu vào lịch sử trạng thái.
+                        </p>
+
+                        <textarea
+                            value={cancelReason}
+                            onChange={(e) => setCancelReason(e.target.value)}
+                            rows={4}
+                            className="w-full border border-gray-400 rounded-xl px-4 py-3 text-sm outline-none focus:border-red-500 resize-none"
+                        />
+
+                        <div className="flex items-center justify-between gap-3 mt-6">
+                            <button
+                                disabled={loading}
+                                onClick={() => {
+                                    setShowCancelModal(false);
+                                    setCancelReason("");
+                                    setCancelOrderId(null);
+                                }}
+                                className="flex-1 h-11 px-5 rounded-lg border border-gray-500 text-sm font-bold hover:bg-gray-100 disabled:opacity-60 transition"
+                            >
+                                Đóng
+                            </button>
+
+                            <button
+                                disabled={loading}
+                                onClick={handleConfirmCancel}
+                                className="flex-1 h-11 px-5 rounded-lg bg-red-500 text-white text-sm font-bold hover:opacity-90 disabled:opacity-60 transition"
+                            >
+                                Xác nhận hủy
+                            </button>        
+                        </div>
+                    </div>
+                </div>    
+            )}
         </div>
     );
 };

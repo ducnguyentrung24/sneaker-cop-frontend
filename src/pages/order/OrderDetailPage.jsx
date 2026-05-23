@@ -157,7 +157,7 @@ function OrderDetailPage() {
                         </h1>
 
                         <p className="text-md sm:text-lg font-bold uppercase tracking-tight leading-snug break-all">
-                            #{order.order_code}
+                            {order.order_code}
                         </p>
                     </div>
 

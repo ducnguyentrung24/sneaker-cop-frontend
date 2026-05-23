@@ -41,7 +41,10 @@ export const getAdminOrderDetail = async (orderId) => {
     return res.data;
 };
 
-export const updateOrderStatus = async (orderId, status) => {
-    const res = await axiosInstance.patch(`/orders/orders/${orderId}/status`, { status });
+export const updateOrderStatus = async (orderId, status, note = "") => {
+    const res = await axiosInstance.patch(`/orders/orders/${orderId}/status`, { 
+        status,
+        note,
+    });
     return res.data;
 };

@@ -32,7 +32,7 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
             <div className="px-4 sm:px-6 py-5 border-b border-gray-200 flex items-start justify-between">
                 <div>
                     <p className="text-xs sm:text-sm uppercase tracking-widest text-gray-600 font-semibold">Mã đơn hàng</p>
-                    <h2 className="text-base sm:text-xl font-bold tracking-tight mt-1">#{order.order_code}</h2>
+                    <h2 className="text-base sm:text-xl font-bold tracking-tight mt-1">{order.order_code}</h2>
 
                     <p className="text-xs sm:text-sm text-gray-600 mt-1">
                         Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")}

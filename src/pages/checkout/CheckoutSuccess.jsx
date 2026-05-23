@@ -28,7 +28,7 @@ function CheckoutSuccess() {
 
                 <div className="bg-gray-100 py-4 rounded-lg mb-5 sm:mb-6">
                     <p className="text-xs text-gray-400 font-semibold tracking-widest">MÃ ĐƠN HÀNG</p>
-                    <p className="font-semibold">#{orderCode}</p>
+                    <p className="font-semibold">{orderCode}</p>
                 </div>
 
                 {/* Buttons */}

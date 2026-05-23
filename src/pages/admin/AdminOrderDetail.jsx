@@ -30,6 +30,9 @@ function AdminOrderDetail() {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
 
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [cancelReason, setCancelReason] = useState("");
+
     useEffect(() => {
         fetchAdminOrderDetail();
     }, [id]);
@@ -48,11 +51,25 @@ function AdminOrderDetail() {
     };
 
     const handleCancelOrder = async () => {
+        if (!cancelReason.trim()) {
+            toast.error("Vui lòng nhập lý do hủy đơn hàng.");
+            return;
+        }
+
         try {
             setUpdating(true);
             
-            await updateOrderStatus(order.id, "CANCELLED");
+            await updateOrderStatus(
+                order.id, 
+                "CANCELLED", 
+                cancelReason.trim()
+            );
+
             await fetchAdminOrderDetail();
+
+            setShowCancelModal(false);
+            setCancelReason("");
+
             toast.success("Đã hủy đơn hàng.");
         } catch (error) {
             console.error(error.response?.data?.message || "Hủy đơn hàng thất bại");
@@ -167,19 +184,16 @@ function AdminOrderDetail() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-3 sm:gap-4 mb-8 sm:mb-12">
                     <div className="min-w-0 flex-1">
-                        <h1 className="text-lg sm:text-xl font-bold uppercase tracking-tight leading-snug">
-                            Chi tiết đơn hàng
-                        </h1>
+                        <h1 className="text-lg sm:text-xl font-bold uppercase tracking-tight leading-snug">Chi tiết đơn hàng</h1>
 
                         <p className="text-md sm:text-lg font-bold uppercase tracking-tight leading-snug break-all">
-                            #{order.order_code}
+                            {order.order_code}
                         </p>
                     </div>
 
                     <div className="flex flex-col items-end gap-2 shrink-0">
                         <p className="text-sm sm:text-base whitespace-nowrap">
-                            {/* Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")} */}
-                            Ngày đặt: {new Date(order.order_date || order.created_at).toLocaleDateString("vi-VN")}
+                            Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")}
                         </p>
 
                         <div className={`w-fit px-3 py-1 rounded-full text-xs font-bold
@@ -191,62 +205,71 @@ function AdminOrderDetail() {
                 </div>
 
                 {/* Status */}
-                <div className="flex items-start sm:items-center justify-start sm:justify-between mb-10 sm:mb-14 relative overflow-hidden gap-2 sm:gap-0 pb-3 sm:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
+                <div className="mb-10 sm:mb-14 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    <div className="relative min-w-180 flex items-start justify-between  gap-2">
+                        <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
 
-                    {statusSteps.map((step, index) => {
-                        const log = (order.status_logs).find(
-                            (item) => item.to_status === step.key || item.status === step.key
-                        );
+                        {statusSteps.map((step, index) => {
+                            const log = (order.status_logs).find(
+                                item => item.to_status === step.key
+                            );
 
-                        const time = step.key === "PENDING"
-                            ? order.order_date || order.created_at
-                            : log?.created_at;
+                            const time = step.key === "PENDING" ? order.created_at : log?.created_at;
 
-                        const active = order.status === "CANCELLED"
-                            ? step.key === "CANCELLED"
-                            : index <= statusIndex && step.key !== "CANCELLED";
+                            const changed_by = log?.changed_by_user?.full_name;
 
-                        return (
-                            <div
-                                key={step.key}
-                                className="relative z-10 flex flex-col items-center flex-none sm:flex-1 w-22 sm:w-auto"
-                            >
-                                <div className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl flex items-center justify-center border-2
-                                    ${active 
-                                            ? "bg-orange-500 border-orange-500 text-white"
-                                            : "bg-white border-gray-300 text-gray-400"
-                                    }    
-                                `}>
-                                    <FontAwesomeIcon icon={step.icon} />
-                                </div>
+                            const active = order.status === "CANCELLED"
+                                ? step.key === "CANCELLED"
+                                : index <= statusIndex && step.key !== "CANCELLED";
 
-                                <p className={`mt-2 sm:mt-3 text-[10px] sm:text-xs font-medium uppercase text-center
-                                    ${active ? "text-orange-500" : "text-gray-400"}
-                                `}>
-                                    {step.label}
-                                </p>
+                            return (
+                                <div
+                                    key={step.key}
+                                    className="relative z-10 flex flex-col items-center flex-none sm:flex-1 w-22 sm:w-auto"
+                                >
+                                    <div className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl flex items-center justify-center border-2
+                                        ${active 
+                                                ? "bg-orange-500 border-orange-500 text-white"
+                                                : "bg-white border-gray-300 text-gray-400"
+                                        }    
+                                    `}>
+                                        <FontAwesomeIcon icon={step.icon} />
+                                    </div>
 
-                                {time ? (
-                                    <p className="mt-1 min-h-8 text-xs text-gray-600 leading-relaxed text-center">
-                                        {new Date(time).toLocaleTimeString("vi-VN", {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                        })}
-                                        <br />
-                                        {new Date(time).toLocaleDateString("vi-VN")}
+                                    <p className={`mt-2 sm:mt-3 text-[10px] sm:text-xs font-medium uppercase text-center
+                                        ${active ? "text-orange-500" : "text-gray-400"}
+                                    `}>
+                                        {step.label}
                                     </p>
-                                ) : (
-                                    <>
-                                        &nbsp;
-                                        <br />
-                                        &nbsp;
-                                    </>
-                                )
-                            }
-                            </div>
-                        );
-                    })}
+
+                                    {time ? (
+                                        <p className="text-[12px] mt-1 min-h-8 text-xs text-gray-600 leading-relaxed text-center">
+                                            {new Date(time).toLocaleTimeString("vi-VN", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                            {" "}
+                                            {new Date(time).toLocaleDateString("vi-VN")}
+
+                                            {changed_by && (
+                                                <>
+                                                    <br />
+                                                    <span className="text-gray-500 text-[12px]">{changed_by}</span>
+                                                </>
+                                            )}
+                                        </p>
+                                    ) : (
+                                        <>
+                                            &nbsp;
+                                            <br />
+                                            &nbsp;
+                                        </>
+                                    )
+                                }
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
 
                 {/* Info */}
@@ -266,7 +289,7 @@ function AdminOrderDetail() {
 
                             <div>
                                 <p className="text-xs text-gray-400 mb-1">Số điện thoại</p>
-                                <p className="font-semibold">{order.user?.phone}</p>
+                                <p className="font-semibold">{order.user?.phone || "N/A"}</p>
                             </div>
 
                             <div>
@@ -383,12 +406,25 @@ function AdminOrderDetail() {
                 {/* Note + Total + Actions */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
                     {/* Note */}
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 mb-10">
-                        <h2 className="text-sm font-bold uppercase text-yellow-600">Ghi chú từ khách hàng</h2>
-                    
-                        <p className="text-sm text-yellow-700 font-medium mt-1">
-                            {order.note || "Không có ghi chú nào từ khách hàng."}
-                        </p>
+                    <div className="space-y-4 mb-10">
+                        {/* Customer note */}
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 mb-10">
+                            <h2 className="text-sm font-bold uppercase text-yellow-600">Ghi chú từ khách hàng</h2>
+                        
+                            <p className="text-sm text-yellow-700 font-medium mt-1">
+                                {order.note || "Không có ghi chú nào từ khách hàng."}
+                            </p>
+                        </div>
+
+                        {/* Cancel reason */}
+                        {order.status === "CANCELLED" && (
+                            <div className="bg-red-50 border border-red-200 rounded-2xl p-5">
+                                <h2 className="text-sm font-bold uppercase text-red-600">Lý do hủy đơn hàng</h2>
+                                <p className="text-sm text-red-700 font-medium mt-1">
+                                    {(order.status_logs).find(log => log.to_status === "CANCELLED")?.note || "Không có lý do hủy đơn hàng."}
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Total + Actions */}
@@ -427,7 +463,7 @@ function AdminOrderDetail() {
                                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                                     <button
                                         disabled={updating}
-                                        onClick={handleCancelOrder}
+                                        onClick={() => setShowCancelModal(true)}
                                         className="w-full sm:flex-1 h-12 border border-red-500 text-red-500 text-sm font-bold uppercase rounded-md hover:bg-red-500 hover:text-white disabled:opacity-60 transition"
                                     >
                                         Hủy đơn hàng
@@ -447,6 +483,46 @@ function AdminOrderDetail() {
                     </div>
                 </div>
             </div>
+
+            {/* Cancel Modal */}
+            {showCancelModal && (
+                <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+                        <h2 className="text-lg text-center font-bold uppercase mb-2">Hủy đơn hàng</h2>
+                        <p className="text-sm text-center text-gray-500 mb-5">
+                            Vui lòng nhập lý do hủy đơn hàng. Lý do này sẽ được lưu vào lịch sử trạng thái.
+                        </p>
+
+                        <textarea
+                            value={cancelReason}
+                            onChange={(e) => setCancelReason(e.target.value)}
+                            rows={4}
+                            className="w-full border border-gray-400 rounded-xl px-4 py-3 text-sm outline-none focus:border-red-500 resize-none"
+                        />
+
+                        <div className="flex items-center justify-between gap-3 mt-6">
+                            <button
+                                disabled={updating}
+                                onClick={() => {
+                                    setShowCancelModal(false);
+                                    setCancelReason("");
+                                }}
+                                className="flex-1 h-11 px-5 rounded-lg border border-gray-500 text-sm font-bold hover:bg-gray-100 disabled:opacity-60 transition"
+                            >
+                                Đóng
+                            </button>
+
+                            <button
+                                disabled={updating}
+                                onClick={handleCancelOrder}
+                                className="flex-1 h-11 px-5 rounded-lg bg-red-500 text-white text-sm font-bold hover:opacity-90 disabled:opacity-60 transition"
+                            >
+                                Xác nhận hủy
+                            </button>        
+                        </div>
+                    </div>
+                </div>    
+            )}
         </div>
     );
 };
