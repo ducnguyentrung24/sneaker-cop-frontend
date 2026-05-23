@@ -52,9 +52,7 @@ function OrderDetailPage() {
 
             toast.success("Hủy đơn hàng thành công!");
         } catch(error) {
-            toast.error(
-                error.response?.data?.message || "Hủy đơn hàng thất bại. Vui lòng thử lại."
-            );
+            toast.error("Hủy đơn hàng thất bại.");
         }
     };
 
@@ -96,16 +94,18 @@ function OrderDetailPage() {
         { key: "CANCELLED", label: "Đã hủy", icon: faXmark },
     ];
 
-    const statusIndex = statusSteps.findIndex(step => step.key === order?.status);
+    const statusIndex = statusSteps.findIndex(
+        (step) => step.key === order?.status
+    );
 
     const statusMap = {
         PENDING: {
             label: "CHỜ XỬ LÝ",
-            className: "bg-blue-100 text-blue-500",
+            className: "bg-orange-100 text-orange-500",
         },
         PROCESSING: {
             label: "ĐANG XỬ LÝ",
-            className: "bg-orange-100 text-orange-500",
+            className: "bg-blue-100 text-blue-500",
         },
         SHIPPING: {
             label: "ĐANG GIAO HÀNG",
@@ -175,36 +175,63 @@ function OrderDetailPage() {
                 </div>
 
                 {/* Status */}
-                <div className="flex items-start sm:items-center justify-start sm:justify-between mb-10 sm:mb-14 relative overflow-hidden gap-2 sm:gap-0 pb-3 sm:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
+                <div className="mb-10 sm:mb-14 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    <div className="relative min-w-180 flex items-start justify-between gap-2">
+                        <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
 
-                    {statusSteps.map((step, index) => {
-                        const active = order.status === "CANCELLED"
-                            ? step.key === "CANCELLED"
-                            : index <= statusIndex && step.key !== "CANCELLED";
+                        {statusSteps.map((step, index) => {
+                            const log = (order.status_logs).find(
+                                item => item.to_status === step.key
+                            );
 
-                        return (
-                            <div
-                                key={step.key}
-                                className="relative z-10 flex flex-col items-center flex-none sm:flex-1 w-22 sm:w-auto"
-                            >
-                                <div className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl flex items-center justify-center border-2
-                                    ${active 
-                                            ? "bg-orange-500 border-orange-500 text-white"
-                                            : "bg-white border-gray-300 text-gray-400"
-                                    }    
-                                `}>
-                                    <FontAwesomeIcon icon={step.icon} />
+                            const time = step.key === "PENDING" ? order.created_at : log?.created_at;
+
+                            const active = order.status === "CANCELLED"
+                                ? step.key === "CANCELLED"
+                                : index <= statusIndex && step.key !== "CANCELLED";
+
+                            return (
+                                <div
+                                    key={step.key}
+                                    className="relative z-10 flex flex-col items-center flex-none sm:flex-1 w-22 sm:w-auto"
+                                >
+                                    <div className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl flex items-center justify-center border-2
+                                        ${active 
+                                                ? "bg-orange-500 border-orange-500 text-white"
+                                                : "bg-white border-gray-300 text-gray-400"
+                                        }    
+                                    `}>
+                                        <FontAwesomeIcon icon={step.icon} />
+                                    </div>
+
+                                    <p className={`mt-2 sm:mt-3 text-[10px] sm:text-xs font-medium uppercase text-center
+                                        ${active ? "text-orange-500" : "text-gray-400"}
+                                    `}>
+                                        {step.label}
+                                    </p>
+
+                                    {time ? (
+                                        <p className="text-[12px] sm:text-xs text-center mt-1 min-h-8 text-gray-600 leading-relaxed">
+                                            {new Date(time).toLocaleString("vi-VN", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                year: "2-digit",
+                                            })}
+                                        </p>
+                                    ) : (
+                                        <>
+                                            &nbsp;
+                                            <br />
+                                            &nbsp;
+                                        </>
+                                    )
+                                }
                                 </div>
-
-                                <p className={`mt-2 sm:mt-3 text-[10px] sm:text-xs font-medium uppercase text-center
-                                    ${active ? "text-orange-500" : "text-gray-400"}
-                                `}>
-                                    {step.label}
-                                </p>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
 
                 {/* Info */}
@@ -252,7 +279,7 @@ function OrderDetailPage() {
                                 <div className={`inline-flex px-3 py-1 rounded-full text-xs font-bold
                                     ${order.payment_status === "PAID"
                                         ? "bg-green-100 text-green-500"
-                                        : "bg-gray-100 text-gray-500"
+                                        : "bg-orange-100 text-orange-500"
                                     }
                                 `}>
                                     {order.payment_status === "PAID" ? "ĐÃ THANH TOÁN" : "CHƯA THANH TOÁN"}
@@ -313,74 +340,98 @@ function OrderDetailPage() {
                     </div>
                 </div>
 
-                {/* Total + Actions */}
-                <div className="flex justify-end">
-                    <div className="w-full max-w-md">
-                        {/* Total */}
-                        <div className="bg-white rounded-2xl p-8 shadow-lg border border-orange-100">
-                            <div className="space-y-4 border-b border-gray-300 pb-6">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600 uppercase text-sm">Tạm tính</span>
-                                    <span className="font-bold">
-                                        {Math.round(order.total_price).toLocaleString("vi-VN")}đ
-                                    </span>
-                                </div>
-
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600 uppercase text-sm">Phí vận chuyển</span>
-                                    <span className="font-bold text-orange-500 uppercase">Miễn phí</span>
-                                </div>
-                            </div>
-
-                            <div className="flex justify-between items-start mt-6">
-                                <div>
-                                    <p className="text-sm uppercase">Tổng cộng</p>
-                                    <p className="text-xs text-gray-400 mt-2 uppercase">Giá đã bao gồm VAT</p>
-                                </div>
-                                    
-                                <div className="text-2xl sm:text-3xl font-bold text-orange-500">
-                                    {Math.round(order.final_price).toLocaleString("vi-VN")}đ
-                                </div>
-                            </div>
+                {/* Note + Totals + Actions */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    <div className="space-y-4 mb-10">
+                        {/* Customer note */}
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 mb-10">
+                            <h2 className="text-sm font-bold uppercase text-yellow-600">Ghi chú từ khách hàng</h2>
+                        
+                            <p className="text-sm text-yellow-700 font-medium mt-1">
+                                {order.note || "Không có ghi chú nào từ khách hàng."}
+                            </p>
                         </div>
 
-                        {/* Actions */}
-                        <div className="mt-6">
-                            {(order.status === "PENDING" || order.status === "PROCESSING") && (
-                                <button
-                                    onClick={handleCancelOrder}
-                                    className="w-full h-12 border border-red-500 text-red-500 text-sm font-bold uppercase rounded-md hover:bg-red-500 hover:text-white transition"
-                                >
-                                    Hủy đơn hàng
-                                </button>
-                            )}
+                        {/* Cancel reason */}
+                        {order.status === "CANCELLED" && (
+                            <div className="bg-red-50 border border-red-200 rounded-2xl p-5">
+                                <h2 className="text-sm font-bold uppercase text-red-600">Lý do hủy đơn hàng</h2>
+                                <p className="text-sm text-red-700 font-medium mt-1">
+                                    {(order.status_logs).find(log => log.to_status === "CANCELLED")?.note || "Không có lý do hủy đơn hàng."}
+                                </p>
+                            </div>
+                        )}
+                    </div>
 
-                            {order.status === "COMPLETED" && (
-                                <div className="flex flex-col sm:flex-row gap-3">
+                    {/* Total + Actions */}
+                    <div className="flex justify-end">
+                        <div className="w-full max-w-md">
+                            {/* Total */}
+                            <div className="bg-white rounded-2xl p-8 shadow-lg border border-orange-100">
+                                <div className="space-y-4 border-b border-gray-300 pb-6">
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600 uppercase text-sm">Tạm tính</span>
+                                        <span className="font-bold">
+                                            {Math.round(order.total_price).toLocaleString("vi-VN")}đ
+                                        </span>
+                                    </div>
+
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-600 uppercase text-sm">Phí vận chuyển</span>
+                                        <span className="font-bold text-orange-500 uppercase">Miễn phí</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between items-start mt-6">
+                                    <div>
+                                        <p className="text-sm uppercase">Tổng cộng</p>
+                                        <p className="text-xs text-gray-400 mt-2 uppercase">Giá đã bao gồm VAT</p>
+                                    </div>
+                                        
+                                    <div className="text-2xl sm:text-3xl font-bold text-orange-500">
+                                        {Math.round(order.final_price).toLocaleString("vi-VN")}đ
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="mt-6">
+                                {(order.status === "PENDING" || order.status === "PROCESSING") && (
                                     <button
-                                        onClick={() => navigate(`/reviews/write/${order.id}`)}
-                                        className="w-full sm:flex-1 sm:w-auto h-12 border border-black text-black text-sm font-bold uppercase rounded-md hover:bg-black hover:text-white transition"
+                                        onClick={handleCancelOrder}
+                                        className="w-full h-12 border border-red-500 text-red-500 text-sm font-bold uppercase rounded-md hover:bg-red-500 hover:text-white transition"
                                     >
-                                        Đánh giá
+                                        Hủy đơn hàng
                                     </button>
+                                )}
 
+                                {order.status === "COMPLETED" && (
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <button
+                                            onClick={() => navigate(`/reviews/write/${order.id}`)}
+                                            className="w-full sm:flex-1 sm:w-auto h-12 border border-black text-black text-sm font-bold uppercase rounded-md hover:bg-black hover:text-white transition"
+                                        >
+                                            Đánh giá
+                                        </button>
+
+                                        <button
+                                            onClick={handleBuyAgain}
+                                            className="w-full sm:flex-1 sm:w-auto h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
+                                        >
+                                            Mua lại
+                                        </button>
+                                    </div>
+                                )}
+
+                                {order.status === "CANCELLED" && (
                                     <button
                                         onClick={handleBuyAgain}
-                                        className="w-full sm:flex-1 sm:w-auto h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
+                                        className="w-full h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
                                     >
                                         Mua lại
                                     </button>
-                                </div>
-                            )}
-
-                            {order.status === "CANCELLED" && (
-                                <button
-                                    onClick={handleBuyAgain}
-                                    className="w-full h-12 bg-orange-500 text-white text-sm font-bold uppercase rounded-md hover:opacity-90 transition"
-                                >
-                                    Mua lại
-                                </button>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -84,9 +84,7 @@ function OrderPage() {
             
             toast.success("Hủy đơn hàng thành công!");
         } catch(error) {
-            toast.error(
-                error.response?.data?.message || "Hủy đơn hàng thất bại!"
-            );
+            toast.error("Hủy đơn hàng thất bại.");
         }
     };
 

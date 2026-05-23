@@ -206,7 +206,7 @@ function AdminOrderDetail() {
 
                 {/* Status */}
                 <div className="mb-10 sm:mb-14 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    <div className="relative min-w-180 flex items-start justify-between  gap-2">
+                    <div className="relative min-w-180 flex items-start justify-between gap-2">
                         <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
 
                         {statusSteps.map((step, index) => {
@@ -243,13 +243,14 @@ function AdminOrderDetail() {
                                     </p>
 
                                     {time ? (
-                                        <p className="text-[12px] mt-1 min-h-8 text-xs text-gray-600 leading-relaxed text-center">
-                                            {new Date(time).toLocaleTimeString("vi-VN", {
+                                        <p className="text-[12px] sm:text-xs text-center mt-1 min-h-8 text-gray-600 leading-relaxed">
+                                            {new Date(time).toLocaleString("vi-VN", {
                                                 hour: "2-digit",
                                                 minute: "2-digit",
-                                            })}
-                                            {" "}
-                                            {new Date(time).toLocaleDateString("vi-VN")}
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                year: "2-digit",
+                                            })};
 
                                             {changed_by && (
                                                 <>

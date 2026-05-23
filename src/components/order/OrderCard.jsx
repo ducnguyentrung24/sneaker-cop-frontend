@@ -6,23 +6,23 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
     const statusMap = {
         PENDING: {
             label: "CHỜ XỬ LÝ",
-            className: "bg-blue-50 text-blue-500",
+            className: "bg-orange-100 text-orange-500",
         },
         PROCESSING: {
             label: "ĐANG XỬ LÝ",
-            className: "bg-orange-50 text-orange-500",
+            className: "bg-blue-100 text-blue-500",
         },
         SHIPPING: {
             label: "ĐANG GIAO HÀNG",
-            className: "bg-purple-50 text-purple-500",
+            className: "bg-purple-100 text-purple-500",
         },
         COMPLETED: {
             label: "HOÀN THÀNH",
-            className: "bg-green-50 text-green-500",
+            className: "bg-green-100 text-green-500",
         },
         CANCELLED: {
             label: "ĐÃ HỦY",
-            className: "bg-red-50 text-red-500",
+            className: "bg-red-100 text-red-500",
         },
     };
 
@@ -101,13 +101,7 @@ function OrderCard({ order, onCancel, onBuyAgain }) {
 
                     {(order.status === "PENDING" || order.status === "PROCESSING") && (
                         <button
-                            onClick={() => {
-                                const confirmCancel = window.confirm("Bạn có chắc muốn hủy đơn hàng này?");
-                                if (confirmCancel) {
-                                    onCancel(order.id);
-                                }
-                                }
-                            }
+                            onClick={() => onCancel(order.id) }
                             className=" h-10 px-4 sm:px-6 border border-red-500 text-red-500 text-xs font-bold uppercase rounded-sm hover:bg-red-500 hover:text-white transition"
                         >
                             Hủy đơn hàng
