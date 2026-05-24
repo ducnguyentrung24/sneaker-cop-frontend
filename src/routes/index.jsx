@@ -28,6 +28,8 @@ import AdminLayout from "../components/layout/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminOrderDetail from "../pages/admin/AdminOrderDetail";
+import AdminCategories from "../pages/admin/AdminCategories";
+import AdminBrand from "../pages/admin/AdminBrand";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -140,7 +142,17 @@ function AppRoutes() {
                 </AdminLayout>
             } />
 
+            <Route path="/admin/categories" element={
+                <AdminLayout>
+                    <AdminCategories />
+                </AdminLayout>
+            } />
 
+            <Route path="/admin/brands" element={
+                <AdminLayout>
+                    <AdminBrand />
+                </AdminLayout>
+            } />
 
 
 
