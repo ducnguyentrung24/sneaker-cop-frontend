@@ -220,7 +220,7 @@ const CategoryBrand = ({
                                         key={item.id}
                                         className="border-t border-gray-100 hover:bg-gray-50 transition"
                                     >
-                                        <td className="px-6 py-5 font-semibold">{(page - 1) * 5 + index +1}</td>
+                                        <td className="px-6 py-5 font-semibold">{(page - 1) * 5 + index + 1}</td>
                                         <td className="px-6 py-5 font-semibold">
                                             <p className="line-clamp-2">{item.name}</p>
                                         </td>

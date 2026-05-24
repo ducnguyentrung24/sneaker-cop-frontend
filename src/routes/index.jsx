@@ -29,7 +29,9 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminOrderDetail from "../pages/admin/AdminOrderDetail";
 import AdminCategories from "../pages/admin/AdminCategories";
-import AdminBrand from "../pages/admin/AdminBrand";
+import AdminBrands from "../pages/admin/AdminBrands";
+import AdminUsers from "../pages/admin/AdminUsers";
+
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -150,10 +152,15 @@ function AppRoutes() {
 
             <Route path="/admin/brands" element={
                 <AdminLayout>
-                    <AdminBrand />
+                    <AdminBrands />
                 </AdminLayout>
             } />
 
+            <Route path="/admin/users" element={
+                <AdminLayout>
+                    <AdminUsers />
+                </AdminLayout>
+             } />
 
 
             {/* Protected routes */}

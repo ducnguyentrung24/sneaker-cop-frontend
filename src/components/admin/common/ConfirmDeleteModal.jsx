@@ -3,8 +3,8 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 function ConfirmDeleteModal({
     open,
-    title = "Xác nhận xóa",
-    message = "Bạn có chắc chắn muốn xóa mục này không?",
+    title = "Xác nhận",
+    message = "Bạn có chắc chắn muốn thực hiện hành động này?",
     loading = false,
     onClose,
     onConfirm,
@@ -35,7 +35,7 @@ function ConfirmDeleteModal({
                         onClick={onConfirm}
                         className="h-11 rounded-lg bg-red-500 text-white text-sm font-bold hover:opacity-90 disabled:opacity-60 transition"
                     >
-                        Xóa
+                        Xác nhận
                     </button>
                 </div>
             </div>

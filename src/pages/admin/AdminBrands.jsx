@@ -7,7 +7,7 @@ import {
     deleteBrand,
 } from "../../services/brand.service";
 
-function AdminBrand() {
+function AdminBrands() {
     return (
         <CategoryBrand
             title="Quản lý thương hiệu"
@@ -22,4 +22,4 @@ function AdminBrand() {
     );
 };
 
-export default AdminBrand;
+export default AdminBrands;
