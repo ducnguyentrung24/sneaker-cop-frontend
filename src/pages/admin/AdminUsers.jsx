@@ -233,7 +233,7 @@ function AdminUsers() {
 
             {/* Table */}
             <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                     <table className="w-full min-w-280 text-sm table-fixed">
                         <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
                             <tr>

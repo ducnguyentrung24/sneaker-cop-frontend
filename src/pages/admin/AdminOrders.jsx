@@ -274,7 +274,7 @@ function AdminOrders() {
             </div>
 
             {/* Status Tabs */}
-            <div className="flex gap-3 overflow-x-auto pb-2 mb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scollbar]:hidden">
+            <div className="flex gap-3 overflow-x-auto pb-2 mb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                 {statusTabs.map((tab) => (
                     <button
                         key={tab.key}
@@ -298,7 +298,7 @@ function AdminOrders() {
 
             {/* Table */}
             <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                     <table className="w-full min-w-240 text-sm">
                         <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
                             <tr>

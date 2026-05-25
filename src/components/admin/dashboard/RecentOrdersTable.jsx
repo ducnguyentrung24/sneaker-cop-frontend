@@ -66,7 +66,7 @@ function RecentOrdersTable({ orders = [] }) {
                 </button>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                 <table className="w-full min-w-260 text-sm">
                     <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
                         <tr>

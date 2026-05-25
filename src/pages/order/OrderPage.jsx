@@ -121,6 +121,7 @@ function OrderPage() {
     return (
         <div className="min-h-screen bg-[#F3F3F4] pt-10 pb-12 px-4 sm:px-6 py-8 sm:py-10">
             <div className="max-w-6xl mx-auto">
+                {/* Header */}
                 <div className="mb-6 sm:mb-10 text-center sm:text-left">
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight">Đơn hàng của tôi</h1>
                     <p className="text-gray-500 mt-2">Theo dõi trạng thái đơn hàng của bạn</p>
@@ -143,7 +144,7 @@ function OrderPage() {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex gap-2 sm:gap-3 mb-6 sm:mb-8 pb-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                     {tabs.map(tab => (
                         <button
                             key={tab.key}

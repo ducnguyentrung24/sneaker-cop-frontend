@@ -30,6 +30,7 @@ import AdminOrders from "../pages/admin/AdminOrders";
 import AdminOrderDetail from "../pages/admin/AdminOrderDetail";
 import AdminCategories from "../pages/admin/AdminCategories";
 import AdminBrands from "../pages/admin/AdminBrands";
+import AdminProducts from "../pages/admin/AdminProducts";
 import AdminUsers from "../pages/admin/AdminUsers";
 
 
@@ -155,6 +156,12 @@ function AppRoutes() {
                     <AdminBrands />
                 </AdminLayout>
             } />
+
+            <Route path="/admin/products" element={
+                <AdminLayout>
+                    <AdminProducts />
+                </AdminLayout>
+             } /> 
 
             <Route path="/admin/users" element={
                 <AdminLayout>

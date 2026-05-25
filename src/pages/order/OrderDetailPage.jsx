@@ -175,7 +175,7 @@ function OrderDetailPage() {
                 </div>
 
                 {/* Status */}
-                <div className="mb-10 sm:mb-14 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="mb-10 sm:mb-14 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
                     <div className="relative min-w-180 flex items-start justify-between gap-2">
                         <div className="absolute top-4 sm:top-5 left-8 sm:left-[10%] right-8 sm:right-[10%] h-1 bg-gray-300 z-0" />
 
