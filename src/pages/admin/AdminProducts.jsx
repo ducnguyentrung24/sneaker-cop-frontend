@@ -273,7 +273,7 @@ const AdminProducts = () => {
                             ) : products.length > 0 ? (
                                 products.map((product, index) => {
                                     const discount = Number(product.discount_percent || 0);
-                                    const stock = Number(product.total_stock || product.stock || 0);
+                                    const stock = Number(product.total_stock || 0);
 
                                     let stockLabel = 'Còn hàng';
                                     let stockClass = 'bg-green-50 text-green-600';
