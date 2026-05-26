@@ -135,7 +135,7 @@ function LoginPage() {
 
                     {/* Forgot password */}
                     <div className='text-right text-xs mb-4'>
-                        <a href="#" className='text-blue-500 hover:underline'>
+                        <a href="/forgot-password" className='text-blue-500 hover:underline'>
                             Quên mật khẩu
                         </a>
                     </div>

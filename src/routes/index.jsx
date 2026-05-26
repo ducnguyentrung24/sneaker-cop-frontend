@@ -5,6 +5,8 @@ import HomePage from "../pages/home/HomePage";
 
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import ForgotPassword from "../pages/auth/ForgotPassword";
+import ResetPassword from "../pages/auth/ResetPassword";
 
 import ProductPage from "../pages/product/ProductPage";
 import ProductDetailPage from "../pages/product/ProductDetailPage";
@@ -56,6 +58,18 @@ function AppRoutes() {
             <Route path="/register" element={
                 <MainLayout>
                     <RegisterPage />
+                </MainLayout>
+            } />
+
+            <Route path="/forgot-password" element={
+                <MainLayout>
+                    <ForgotPassword />
+                </MainLayout>
+            } />
+
+            <Route path="/reset-password" element={
+                <MainLayout>
+                    <ResetPassword />
                 </MainLayout>
             } />
 
