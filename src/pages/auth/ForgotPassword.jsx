@@ -41,7 +41,11 @@ function ForgotPassword() {
             });
         } catch (error) {
             console.error("Forgot password error:", error);
-            toast.error("Gửi OTP thất bại. Vui lòng thử lại sau.");
+            toast.error(
+                error.response?.error ||
+                error.response?.data?.message ||
+                "Gửi OTP thất bại. Vui lòng thử lại sau."
+            );
         } finally {
             setLoading(false);
         }
@@ -57,6 +61,7 @@ function ForgotPassword() {
                     </p>
 
                     <form onSubmit={handleSubmit} className="mt-7">
+                        {/* Email */}
                         <div>
                             <label className="text-xs font-bold uppercase text-gray-500">Email</label>
                             <input 
@@ -68,6 +73,7 @@ function ForgotPassword() {
                             />
                         </div>
 
+                        {/* Submit */}
                         <button
                             type="submit"
                             disabled={loading}
@@ -77,6 +83,7 @@ function ForgotPassword() {
                         </button>
                     </form>
 
+                    {/* Back */}
                     <div className="text-center mt-5">
                         <Link to="/login" className="text-xs text-gray-500 hover:text-orange-500 transition">
                             <FontAwesomeIcon icon={faArrowLeft} className="mr-1" />

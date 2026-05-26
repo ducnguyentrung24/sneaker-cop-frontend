@@ -19,7 +19,8 @@ function ResetPassword() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [email, setEmail] = useState(location.state?.email || "");
+    const email = location.state?.email || "";
+
     const [otp, setOtp] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -62,7 +63,11 @@ function ResetPassword() {
             setCountdown(60);
         } catch(error) {
             console.error("Resend OTP error:", error);
-            toast.error("Gửi lại OTP thất bại. Vui lòng thử lại sau.");
+            toast.error(
+                error.response?.error ||
+                error.response?.data?.message ||
+                "Gửi lại OTP thất bại. Vui lòng thử lại sau."
+            );
         } finally {
             setResending(false);
         }
@@ -114,8 +119,8 @@ function ResetPassword() {
         } catch (error) {
             console.error("Reset password error:", error);
             toast.error(
-                error.response?.data?.message ||
                 error.response?.error ||
+                error.response?.data?.message ||
                 "Đặt lại mật khẩu thất bại.");
         } finally {
             setLoading(false);
@@ -174,18 +179,6 @@ function ResetPassword() {
                                     <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                                 </button>
                             </div>
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label className="text-xs font-bold uppercase text-gray-500">Email</label>
-                            <input
-                                type="text"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="you@gmail.com"
-                                className="mt-2 w-full h-11 bg-[#eeeeee] px-4 text-sm outline-none focus:ring-1 focus:ring-orange-500"
-                            />
                         </div>
 
                         {/* OTP */}
