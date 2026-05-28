@@ -37,7 +37,9 @@ function ProductInfo({ product, selectedColor, setSelectedColor, reviewStats }) 
 
     const sizes = useMemo(() => {
         if (!selectedColor) return [];
-        return variants.filter(v => v.color === selectedColor);
+        return variants
+            .filter(v => v.color === selectedColor)
+            .sort((a, b) => Number(a.size) - Number(b.size));
     }, [selectedColor, variants]);
 
     const selectedVariant = useMemo(() => {

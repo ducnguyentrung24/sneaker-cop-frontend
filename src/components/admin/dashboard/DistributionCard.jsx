@@ -1,9 +1,9 @@
 const chartColors = [
-    "#f97316",
-    "#111827",
-    "#6b7280",
-    "#d1d5db",
-    "#fb923c",
+     "#F97316",
+    "#3B82F6",
+    "#10B981",
+    "#F59E0B",
+    "#8B5CF6",
 ];
 
 function DistributionCard({
@@ -12,6 +12,8 @@ function DistributionCard({
     data = [],
     emptyText,
     idKey,
+    centerValue,
+    centerLabel = "Sản phẩm",
 }) {
     const formatNumber = (value) => {
         return Number(value || 0).toLocaleString("vi-VN");
@@ -31,6 +33,12 @@ function DistributionCard({
 
     const getTotalCount = (list) => {
         return list.reduce((sum, item) => sum + getCount(item), 0);
+    };
+
+    const getCenterValue = () => {
+        if (centerValue !== undefined && centerValue !== null) return centerValue;
+
+        return getTotalCount(data);
     };
 
     const getConicGradient = (list) => {
@@ -60,15 +68,17 @@ function DistributionCard({
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
                     {/* Chart */}
                     <div
-                        className="w-36 h-36 sm:w-40 sm:h40 rounded-full flex items-center justify-center shrink-0"
+                        className="w-36 h-36 sm:w-40 sm:h-40 rounded-full flex items-center justify-center shrink-0"
                         style={{ background: getConicGradient(data) }}
                     >
                         <div className="w-22 h-22 sm:w-24 sm:h-24 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
                             <p className="font-bold text-xl">
-                                {formatNumber(getTotalCount(data))}
+                                {formatNumber(getCenterValue())}
                             </p>
 
-                            <p className="text-xs text-gray-400 font-bold uppercase">Sản phẩm</p>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase">
+                                {centerLabel}
+                            </p>
                         </div>
                     </div>
 

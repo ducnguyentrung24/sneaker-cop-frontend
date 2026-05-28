@@ -40,8 +40,16 @@ function AdminDashboard() {
 
     const [revenueStats, setRevenueStats] = useState([]);
     const [topProducts, setTopProducts] = useState([]);
-    const [categoryStats, setCategoryStats] = useState([]);
-    const [brandStats, setBrandStats] = useState([]);
+    const [categoryStats, setCategoryStats] = useState({
+        total_categories: 0,
+        total_products: 0,
+        categories: [],
+    });
+    const [brandStats, setBrandStats] = useState({
+        total_brands: 0,
+        total_products: 0,
+        brands: [],
+    });
     const [recentOrders, setRecentOrders] = useState([]);
 
     const [revenueType, setRevenueType] = useState("week");
@@ -78,8 +86,18 @@ function AdminDashboard() {
 
             setSummary(summaryRes.data || {});
             setTopProducts(topProductsRes.data || []);
-            setCategoryStats(categoryRes.data?.categories || []);
-            setBrandStats(brandRes.data?.brands || []);
+
+            setCategoryStats(categoryRes.data || {
+                total_categories: 0,
+                total_products: 0,
+                categories: [],
+            });
+            setBrandStats(brandRes.data || {
+                total_brands: 0,
+                total_products: 0,
+                brands: [],
+            });
+            
             setRecentOrders(ordersRes.data?.data || []);
         } catch(error) {
             console.error("Failed to fetch dashboard data:", error);
@@ -184,17 +202,21 @@ function AdminDashboard() {
                 <DistributionCard
                     title="Phân bố theo danh mục"
                     description="Tỉ lệ sản phẩm theo danh mục"
-                    data={categoryStats}
+                    data={categoryStats.categories || []}
                     emptyText="Chưa có danh mục nào"
                     idKey="category_id"
+                    centerValue={categoryStats?.total_categories || 0}
+                    centerLabel="Danh mục"
                 />
 
                 <DistributionCard
                     title="Phân bố theo thương hiệu"
                     description="Tỉ lệ sản phẩm theo thương hiệu"
-                    data={brandStats}
+                    data={brandStats.brands || []}
                     emptyText="Chưa có thương hiệu nào"
                     idKey="brand_id"
+                    centerValue={brandStats?.total_brands || 0}
+                    centerLabel="Thương hiệu"
                 />
             </div>
 

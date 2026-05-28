@@ -504,14 +504,14 @@ const AdminProductForm = () => {
                 </div>
 
                 <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:auto] sm:[scrollbar-width:thin] sm:[&::-webkit-scrollbar]:block">
-                    <table className="w-full min-w-300">
+                    <table className="w-full min-w-300 table-fixed">
                         <thead className="bg-gray-50 text-gray-400 uppercase text-xs">
                             <tr>
                                 <th className="text-left px-6 py-4 w-25">STT</th>
                                 <th className="text-left px-6 py-4">Hình ảnh</th>
                                 <th className="text-left px-6 py-4 w-40">Màu sắc</th>
                                 <th className="text-left px-6 py-4 w-40">Kích cỡ</th>
-                                <th className="text-left px-6 py-4 w-50">Giá bán</th>
+                                <th className="text-left px-6 py-4">Giá bán</th>
                                 <th className="text-left px-6 py-4 w-30">Đã bán</th>
                                 <th className="text-left px-6 py-4 w-30">Tồn</th>
                                 <th className="text-left px-6 py-4 w-35">Thao tác</th>
@@ -547,8 +547,8 @@ const AdminProductForm = () => {
                                                     className="w-15 h-15 rounded-lg object-cover bg-gray-100 border border-gray-200"
                                                 />
                                             </td>
-                                            <td className="px-6 py-4 font-semibold">{variant.color}</td>
-                                            <td className="px-6 py-4 font-semibold">{variant.size}</td>
+                                            <td className="px-6 py-4 font-semibold truncate ">{variant.color}</td>
+                                            <td className="px-6 py-4 font-semibold truncate">{variant.size}</td>
                                             <td className="px-6 py-4 font-semibold">{Number(variant.price || 0).toLocaleString("vi-VN")}đ</td>
                                             <td className="px-6 py-4 font-semibold">{Number(variant.sold || 0)}</td>
                                             <td className="px-6 py-4 text-center">
