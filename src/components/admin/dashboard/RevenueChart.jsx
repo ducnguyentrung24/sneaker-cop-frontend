@@ -1,4 +1,6 @@
 function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
+    const chartData = Array.isArray(revenueStats) ? revenueStats : [];
+    
     const formatCurrency = (value) =>
         Math.round(Number(value || 0)).toLocaleString("vi-VN") + "đ";
 
@@ -13,7 +15,7 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
     };
 
     const maxRevenue = Math.max(
-        ...revenueStats.map(item => Number(item.revenue || 0)),
+        ...chartData.map(item => Number(item.revenue || 0)),
         1
     );
 
@@ -22,44 +24,23 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                 <div>
-                    <h2 className="font-bold">Biểu đồ doanh thu</h2>
+                    <h2 className="font-bold">Biểu đồ doanh thu 7 ngày</h2>
                     <p className="text-xs text-gray-500 mt-1">
-                        Thống kê doanh thu theo thời gian
+                        Thống kê doanh thu trong tuần này
                     </p>
-                </div>
-
-                <div className="flex bg-gray-100 rounded-lg p-1 w-fit">
-                    {[
-                        { key: "week", label: "Tuần" },
-                        { key: "month", label: "Tháng" },
-                        { key: "year", label: "Năm" },
-                    ].map(item => (
-                        <button
-                            key={item.key}
-                            onClick={() => setRevenueType(item.key)}
-                            className={`px-3 py-1 text-xs rounded-md font-bold transition
-                                ${revenueType === item.key
-                                    ? "bg-white shadow-sm"
-                                    : "text-gray-500"
-                                }
-                            `}
-                        >
-                            {item.label}
-                        </button>
-                    ))}
                 </div>
             </div>
 
-            {revenueStats.length === 0 ? (
+            {chartData.length === 0 ? (
                 <div className="h-56 flex items-center justify-center text-sm text-gray-400">
-                    Chưa có dữ liệu doanh thu
+                    Chưa có dữ liệu doanh thu trong tuần
                 </div>
             ) : (
                 <>
                     {/* Chart */}
                     <div className="h-64 flex items-end gap-1 sm:gap-2 border-b border-gray-100 pb-2">
-                        {revenueStats.map((item, index) => {
-                            const revenue = Number(item.revenue || 0);
+                        {chartData.map((item, index) => {
+                            const revenue = Number(item.revenue || 0);;
 
                             const height = revenue > 0
                                 ? Math.max(14, (revenue / maxRevenue) * 100)
@@ -74,7 +55,7 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
                                         <div
                                             title={formatCurrency(revenue)}
                                             style={{ height: `${height}%` }}
-                                            className={`relative w-full max-w-14 rounded-t-xl overflow-hidden
+                                            className={`relative w-full max-w-20 rounded-t-xl overflow-hidden
                                                 ${revenue > 0
                                                     ? "bg-orange-500"
                                                     : "bg-orange-100"
@@ -89,9 +70,15 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
                                         </div>
                                     </div>
 
-                                    <span className="text-[10px] sm:text-xs text-gray-400 text-center line-clamp-1 w-full">
-                                        {item.label}
-                                    </span>
+                                    <div className="text-center w-full">
+                                        <p className="text-[11px] text-gray-800 font-bold leading-tight">
+                                            {item.day}
+                                        </p>
+
+                                        <p className="text-[10px] text-gray-400 font-medium leading-tight mt-1">
+                                            {item.date}
+                                        </p>
+                                    </div>
                                 </div>
                             );
                         })}
@@ -105,7 +92,7 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
                                 className="flex-1 text-center min-w-0"
                             >
                                 <p className="text-[10px] sm:text-xs text-gray-400">
-                                    {item.orders || 0} đơn
+                                    {Number(item.orders || 0)} đơn
                                 </p>
                             </div>
                         ))}

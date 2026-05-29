@@ -25,7 +25,7 @@ function AdminOrders() {
 
     const defaultFilters = {
         limit: 10,
-        status: "",
+        status: "PENDING",
         keyword: "",
         from_date: "",
         to_date: "",

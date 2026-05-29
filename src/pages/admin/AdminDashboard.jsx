@@ -24,22 +24,34 @@ import {
     faClock,
     faUser,
     faTriangleExclamation,
+    faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
 function AdminDashboard() {
     const [loading, setLoading] = useState(true);
+    const [period, setPeriod] = useState("today");
 
     const [summary, setSummary] = useState({
+        current_period: null,
         total_revenue: 0,
         total_orders: 0,
-        total_products: 0,
-        total_users: 0,
-        pending_orders: 0,
-        low_stock_count: 0,
+        completed_orders: 0,
+        cancelled_orders: 0,
+        cancel_rate: 0,
+        average_order_value: 0,
+        new_customers: 0,
+
+        overview: {
+            total_users: 0,
+            total_products: 0,
+            pending_orders: 0,
+            low_stock_count: 0,
+        },
     });
 
     const [revenueStats, setRevenueStats] = useState([]);
     const [topProducts, setTopProducts] = useState([]);
+
     const [categoryStats, setCategoryStats] = useState({
         total_categories: 0,
         total_products: 0,
@@ -50,17 +62,12 @@ function AdminDashboard() {
         total_products: 0,
         brands: [],
     });
-    const [recentOrders, setRecentOrders] = useState([]);
 
-    const [revenueType, setRevenueType] = useState("week");
+    const [recentOrders, setRecentOrders] = useState([]);
 
     useEffect(() => {
         fetchDashboard();
-    }, []);
-
-    useEffect(() => {
-        fetchRevenueStatistics();
-    }, [revenueType]);
+    }, [period]);
 
     const fetchDashboard = async () => {
         try {
@@ -68,13 +75,15 @@ function AdminDashboard() {
 
             const [
                 summaryRes,
+                revenueRes,
                 topProductsRes,
                 categoryRes,
                 brandRes,
                 ordersRes,
             ] = await Promise.all([
-                getDashboardSummary(),
-                getTopProducts({ limit: 5 }),
+                getDashboardSummary({ period }),
+                getRevenueStatistics(),
+                getTopProducts({ limit: 5, period }),
                 getCategoryStatistics(),
                 getBrandStatistics(),
                 getAllOrders({
@@ -85,7 +94,18 @@ function AdminDashboard() {
             ]);
 
             setSummary(summaryRes.data || {});
-            setTopProducts(topProductsRes.data || []);
+
+            setRevenueStats(
+                Array.isArray(revenueRes?.data?.data)
+                    ? revenueRes.data.data
+                    : []
+            );
+
+            setTopProducts(
+                Array.isArray(topProductsRes?.data?.data)
+                    ? topProductsRes.data.data
+                    : []
+            );
 
             setCategoryStats(categoryRes.data || {
                 total_categories: 0,
@@ -102,21 +122,10 @@ function AdminDashboard() {
         } catch(error) {
             console.error("Failed to fetch dashboard data:", error);
             console.error("Error response:", error.response?.data);
+
+            toast.error("Không thể tải dữ liệu dashboard. Vui lòng thử lại sau.");
         } finally {
             setLoading(false);
-        }
-    };
-
-    const fetchRevenueStatistics = async () => {
-        try {
-            const res = await getRevenueStatistics({
-                type: revenueType,
-            });
-
-            setRevenueStats(res.data || []);
-        } catch (error) {
-            console.error("Failed to fetch revenue statistics:", error);
-            console.error("Error response:", error.response?.data);
         }
     };
 
@@ -142,26 +151,32 @@ function AdminDashboard() {
             color: "text-orange-500 bg-orange-50",
         },
         {
+            title: "Đơn hàng hoàn thành",
+            value: formatNumber(summary.completed_orders),
+            icon: faCircleCheck,
+            color: "text-green-500 bg-green-50",
+        },
+        {
             title: "Tổng sản phẩm",
-            value: formatNumber(summary.total_products),
+            value: formatNumber(summary.overview?.total_products),
             icon: faBox,
             color: "text-blue-500 bg-blue-50",
         },
         {
             title: "Sản phẩm sắp hết",
-            value: formatNumber(summary.low_stock_count),
+            value: formatNumber(summary.overview?.low_stock_count),
             icon: faTriangleExclamation,
             color: "text-red-500 bg-red-50",
         },
         {
             title: "Đơn chờ xử lý",
-            value: formatNumber(summary.pending_orders),
+            value: formatNumber(summary.overview?.pending_orders),
             icon: faClock,
             color: "text-yellow-500 bg-yellow-50",
         },
         {
             title: "Tổng người dùng",
-            value: formatNumber(summary.total_users),
+            value: formatNumber(summary.overview?.total_users),
             icon: faUser,
             color: "text-purple-500 bg-purple-50",
         },
@@ -178,9 +193,37 @@ function AdminDashboard() {
     return (
         <div>
             {/* Header */}
-            <div className="mb-6">
-                <h1 className="text-2xl sm:text-3xl font-black">Tổng quan</h1>
-                <p className="text-sm text-gray-500 mt-1">Thống kê nhanh các chỉ số chính của cửa hàn</p>
+            <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl sm:text-3xl font-black">Tổng quan</h1>
+                    <p className="text-sm text-gray-500 mt-1">Thống kê nhanh các chỉ số chính của cửa hàng</p>
+                </div>
+
+                <div className="flex bg-white border border-gray-200 round-xl p-1 shadow-sm w-fit">
+                    <button
+                        onClick={() => setPeriod("today")}
+                        className={`h-10 px-5 rounded-lg text-sm font-bold transition
+                            ${period === "today"
+                                ? "bg-black text-white"
+                                : "text-gray-500 hover:bg-gray-100"
+                            }
+                        `}
+                    >
+                        Hôm nay
+                    </button>
+
+                    <button
+                        onClick={() => setPeriod("week")}
+                        className={`h-10 px-5 rounded-lg text-sm font-bold transition
+                            ${period === "week"
+                                ? "bg-black text-white"
+                                : "text-gray-500 hover:bg-gray-100"
+                            }
+                        `}
+                    >
+                        Tuần này
+                    </button>
+                </div>
             </div>
 
             {/* Stats Cards */}
@@ -188,11 +231,7 @@ function AdminDashboard() {
 
             {/* Revenue chart + top products */}
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
-                <RevenueChart
-                    revenueStats={revenueStats}
-                    revenueType={revenueType}
-                    setRevenueType={setRevenueType}
-                />
+                <RevenueChart revenueStats={revenueStats} />
 
                 <TopProductCard topProducts={topProducts} />
             </div>
