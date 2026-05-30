@@ -16,17 +16,6 @@ import TopProductCard from "../../components/admin/dashboard/TopProductsCard";
 import DistributionCard from "../../components/admin/dashboard/DistributionCard";
 import RecentOrdersTable from "../../components/admin/dashboard/RecentOrdersTable";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faMoneyBillWave,
-    faCartShopping,
-    faBox,
-    faClock,
-    faUser,
-    faTriangleExclamation,
-    faCircleCheck,
-} from "@fortawesome/free-solid-svg-icons";
-
 function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [period, setPeriod] = useState("today");
@@ -37,14 +26,13 @@ function AdminDashboard() {
         total_orders: 0,
         completed_orders: 0,
         cancelled_orders: 0,
-        cancel_rate: 0,
-        average_order_value: 0,
         new_customers: 0,
 
         overview: {
             total_users: 0,
             total_products: 0,
             pending_orders: 0,
+            cancel_rate: 0,
             low_stock_count: 0,
         },
     });
@@ -129,59 +117,6 @@ function AdminDashboard() {
         }
     };
 
-    const formatCurrency = (value) => {
-        return Math.round(Number(value || 0)).toLocaleString("vi-VN") + "đ";
-    };
-
-    const formatNumber = (value) => {
-        return Number(value || 0).toLocaleString("vi-VN");
-    };
-
-    const stats = [
-        {
-            title: "Tổng doanh thu",
-            value: formatCurrency(summary.total_revenue),
-            icon: faMoneyBillWave,
-            color: "text-green-500 bg-green-50",
-        },
-        {
-            title: "Tổng đơn hàng",
-            value: formatNumber(summary.total_orders),
-            icon: faCartShopping,
-            color: "text-orange-500 bg-orange-50",
-        },
-        {
-            title: "Đơn hàng hoàn thành",
-            value: formatNumber(summary.completed_orders),
-            icon: faCircleCheck,
-            color: "text-green-500 bg-green-50",
-        },
-        {
-            title: "Tổng sản phẩm",
-            value: formatNumber(summary.overview?.total_products),
-            icon: faBox,
-            color: "text-blue-500 bg-blue-50",
-        },
-        {
-            title: "Sản phẩm sắp hết",
-            value: formatNumber(summary.overview?.low_stock_count),
-            icon: faTriangleExclamation,
-            color: "text-red-500 bg-red-50",
-        },
-        {
-            title: "Đơn chờ xử lý",
-            value: formatNumber(summary.overview?.pending_orders),
-            icon: faClock,
-            color: "text-yellow-500 bg-yellow-50",
-        },
-        {
-            title: "Tổng người dùng",
-            value: formatNumber(summary.overview?.total_users),
-            icon: faUser,
-            color: "text-purple-500 bg-purple-50",
-        },
-    ];
-
     if (loading) {
         return (
             <div className="min-h-100 flex items-center justify-center text-gray-400">
@@ -195,7 +130,7 @@ function AdminDashboard() {
             {/* Header */}
             <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-black">Tổng quan</h1>
+                    <h1 className="text-2xl sm:text-3xl font-black">Tổng quan {period === "today" ? "hôm nay" : "tuần này"}</h1>
                     <p className="text-sm text-gray-500 mt-1">Thống kê nhanh các chỉ số chính của cửa hàng</p>
                 </div>
 
@@ -227,7 +162,10 @@ function AdminDashboard() {
             </div>
 
             {/* Stats Cards */}
-            <StatsCard stats={stats} />
+            <StatsCard 
+                summary={summary}
+                period={period} 
+            />
 
             {/* Revenue chart + top products */}
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">

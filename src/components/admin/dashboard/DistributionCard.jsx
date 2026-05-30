@@ -19,20 +19,8 @@ function DistributionCard({
         return Number(value || 0).toLocaleString("vi-VN");
     };
 
-    const getName = (item) => {
-        return item.category_name || item.brand_name || item.name || "Không xác định";
-    };
-
-    const getCount = (item) => {
-        return Number(item.product_count || item.total_products || item.count || 0);
-    };
-
-    const getPercent = (item) => {
-        return Number(item.percent || item.percentage || item.ratio || 0);
-    };
-
     const getTotalCount = (list) => {
-        return list.reduce((sum, item) => sum + getCount(item), 0);
+        return list.reduce((sum, item) => sum + Number(item.product_count || 0), 0);
     };
 
     const getCenterValue = () => {
@@ -45,7 +33,7 @@ function DistributionCard({
         let current = 0;
 
         const segments = list.map((item, index) => {
-            const percent = getPercent(item);
+            const percent = Number(item.percent || 0);
             const start = current;
             const end = current + percent;
 
@@ -83,10 +71,10 @@ function DistributionCard({
                     </div>
 
                     {/* Legend */}
-                    <div className="w-full sm:flex-1 space-y-3">
+                    <div className="w-full sm:flex-1 flex flex-col gap-3">
                         {data.map((item, index) => (
                             <div
-                                key={item[idKey] || item.id || index}
+                                key={item.category_id || item.brand_id || index}
                                 className="flex items-center justify-between gap-4"
                             >
                                 <div className="flex items-center gap-2 min-w-0">
@@ -96,13 +84,15 @@ function DistributionCard({
                                     />
 
                                     <span className="text-sm text-gray-600 font-medium line-clamp-1">
-                                        {getName(item)}
+                                        {item.category_name || item.brand_name || "Không xác định"}
                                     </span>
                                 </div>
 
                                 <div className="text-right shrink-0">
-                                    <p className="text-sm font-bold">{getPercent(item)}%</p>
-                                    <p className="text-xs text-gray-400">{formatNumber(getCount(item))} SP</p>
+                                    <p className="text-sm font-bold">
+                                        {Number(item.percent || 0)}%
+                                        <span className="text-xs text-gray-400 ml-2">({formatNumber(Number(item.product_count || 0))} SP)</span>
+                                    </p>  
                                 </div>
                             </div>
                         ))}

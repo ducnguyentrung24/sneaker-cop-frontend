@@ -3,15 +3,6 @@ import { useNavigate } from "react-router-dom";
 function RecentOrdersTable({ orders = [] }) {
     const navigate = useNavigate();
 
-    const formatCurrency = (value) => {
-        return Math.round(value || 0).toLocaleString("vi-VN") + "đ";
-    };
-
-    const formatDate = (date) => {
-        if (!date) return "N/A";
-        return new Date(date).toLocaleDateString("vi-VN");
-    };
-
     const paymentStatusMap = {
         PAID: {
             label: "Đã thanh toán",
@@ -98,9 +89,13 @@ function RecentOrdersTable({ orders = [] }) {
                                         className="border-t border-gray-100 hover:bg-gray-50 transition"
                                     >
                                         <td className="px-6 py-4 font-bold">#{order.order_code}</td>
-                                        <td className="px-6 py-4">{order.receiver_name}</td>
-                                        <td className="px-6 py-4 text-gray-500">{formatDate(order.order_date)}</td>
-                                        <td className="px-6 py-4 font-bold">{formatCurrency(order.total_price)}</td>
+                                        <td className="px-6 py-4 font-semibold">{order.receiver_name}</td>
+                                        <td className="px-6 py-4 text-gray-500 font-semibold">
+                                            {order.order_date ? new Date(order.order_date).toLocaleDateString("vi-VN") : "N/A"}
+                                        </td>
+                                        <td className="px-6 py-4 font-bold">
+                                            {Math.round(order.total_price || 0).toLocaleString("vi-VN")}đ
+                                        </td>
                                         <td className="px-6 py-4">
                                             <span className={`text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap ${payment.class}`}>
                                                 {payment.label}

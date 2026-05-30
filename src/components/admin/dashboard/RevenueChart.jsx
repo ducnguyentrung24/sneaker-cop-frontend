@@ -8,10 +8,10 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
         const number = Number(value || 0);
 
         if (number >= 1000000000) return `${(number / 1000000000).toFixed(1)}tỷ`;
-        if (number >= 1000000) return `${Math.round(number / 1000000)}tr`;
-        if (number >= 1000) return `${Math.round(number / 1000)}k`;
+        if (number >= 1000000) return `${(number / 1000000).toFixed(1)}tr`;
+        if (number >= 1000) return `${(number / 1000).toFixed(1)}k`;
 
-        return `${number}đ`;
+        return `${Math.round(number)}đ`;
     };
 
     const maxRevenue = Math.max(
@@ -25,9 +25,7 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                 <div>
                     <h2 className="font-bold">Biểu đồ doanh thu 7 ngày</h2>
-                    <p className="text-xs text-gray-500 mt-1">
-                        Thống kê doanh thu trong tuần này
-                    </p>
+                    <p className="text-xs text-gray-500 mt-1">Thống kê doanh thu trong tuần này</p>
                 </div>
             </div>
 
@@ -40,7 +38,7 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
                     {/* Chart */}
                     <div className="h-64 flex items-end gap-1 sm:gap-2 border-b border-gray-100 pb-2">
                         {chartData.map((item, index) => {
-                            const revenue = Number(item.revenue || 0);;
+                            const revenue = Number(item.revenue || 0);
 
                             const height = revenue > 0
                                 ? Math.max(14, (revenue / maxRevenue) * 100)
@@ -53,7 +51,7 @@ function RevenueChart({ revenueStats = [], revenueType, setRevenueType }) {
                                 >
                                     <div className="w-full flex-1 flex items-end justify-center">
                                         <div
-                                            title={formatCurrency(revenue)}
+                                            title={Math.round(Number(revenue || 0)).toLocaleString("vi-VN") + "đ"}
                                             style={{ height: `${height}%` }}
                                             className={`relative w-full max-w-20 rounded-t-xl overflow-hidden
                                                 ${revenue > 0

@@ -1,15 +1,4 @@
 function TopProductCard({ topProducts = [] }) {
-    const formatNumber = (value) => {
-        return Number(value || 0).toLocaleString("vi-VN");
-    };
-
-    const getName = (item) => {
-        return item.product_name || item.name || "Không xác định";
-    };
-
-    const getCount = (item) => {
-        return Number(item.sold_quantity || item.sold || 0);
-    };
 
     return (
         <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
@@ -25,13 +14,13 @@ function TopProductCard({ topProducts = [] }) {
                         >
                             <img
                                 src={product.thumbnail || product.image}
-                                alt={getName(product)}
+                                alt={product.product_name || "Không xác định"}
                                 className="w-14 h-14 rounded-xl object-cover bg-gray-100 shrink-0"
                             />
 
                             <div className="flex-1 min-w-0">
-                                <p className="font-bold text-sm line-clamp-1">{getName(product)}</p>
-                                <p className="text-xs text-gray-400">{formatNumber(getCount(product))} lượt bán</p>
+                                <p className="font-bold text-sm line-clamp-1">{product.product_name || "Không xác định"}</p>
+                                <p className="text-xs text-gray-400">{Number(product.sold_quantity || 0).toLocaleString("vi-VN")} lượt bán</p>
                             </div>
 
                             <span className="text-xs font-bold text-green-500">
