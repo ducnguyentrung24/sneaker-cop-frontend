@@ -54,9 +54,16 @@ function CartPage() {
         .filter(i => selected.includes(i.id))
         .reduce((sum, i) => sum + i.total, 0);
 
+    const hasStockIssue = cart.items.some(i => i.stock_error);
+
     const handleCheckout = () => {
         if (!selected.length) {
             toast.error("Vui lòng chọn sản phẩm để thanh toán");
+            return;
+        }
+
+        if (hasStockIssue) {
+            toast.error("Số lượng sản phẩm tồn kho không đủ");
             return;
         }
 
@@ -154,6 +161,12 @@ function CartPage() {
                                             <p className="text-xs font-semibold text-gray-500">
                                                 Màu: {item.variant.color} | Size: {item.variant.size}
                                             </p>
+
+                                            {item.stock_error && (
+                                                <p className="text-red-500 text-xs mt-1">
+                                                    {item.stock_message}
+                                                </p>
+                                            )}
 
                                             {/* Quantity */}
                                             <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden w-fit mt-2">

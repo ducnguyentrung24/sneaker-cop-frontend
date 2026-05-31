@@ -72,7 +72,7 @@ export const CartProvider = ({ children }) => {
 
         } catch(error) {
             console.error("Failed to update cart item:", error);
-            const message = error.response?.data?.message || "Vượt quá số lượng tồn kho";
+            const message = error.response?.data?.error || error.response?.data?.message || "Vượt quá số lượng tồn kho";
             toast.error(message);
         }
     };
