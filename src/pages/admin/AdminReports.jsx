@@ -691,7 +691,7 @@ function RevenueOrdersCard({
                 </span>
             </div>
 
-            <div className="space-y-3 max-h-[430px] overflow-y-auto pr-1">
+            <div className="space-y-3 max-h-108 overflow-y-auto pr-1">
                 {orders.length > 0 ? (
                     orders.slice(0, 8).map((order, index) => (
                         <div

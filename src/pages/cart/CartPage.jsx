@@ -18,8 +18,12 @@ import {
 function CartPage() {
     const navigate = useNavigate();
 
-    const { cart, loading, updateQuantity, removeItem, removeManyItems } = useCart();
+    const { cart, loading, fetchCart, updateQuantity, removeItem, removeManyItems } = useCart();
     const [selected, setSelected] = useState([]);
+
+    useEffect(() => {
+        fetchCart();
+    }, []);
 
     useEffect(() => {
         if (cart.items.length) {
@@ -54,7 +58,9 @@ function CartPage() {
         .filter(i => selected.includes(i.id))
         .reduce((sum, i) => sum + i.total, 0);
 
-    const hasStockIssue = cart.items.some(i => i.stock_error);
+    const hasStockIssue = cart.items
+        .filter(i => selected.includes(i.id))
+        .some(i => i.quantity > i.variant.stock);
 
     const handleCheckout = () => {
         if (!selected.length) {
@@ -162,9 +168,9 @@ function CartPage() {
                                                 Màu: {item.variant.color} | Size: {item.variant.size}
                                             </p>
 
-                                            {item.stock_error && (
+                                            {item.quantity > item.variant.stock && (
                                                 <p className="text-red-500 text-xs mt-1">
-                                                    {item.stock_message}
+                                                    Chỉ còn {item.variant.stock} sản phẩm
                                                 </p>
                                             )}
 
