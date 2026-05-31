@@ -34,6 +34,7 @@ import AdminCategories from "../pages/admin/AdminCategories";
 import AdminBrands from "../pages/admin/AdminBrands";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminProductForm from "../pages/admin/AdminProductForm";
+import AdminReports from "../pages/admin/AdminReports";
 import AdminUsers from "../pages/admin/AdminUsers";
 
 
@@ -193,6 +194,12 @@ function AppRoutes() {
             <Route path="/admin/products/:id/edit" element={
                 <AdminLayout>
                     <AdminProductForm />
+                </AdminLayout>
+            } />
+            
+            <Route path="/admin/reports" element={
+                <AdminLayout>
+                    <AdminReports />
                 </AdminLayout>
             } />
 

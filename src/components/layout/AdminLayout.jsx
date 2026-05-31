@@ -4,10 +4,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faChartLine,
+    faTableCellsLarge,
     faBox,
     faTags,
     faLayerGroup,
+    faChartLine,
     faUsers,
     faArrowLeft,
     faRightFromBracket,
@@ -22,7 +23,7 @@ function AdminLayout({ children }) {
         {
             path: "/admin",
             label: "Tổng quan",
-            icon: faChartLine,
+            icon: faTableCellsLarge,
             end: true,
         },
         {
@@ -44,6 +45,11 @@ function AdminLayout({ children }) {
             path: "/admin/products",
             label: "Sản phẩm",
             icon: faBox,
+        },
+        {
+            path: "/admin/reports",
+            label: "Báo cáo",
+            icon: faChartLine,
         },
         {
             path: "/admin/users",
