@@ -122,7 +122,7 @@ function CheckoutPage() {
                         Quay lại
                     </div>
 
-                    <h1 className="text-2xl sm:text-3xl font-bold mt-3 uppercase tracking-tight">Thanh toán</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold mt-3 uppercase tracking-tight">Đặt hàng & Thanh toán</h1>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">

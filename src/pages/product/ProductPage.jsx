@@ -36,21 +36,31 @@ function ProductPage() {
     useEffect(() => {
         const fetchRecommend = async () => {
             try {
-                const res = await getRecommendations({
-                    limit: 10,
-                });
+                const res = await getRecommendations({ limit: 10 });
 
-                setRecommend(res.data || []);
-            } catch(error) {
-                try {
-                    const fallbackRes = await getProducts({
+                const recommendations = res.data || [];
+
+                if (recommendations.length === 0) {
+                    const fallBackRes = await getProducts({
                         limit: 10,
                         sort: "sold_desc",
                     });
 
-                    setRecommend(fallbackRes.data.data || []);
+                    setRecommend(fallBackRes.data.data || []);
+                    return;
+                }
+
+                setRecommend(recommendations);
+            } catch(error) {
+                try {
+                    const fallBackRes = await getProducts({
+                        limit: 10,
+                        sort: "sold_desc",
+                    });
+
+                    setRecommend(fallBackRes.data.data || []);
                 } catch(fallbackError) {
-                    console.error("Fetch fallback recommend products error: ", fallbackError);
+                    console.error("Fetch fallback recommend product render: ", fallbackError);
                 }
             }
         };

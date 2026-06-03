@@ -39,10 +39,10 @@ function CheckoutFail() {
                 {/* Buttons */}
                 <div className="flex gap-3">
                     <button
-                        onClick={() => navigate("/checkout")}
+                        onClick={() => navigate("/products")}
                         className="flex-1 bg-black text-white py-3 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition"
                     >
-                        THỬ LẠI NGAY
+                        TIẾP TỤC THANH TOÁN
                     </button>
 
                     <button

@@ -7,6 +7,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '../../context/AuthContext';
 
+import toast from 'react-hot-toast';
+
 function LoginPage() {
     const navigate = useNavigate();
     const { loginUser } = useAuth();
@@ -70,6 +72,7 @@ function LoginPage() {
             loginUser(res.user);
             navigate('/');
         } catch (error) {
+            toast.error(error.response?.data?.message || 'Đăng nhập thất bại');
             setError('Email hoặc Mật khẩu không đúng');
         } finally {
             setLoading(false);

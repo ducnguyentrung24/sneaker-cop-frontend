@@ -87,7 +87,7 @@ function CartPage() {
             {/* Header */}
             <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4 text-sm shadow-md">
                 <span
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate("/products")}
                     className="flex items-center gap-2 cursor-pointer font-semibold shrink-0"
                 >
                     <FontAwesomeIcon icon={faArrowLeft} />

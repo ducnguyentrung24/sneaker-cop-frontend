@@ -5,6 +5,8 @@ import { register } from '../../services/auth.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
+import toast from 'react-hot-toast';
+
 function RegisterPage() {
     const navigate = useNavigate();
 
@@ -81,7 +83,7 @@ function RegisterPage() {
             navigate('/login');
         } catch (error) {
             const message = error.response?.data?.message;
-
+            toast.error(message);
             if (message === 'Email already exists') setError('Email đã được sử dụng để đăng ký tài khoản')
             else setError('Đăng ký thất bại. Vui lòng thử lại');
         } finally {

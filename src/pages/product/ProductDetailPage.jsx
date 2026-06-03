@@ -164,7 +164,7 @@ function ProductDetailPage() {
 
             {/* Related */}
             <div className='mt-10'>
-                <h2 className='font-bold mb-4 text-base sm:text-lg'>SẢN PHẨM TƯƠNG TỰ</h2>
+                <h2 className='font-bold mb-4 text-base sm:text-lg'>SẢN PHẨM LIÊN QUAN</h2>
                 <ProductSlider products={related} />
             </div>
         </div>

@@ -175,7 +175,7 @@ function Header() {
                                         <div className="absolute right-0 mt-3 w-64 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50">
                                             <Link to="/profile" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 text-sm">
                                                 <FontAwesomeIcon icon={faUser} />
-                                                Thông tin tài khoản
+                                                Cài đặt tài khoản
                                             </Link>
 
                                             <Link to="/orders" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 text-sm">
