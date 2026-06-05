@@ -88,7 +88,7 @@ function RecentOrdersTable({ orders = [] }) {
                                         key={order.id}
                                         className="border-t border-gray-100 hover:bg-gray-50 transition"
                                     >
-                                        <td className="px-6 py-4 font-bold">#{order.order_code}</td>
+                                        <td className="px-6 py-4 font-bold">{order.order_code}</td>
                                         <td className="px-6 py-4 font-semibold">{order.receiver_name}</td>
                                         <td className="px-6 py-4 text-gray-500 font-semibold">
                                             {order.order_date ? new Date(order.order_date).toLocaleDateString("vi-VN") : "N/A"}

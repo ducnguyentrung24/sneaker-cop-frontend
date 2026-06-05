@@ -14,18 +14,17 @@ function ProductCard({ product }) {
     
     const hasDiscount = discount_percent > 0;
 
-
     return (
         <div
             onClick={() => navigate(`/products/${id}`)}
             className="bg-white rounded-2xl p-3 sm:p-4 shadow-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer">
             {/* Image */}
             <div className="relative bg-gray-100 rounded-xl p-2 sm:p-3">
-                <img src={thumbnail} className="w-full h-36 sm:h-40 md:h-45 object-cover rounded-md" />
+                <img src={thumbnail} className="w-full h-36 sm:h-40 md:h-45 object-contain rounded-md" />
 
                 {/* Sale badge */}
                 {discount_percent > 0 && (
-                    <span className="absolute top-2 left-1 bg-red-500 text-white text-xs px-1.5 py-1 rounded-full font-bold">
+                    <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md tracking-wide">
                         -{discount_percent}% OFF
                     </span>
                 )}

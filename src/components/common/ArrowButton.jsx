@@ -7,8 +7,8 @@ function ArrowButton({ direction = 'left', onClick, className="" }) {
     return (
         <button
             onClick={onClick}
-            className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 z-10 flex items-center justify-center bg-white/10
-                backdrop-blur text-black rounded text-xs sm:text-base hover:bg-white/20 transition
+            className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 z-20 flex items-center justify-center bg-white
+                shadow-md border border-gray-200 backdrop-blur text-black rounded-full text-xs sm:text-base hover:bg-white/20 transition
                 ${isLeft ? 'left-5' : 'right-5'} 
                 ${className}
                 `}

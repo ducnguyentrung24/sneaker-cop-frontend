@@ -186,7 +186,9 @@ function AddressPage() {
 
                         {/* Empty */}
                         {addresses.length === 0 && (
-                            <div className="border-2 border-dashed rounded-xl p-14 flex flex-col items-center justify-center text-gray-400">
+                            <div 
+                                onClick={handleAdd}
+                                className="border-2 border-dashed rounded-xl p-14 flex flex-col items-center justify-center text-gray-400">
                                 <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-3">
                                     <FontAwesomeIcon icon={faLocationDot} />
                                 </div>
