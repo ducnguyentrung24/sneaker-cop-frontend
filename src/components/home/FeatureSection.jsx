@@ -1,69 +1,82 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faBolt,
-    faFire,
-    faRankingStar,
-    faMedal
+    faShieldHalved,
+    faTruckFast,
+    faArrowsRotate,
+    faAward,
 } from "@fortawesome/free-solid-svg-icons";
 
 function FeatureSection() {
     const features = [
         {
-            icon: faBolt,
-            title: "Xu Hướng Mới",
-            desc: "Cập nhật sneaker hot nhất mỗi ngày"
+            icon: faShieldHalved,
+            title: "Chính hãng 100%",
+            desc: "Sản phẩm chuẩn hãng",
         },
         {
-            icon: faFire,
-            title: "Giảm Giá",
-            desc: "Sản phẩm đang có ưu đãi hấp dẫn"
+            icon: faTruckFast,
+            title: "Miễn phí vận chuyển",
+            desc: "Cho đơn hàng đủ điều kiện",
         },
         {
-            icon: faRankingStar,
-            title: "Bán Chạy",
-            desc: "Những mẫu được yêu thích nhất"
+            icon: faArrowsRotate,
+            title: "Đổi trả dễ dàng",
+            desc: "Hỗ trợ đổi mẫu đổi size",
         },
         {
-            icon: faMedal,
-            title: "Thương Hiệu",
-            desc: "Nike, Adidas, Puma, Vans..."
-        }
+            icon: faAward,
+            title: "Bảo hành 12 tháng",
+            desc: "An tâm sau mua",
+        },
     ];
 
     return (
-        <section className="py-10">
-            <div className="max-w-300 mx-auto px-4">
+        <section className="py-8 bg-gray-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="bg-white border border-orange-100 rounded-3xl p-4 sm:p-5 shadow-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {features.map((item, index) => (
+                            <div
+                                key={index}
+                                className="
+                                    group bg-white rounded-2xl border border-gray-100
+                                    px-5 py-4 flex items-center gap-4 min-h-20
+                                    shadow-sm
+                                    transition duration-300
+                                    hover:-translate-y-1 hover:scale-[1.02]
+                                    hover:border-orange-300 hover:shadow-lg
+                                "
+                            >
+                                {/* Icon */}
+                                <div
+                                    className="
+                                        w-12 h-12 rounded-2xl
+                                        bg-orange-100 text-orange-500
+                                        flex items-center justify-center shrink-0
+                                        transition duration-300
+                                        group-hover:bg-orange-500 group-hover:text-white
+                                    "
+                                >
+                                    <FontAwesomeIcon
+                                        icon={item.icon}
+                                        className="text-lg"
+                                    />
+                                </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+                                {/* Text */}
+                                <div>
+                                    <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight">
+                                        {item.title}
+                                    </h3>
 
-                    {features.map((item, index) => (
-                        <div
-                            key={index}
-                            className="flex items-start gap-4 min-h-23"
-                        >
-                            {/* Icon */}
-                            <div className="w-14 h-14 flex items-center justify-center">
-                                <FontAwesomeIcon
-                                    icon={item.icon}
-                                    className="text-red-500 text-xl"
-                                />
+                                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                                        {item.desc}
+                                    </p>
+                                </div>
                             </div>
-
-                            {/* Text */}
-                            <div className="flex flex-col justify-center">
-                                <h3 className="text-[15px] font-bold text-gray-900 tracking-tight leading-snug">
-                                    {item.title}
-                                </h3>
-
-                                <p className="text-[13px] text-gray-600 mt-1 leading-relaxed">
-                                    {item.desc}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-
+                        ))}
+                    </div>
                 </div>
-
             </div>
         </section>
     );

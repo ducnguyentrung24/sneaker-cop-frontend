@@ -65,10 +65,10 @@ function Hero() {
             </div>
 
             {/* Button arrow left */}
-            <ArrowButton direction="left" onClick={prev} className="text-white hidden sm:block" />
+            <ArrowButton direction="left" onClick={prev} className="hidden sm:block" />
 
             {/* Button arrow right */}
-            <ArrowButton direction="right" onClick={next} className="text-white hidden sm:block" />
+            <ArrowButton direction="right" onClick={next} className="hidden sm:block" />
 
             {/* Dots */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">

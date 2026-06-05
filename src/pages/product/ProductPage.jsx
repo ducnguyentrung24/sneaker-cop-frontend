@@ -96,6 +96,18 @@ function ProductPage() {
         }
     }, [location.state]);
 
+    // useEffect(() => {
+    //     if (!location.state) return;
+
+    //     setFilters((prev) => ({
+    //         ...prev,
+    //         page: 1,
+    //         filter: location.state.filter ?? null,
+    //         sort: location.state.sort ?? "newest",
+    //         min_discount_percent: location.state.min_discount_percent ?? prev.min_discount_percent,
+    //     }));
+    // }, [location.state]);
+
     return (
         <div className="max-w-7xl mx-auto sm:px-6 py-10">
             {/* Recommend Section */}
