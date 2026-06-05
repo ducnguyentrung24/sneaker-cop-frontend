@@ -41,7 +41,7 @@ function FeatureSection() {
                             key={index}
                             className="flex items-start gap-4 min-h-23"
                         >
-                            {/* ICON */}
+                            {/* Icon */}
                             <div className="w-14 h-14 flex items-center justify-center">
                                 <FontAwesomeIcon
                                     icon={item.icon}
@@ -49,7 +49,7 @@ function FeatureSection() {
                                 />
                             </div>
 
-                            {/* TEXT */}
+                            {/* Text */}
                             <div className="flex flex-col justify-center">
                                 <h3 className="text-[15px] font-bold text-gray-900 tracking-tight leading-snug">
                                     {item.title}
