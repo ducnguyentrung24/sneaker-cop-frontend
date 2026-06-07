@@ -403,6 +403,7 @@ const AdminProductForm = () => {
                                             base_price: e.target.value,
                                         }))
                                     }
+                                    onWheel={(e) => e.target.blur()}
                                     placeholder="0"
                                     className="mt-2 w-full h-11 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm outline-none focus:border-gray-500"
                                 />
@@ -420,6 +421,7 @@ const AdminProductForm = () => {
                                             discount_percent: e.target.value,
                                         }))
                                     }
+                                    onWheel={(e) => e.target.blur()}
                                     placeholder="0"
                                     className="mt-2 w-full h-11 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm outline-none focus:border-gray-500"
                                 />
@@ -669,7 +671,7 @@ const AdminProductForm = () => {
                                 </div>
                             </div>
 
-                            {/* Price _ Stock */}
+                            {/* Price + Stock */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-xs font-bold text-gray-400 uppercase">Giá bán</label>
@@ -683,6 +685,7 @@ const AdminProductForm = () => {
                                                     price: e.target.value,
                                                 }))
                                             }
+                                            onWheel={(e) => e.target.blur()}
                                             placeholder="0"
                                             className="w-full px-3 text-sm outline-none bg-transparent"
                                         />
@@ -702,6 +705,7 @@ const AdminProductForm = () => {
                                                 stock: e.target.value,
                                             }))
                                         }
+                                        onWheel={(e) => e.target.blur()}
                                         placeholder="0"
                                         className="mt-2 w-full h-11 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm outline-none focus:border-orange-500"
                                     />

@@ -38,29 +38,11 @@ function FeatureSection() {
                         {features.map((item, index) => (
                             <div
                                 key={index}
-                                className="
-                                    group bg-white rounded-2xl border border-gray-100
-                                    px-5 py-4 flex items-center gap-4 min-h-20
-                                    shadow-sm
-                                    transition duration-300
-                                    hover:-translate-y-1 hover:scale-[1.02]
-                                    hover:border-orange-300 hover:shadow-lg
-                                "
+                                className="group bg-white rounded-2xl border border-gray-100 px-5 py-4 flex items-center gap-4 min-h-20 shadow-sm transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:border-orange-300 hover:shadow-lg"
                             >
                                 {/* Icon */}
-                                <div
-                                    className="
-                                        w-12 h-12 rounded-2xl
-                                        bg-orange-100 text-orange-500
-                                        flex items-center justify-center shrink-0
-                                        transition duration-300
-                                        group-hover:bg-orange-500 group-hover:text-white
-                                    "
-                                >
-                                    <FontAwesomeIcon
-                                        icon={item.icon}
-                                        className="text-lg"
-                                    />
+                                <div className="w-12 h-12 rounded-2xl bg-orange-100 text-orange-500 flex items-center justify-center shrink-0 transition duration-300 group-hover:bg-orange-500 group-hover:text-white">
+                                    <FontAwesomeIcon icon={item.icon} className="text-lg"  />
                                 </div>
 
                                 {/* Text */}
