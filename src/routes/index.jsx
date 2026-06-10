@@ -27,16 +27,14 @@ import OrderDetailPage from "../pages/order/OrderDetailPage";
 import WriteReviewPage from "../pages/review/WriteReviewPage";
 
 import AdminLayout from "../components/layout/AdminLayout";
-import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminOrderDetail from "../pages/admin/AdminOrderDetail";
 import AdminCategories from "../pages/admin/AdminCategories";
 import AdminBrands from "../pages/admin/AdminBrands";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminProductForm from "../pages/admin/AdminProductForm";
-import AdminReports from "../pages/admin/AdminReports";
 import AdminUsers from "../pages/admin/AdminUsers";
-
+import AdminRevenueStatistics from "../pages/admin/AdminRevenueStatistics";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -145,7 +143,7 @@ function AppRoutes() {
             {/* Admin */}
             <Route path="/admin" element={
                 <AdminLayout>
-                    <AdminDashboard />
+                    <AdminRevenueStatistics />
                 </AdminLayout>
             } />
 
@@ -196,13 +194,6 @@ function AppRoutes() {
                     <AdminProductForm />
                 </AdminLayout>
             } />
-            
-            <Route path="/admin/reports" element={
-                <AdminLayout>
-                    <AdminReports />
-                </AdminLayout>
-            } />
-
 
             {/* Protected routes */}
             <Route path="/" element={

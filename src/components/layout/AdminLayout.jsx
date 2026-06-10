@@ -22,7 +22,7 @@ function AdminLayout({ children }) {
     const menuItems = [
         {
             path: "/admin",
-            label: "Tổng quan",
+            label: "Thống kê",
             icon: faTableCellsLarge,
             end: true,
         },
@@ -45,11 +45,6 @@ function AdminLayout({ children }) {
             path: "/admin/products",
             label: "Sản phẩm",
             icon: faBox,
-        },
-        {
-            path: "/admin/reports",
-            label: "Báo cáo",
-            icon: faChartLine,
         },
         {
             path: "/admin/users",

@@ -129,11 +129,11 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
             <Pagination 
                 pagination={pagination} 
                 onPageChange={(newPage) => 
-                        setFilters((prev) => ({
+                    setFilters((prev) => ({
                             ...prev,
                             page: newPage,
-                        }))
-                    } 
+                    }))
+                } 
             />
         </div>
     );
