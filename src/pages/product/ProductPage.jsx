@@ -73,9 +73,20 @@ function ProductPage() {
         const fetchProducts = async () => {
             try {
                 setLoading(true);
-                const res = await getProducts(filters);
 
-                setProducts(res.data.data);
+                const query = { ...filters };
+
+                if (filters.filter === "best_seller") query.sort = "sold_desc";
+                if (filters.filter === "discount") query.min_discount_percent = filters.min_discount_percent || 1;
+                if (filters.filter !== "discount") delete query.min_discount_percent;
+
+                delete query.filter;
+
+                console.log("Fetch products with query: ", query);
+
+                const res = await getProducts(query);
+
+                setProducts(res.data.data || []);
                 setPagination(res.data.pagination || {});
             } catch(error) {
                 console.error(error);
@@ -87,15 +98,6 @@ function ProductPage() {
         fetchProducts();
     }, [filters]);
 
-    // useEffect(() => {
-    //     if (location.state?.filter) {
-    //         setFilters((prev) => ({
-    //             ...prev,
-    //             filter: location.state.filter,
-    //         }));
-    //     }
-    // }, [location.state]);
-
     useEffect(() => {
         if (!location.state) return;
 
@@ -104,7 +106,9 @@ function ProductPage() {
             page: 1,
             filter: location.state.filter ?? null,
             sort: location.state.sort ?? "newest",
-            min_discount_percent: location.state.min_discount_percent ?? prev.min_discount_percent,
+            min_discount_percent: location.state.filter === "discount"
+                ? location.state.min_discount_percent || 1
+                : null,
         }));
     }, [location.state]);
 

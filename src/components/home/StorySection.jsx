@@ -34,7 +34,7 @@ const stories = [
         className: "",
         state: {
             filter: "best_seller",
-            sort: "newest",
+            sort: "sold_desc",
         },
     },
     {
@@ -46,6 +46,7 @@ const stories = [
         state: {
             filter: "discount",
             sort: "newest",
+            min_discount_percent: 1,
         },
     },
 ];

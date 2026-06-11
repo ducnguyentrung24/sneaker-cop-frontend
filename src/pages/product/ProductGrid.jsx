@@ -27,29 +27,63 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
                 ? "sale"
                 : "all";
 
+    // const handleSort = (value) => {
+    //     setFilters((prev) => ({
+    //         ...prev,
+    //         sort: value,
+    //         filter: null,
+    //         page: 1,
+    //     }));
+    // };
+
+    // const handleTab = (type) => {
+    //     let newFilters = {
+    //         page: 1,
+    //         sort: "newest",
+    //         filter: null,
+    //     };
+
+    //     if (type === "best_seller") newFilters.filter = "best_seller";
+    //     if (type === "sale") newFilters.filter = "discount";
+
+    //     setFilters((prev) => ({
+    //         ...prev,
+    //         ...newFilters,
+    //         page: 1,
+    //     }));
+    // };
+
     const handleSort = (value) => {
         setFilters((prev) => ({
             ...prev,
             sort: value,
             filter: null,
+            min_discount_percent: null,
             page: 1,
         }));
     };
 
     const handleTab = (type) => {
-        let newFilters = {
+        const newFilters = {
             page: 1,
             sort: "newest",
             filter: null,
+            min_discount_percent: null,
         };
 
-        if (type === "best_seller") newFilters.filter = "best_seller";
-        if (type === "sale") newFilters.filter = "discount";
+        if (type === "best_seller") {
+            newFilters.filter = "best_seller";
+            newFilters.sort = "sold_desc";
+        }
+
+        if (type === "sale") {
+            newFilters.filter = "discount";
+            newFilters.min_discount_percent = 1;
+        }
 
         setFilters((prev) => ({
             ...prev,
             ...newFilters,
-            page: 1,
         }));
     };
 
