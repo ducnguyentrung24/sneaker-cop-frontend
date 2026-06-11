@@ -39,7 +39,7 @@ function Header() {
     const navLinks = [
         { path: "/", label: "Trang chủ" },
         { path: "/products", label: "Sản phẩm" },
-        { path: "/contact", label: "Liên hệ" },
+        { path: "/support", label: "Hỗ trợ" },
     ];
 
     useEffect(() => {
