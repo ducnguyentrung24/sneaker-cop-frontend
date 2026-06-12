@@ -200,7 +200,7 @@ function AdminOrderDetail() {
 
                     <div className="flex flex-col items-end gap-2 shrink-0">
                         <p className="text-sm sm:text-base whitespace-nowrap">
-                            Ngày đặt: {new Date(order.created_at).toLocaleDateString("vi-VN")}
+                            Ngày đặt: {new Date(order.created_at).toLocaleString("vi-VN")}
                         </p>
 
                         <div className={`w-fit px-3 py-1 rounded-full text-xs font-bold

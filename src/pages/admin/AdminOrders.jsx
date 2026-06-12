@@ -29,7 +29,7 @@ function AdminOrders() {
         keyword: "",
         from_date: "",
         to_date: "",
-        sort: "created_at:desc",
+        sort: "updated_at:desc",
     };
 
     const [orders, setOrders] = useState([]);
@@ -305,6 +305,7 @@ function AdminOrders() {
                                 <th className="text-left px-6 py-4">Mã đơn</th>
                                 <th className="text-left px-6 py-4">Khách hàng</th>
                                 <th className="text-left px-6 py-4">Ngày đặt</th>
+                                <th className="text-left px-6 py-3">Ngày cập nhật</th>
                                 <th className="text-left px-6 py-4">Thanh toán</th>
                                 <th className="text-left px-6 py-4">Tổng tiền</th>
                                 <th className="text-left px-6 py-4">Trạng thái</th>
@@ -341,7 +342,10 @@ function AdminOrders() {
                                             <td className="px-6 py-4 font-bold">{order.order_code}</td>
                                             <td className="px-6 py-4 font-semibold">{order.receiver_name}</td>
                                             <td className="px-6 py-4 text-gray-500">
-                                                {new Date(order.order_date).toLocaleString("vi-VN") || "N/A"}
+                                                {new Date(order.order_created_at).toLocaleDateString("vi-VN") || "N/A"}
+                                            </td>
+                                            <td className="px-6 py-4 text-gray-500">
+                                                {new Date(order.order_updated_at).toLocaleDateString("vi-VN") || "N/A"}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className={`text-[10px] font-bold px-3 py-1 rounded-full whitespace-nowrap ${payment.className}`}>
