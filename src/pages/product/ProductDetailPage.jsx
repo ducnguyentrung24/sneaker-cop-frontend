@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { getProductById, getProducts } from '../../services/product.service';
@@ -28,7 +28,7 @@ function ProductDetailPage() {
         rating_distribution: {},
     });
 
-    const [actieveTab, setActiveTab] = useState("description");
+    const [activeTab, setActiveTab] = useState("description");
 
     const [reviewFilters, setReviewFilters] = useState({
         page: 1,
@@ -49,7 +49,7 @@ function ProductDetailPage() {
         fetchProduct();
     }, [id]);
 
-    // Reviews (load more, filter by rating)
+    // Reviews
     useEffect(() => {
         if (!id) return;
         const fetchReviews = async () => {
@@ -127,8 +127,8 @@ function ProductDetailPage() {
             <div className='mt-10 flex gap-4 sm:gap-6 overflow-x-auto text-xs font-semibold [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
                 <button
                     onClick={() => setActiveTab("description")}
-                    className={`pb-2 
-                        ${actieveTab === "description"
+                    className={`pb-2 cursor-pointer
+                        ${activeTab === "description"
                             ? 'font-bold px-3 border-b-3 border-orange-500'
                             : 'text-gray-400'
                         }
@@ -139,8 +139,8 @@ function ProductDetailPage() {
 
                 <button
                     onClick={() =>setActiveTab("reviews")}
-                    className={`pb-2
-                        ${actieveTab === "reviews"
+                    className={`pb-2 cursor-pointer
+                        ${activeTab === "reviews"
                             ? 'font-bold px-3 border-b-3 border-orange-500'
                             : 'text-gray-400'
                         }
@@ -151,16 +151,16 @@ function ProductDetailPage() {
             </div>
 
             {/* Description/Reviews */}
-            {actieveTab === "description" ? (
+            {activeTab === "description" ? (
                 <ProductDescription product={product} />
-            ) : (
+            ) : activeTab === "reviews" ? (
                 <ProductReView
                     productId={id}
                     reviewData={reviewData}
                     reviewFilters={reviewFilters}
                     setReviewFilters={setReviewFilters}
                 />
-            )}  
+            ): null}  
 
             {/* Related */}
             <div className='mt-10'>

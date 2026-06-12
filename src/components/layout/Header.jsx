@@ -31,7 +31,10 @@ function Header() {
 
     const dropdownRef = useRef(null);
 
-    const isActive = (path) => location.pathname === path;
+    const isActive = (path) => {
+        if (path === "/") return location.pathname === "/";
+        return location.pathname === path || location.pathname.startsWith(`${path}/`);
+    };
 
     const totalQuantity =
         cart?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
