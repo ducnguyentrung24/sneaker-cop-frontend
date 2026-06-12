@@ -79,13 +79,10 @@ function ProductPage() {
                 if (filters.filter === "best_seller") query.sort = "sold_desc";
                 if (filters.filter === "discount") query.min_discount_percent = filters.min_discount_percent || 1;
                 if (filters.filter !== "discount") delete query.min_discount_percent;
-
                 delete query.filter;
 
-                console.log("Fetch products with query: ", query);
-
                 const res = await getProducts(query);
-
+                
                 setProducts(res.data.data || []);
                 setPagination(res.data.pagination || {});
             } catch(error) {

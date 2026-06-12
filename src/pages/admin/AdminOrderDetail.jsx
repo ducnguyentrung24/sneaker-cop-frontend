@@ -138,34 +138,41 @@ function AdminOrderDetail() {
         },
     };
 
-    const paymentStatusMap = {
-        PAID: {
-            label: "Đã thanh toán",
-            className: "bg-green-100 text-green-500",
-        },
-        UNPAID: {
-            label: "Chưa thanh toán",
-            className: "bg-orange-100 text-orange-500",
-        },
-        FAILED: {
-            label: "Thanh toán thất bại",
-            className: "bg-red-100 text-red-500",
-        },
+    const getPaymentStatusLabel = (status) => {
+        switch(status) {
+            case "PAID":
+                return "Đã thanh toán";
+            case "FAILED":
+                return "Thanh toán thất bại";
+            case "UNPAID":
+                return "Chưa thanh toán";
+            default:
+                return "Không xác định";
+        }
+    };
+
+    const getPaymentStatusClass = (status) => {
+        switch(status) {
+            case "PAID":
+                return "bg-green-100 text-green-500";
+            case "FAILED":
+                return "bg-red-100 text-red-500";
+            case "UNPAID":
+                return "bg-orange-100 text-orange-500";
+            default:
+                return "bg-gray-100 text-gray-500";
+        }
     };
 
     if (loading) {
         return (
-            <div className="min-h-screen pt-24 flex justify-center">
-                Đang tải chi tiết đơn hàng...
-            </div>
+            <div className="min-h-screen pt-24 flex justify-center">Đang tải chi tiết đơn hàng...</div>
         );
     }
 
     if (!order) {
         return (
-            <div className="min-h-screen pt-24 flex justify-center">
-                Không tìm thấy đơn hàng.
-            </div>
+            <div className="min-h-screen pt-24 flex justify-center">Không tìm thấy đơn hàng.</div>
         );
     }
 
@@ -341,12 +348,9 @@ function AdminOrderDetail() {
                             <div>
                                 <p className="text-xs text-gray-400 uppercase mb-1">Trạng thái</p>
                                 <div className={`inline-flex px-3 py-1 rounded-full text-xs font-bold
-                                    ${order.payment_status === "PAID"
-                                        ? "bg-green-100 text-green-500"
-                                        : "bg-orange-100 text-orange-500"
-                                    }
+                                    ${getPaymentStatusClass(order.payment_status)}
                                 `}>
-                                    {order.payment_status === "PAID" ? "ĐÃ THANH TOÁN" : "CHƯA THANH TOÁN"}
+                                    {getPaymentStatusLabel(order.payment_status)}
                                 </div>
                             </div>
                         </div>

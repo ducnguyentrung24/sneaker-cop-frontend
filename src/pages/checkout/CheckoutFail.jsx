@@ -42,7 +42,7 @@ function CheckoutFail() {
                         onClick={() => navigate("/products")}
                         className="flex-1 bg-black text-white py-3 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition"
                     >
-                        TIẾP TỤC THANH TOÁN
+                        TIẾP TỤC MUA SẮM
                     </button>
 
                     <button
