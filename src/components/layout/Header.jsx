@@ -39,6 +39,7 @@ function Header() {
     const navLinks = [
         { path: "/", label: "Trang chủ" },
         { path: "/products", label: "Sản phẩm" },
+        { path: "/store", label: "Cửa hàng" },
         { path: "/support", label: "Hỗ trợ" },
     ];
 
