@@ -11,7 +11,7 @@ import {
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 
-function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
+function CheckoutForm({ payment, setPayment, note, setNote, addressData, setAddressData }) {
     const [addresses, setAddresses] = useState([]);
     const [selected, setSelected] = useState(null);
     const [openModal, setOpenModal] = useState(false);
@@ -39,6 +39,8 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
         setAddressData(addr);
     };
 
+    const currentAddress = selected || addressData;
+
     return (
         <div className="col-span-12 lg:col-span-7 space-y-5 sm:space-y-6">
             {/* Address */}
@@ -61,27 +63,31 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
                 </div>
 
                 {/* Adress selected */}
-                {selected && (
+                {currentAddress ? (
                     <div className="bg-[#F3F3F4] p-4 sm:p-5 rounded-lg flex flex-row sm:justify-between gap-3">
                         <div className="text-sm min-w-0">
                             <p className="font-semibold">{selected.receiver_name}</p>
 
                             <p className="flex items-center gap-2 text-gray-500 mt-1">
                                 <FontAwesomeIcon icon={faPhone} className="text-xs" />
-                                {selected.phone}
+                                {currentAddress.phone}
                             </p>
 
                             <p className="flex items-center gap-2 text-gray-500 mt-1 leading-relaxed">
                                 <FontAwesomeIcon icon={faLocationDot} className="text-xs" />
-                                {selected.detail_address}, {selected.ward}, {selected.city}
+                                {currentAddress.detail_address}, {currentAddress.ward}, {currentAddress.city}
                             </p>
                         </div>
 
-                        {selected.is_default && (
+                        {currentAddress.is_default && (
                             <span className="bg-black text-white text-[10px] sm:text-xs px-3 py-1 rounded h-fit whitespace-nowrap">
                                 Mặc định
                             </span>
                         )}
+                    </div>
+                ) : (
+                    <div className="bg-[#F3F3F4] p-4 sm:p-5 rounded-lg text-sm text-gray-500">
+                        Chưa chọn địa chỉ giao hàng. Vui lòng chọn địa chỉ đã lưu hoặc nhập địa chỉ mới.
                     </div>
                 )}
             </div>
@@ -150,7 +156,7 @@ function CheckoutForm({ payment, setPayment, note, setNote, setAddressData }) {
                 open={openModal}
                 onClose={() => setOpenModal(false)}
                 addresses={addresses}
-                selected={selected}
+                selected={currentAddress}
                 onSelect={handleSelect}
             />
         </div>

@@ -5,6 +5,8 @@ import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+const PROVINCES_API_URL = import.meta.env.VITE_PROVINCES_API_URL;
+
 function AddressModal({ open, onClose, onSubmit, initialData }) {
     const defaultForm = {
         receiver_name: "",
@@ -21,7 +23,7 @@ function AddressModal({ open, onClose, onSubmit, initialData }) {
     const [wards, setWards] = useState([]);
 
     useEffect(() => {
-        fetch("https://provinces.open-api.vn/api/v2/p/")
+        fetch(`${PROVINCES_API_URL}`)
         .then(res => res.json())
         .then(data => setProvinces(data));
     }, []);
@@ -32,32 +34,30 @@ function AddressModal({ open, onClose, onSubmit, initialData }) {
         setForm(initialData);
 
         // load wards theo city
-        fetch("https://provinces.open-api.vn/api/v2/p/")
+        fetch(`${PROVINCES_API_URL}`)
             .then(res => res.json())
             .then(async (list) => {
-            const province = list.find(p => p.name === initialData.city);
+                const province = list.find(p => p.name === initialData.city);
 
-            if (province) {
-                const res = await fetch(
-                `https://provinces.open-api.vn/api/v2/p/${province.code}?depth=2`
-                );
-                const data = await res.json();
+                if (province) {
+                    const res = await fetch(`${PROVINCES_API_URL}/${province.code}?depth=2`);
+                    const data = await res.json();
 
-                setWards(data.wards || []);
-            }
+                    setWards(data.wards || []);
+                }
             });
-
         } else {
-        setForm(defaultForm);
-        setWards([]);
+            setForm(defaultForm);
+            setWards([]);
         }
     }, [open, initialData]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
+
         setForm({
-        ...form,
-        [name]: type === "checkbox" ? checked : value,
+            ...form,
+            [name]: type === "checkbox" ? checked : value,
         });
     };
 
@@ -65,16 +65,13 @@ function AddressModal({ open, onClose, onSubmit, initialData }) {
         if (!selected) return;
 
         const code = selected.value;
-
-        const res = await fetch(
-        `https://provinces.open-api.vn/api/v2/p/${code}?depth=2`
-        );
+        const res = await fetch(`${PROVINCES_API_URL}/${code}?depth=2`);
         const data = await res.json();
 
         setForm({
-        ...form,
-        city: data.name,
-        ward: "",
+            ...form,
+            city: data.name,
+            ward: "",
         });
 
         setWards(data.wards || []);
@@ -84,8 +81,8 @@ function AddressModal({ open, onClose, onSubmit, initialData }) {
         if (!selected) return;
 
         setForm({
-        ...form,
-        ward: selected.value,
+            ...form,
+            ward: selected.value,
         });
     };
 

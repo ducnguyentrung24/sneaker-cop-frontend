@@ -32,12 +32,31 @@ function CheckoutPage() {
     const total = items.reduce((sum, i) => sum + i.total, 0);
 
     const isCart = items[0]?.id && !items[0]?.variant_id;
-
     const checkoutType = state?.type;
     const isReorder = checkoutType === "REORDER";
 
+    const getAddressPayload = () => {
+        if (!addressData) return null;
+
+        if (addressData.id) {
+            return {
+                address_id: addressData.id,
+            };
+        }
+
+        return {
+            receiver_name: addressData.receiver_name,
+            phone: addressData.phone,
+            city: addressData.city,
+            ward: addressData.ward,
+            detail_address: addressData.detail_address,
+        };
+    };
+
     const handleSubmit = async () => {
-        if (!addressData) {
+        const addressPayload = getAddressPayload();
+
+        if (!addressPayload) {
             toast.error("Vui lòng chọn địa chỉ giao hàng!");
             return;
         }
@@ -48,14 +67,14 @@ function CheckoutPage() {
 
             if (isCart) {
                 res = await checkoutFromCart({
-                    address_id: addressData.id,
+                    ...addressPayload,
                     payment_method: payment,
                     note,
                     selected_item_ids: items.map(i => i.id),
                 });
             } else if (isReorder) {
                 res = await checkoutFromReorder({
-                    address_id: addressData.id,
+                    ...addressPayload,
                     payment_method: payment,
                     note,
                     items: items.map(i => ({
@@ -70,7 +89,7 @@ function CheckoutPage() {
                 res = await checkoutFromBuyNow({
                     variant_id: item.variant_id,
                     quantity: item.quantity,
-                    address_id: addressData.id,
+                    ...addressPayload,
                     payment_method: payment,
                     note,
                 });
@@ -131,6 +150,7 @@ function CheckoutPage() {
                         setPayment={setPayment}
                         note={note}
                         setNote={setNote}
+                        addressData={addressData}
                         setAddressData={setAddressData}
                     />
         
