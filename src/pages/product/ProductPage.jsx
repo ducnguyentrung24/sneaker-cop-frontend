@@ -37,31 +37,10 @@ function ProductPage() {
         const fetchRecommend = async () => {
             try {
                 const res = await getRecommendations({ limit: 10 });
-
-                const recommendations = res.data || [];
-
-                if (recommendations.length === 0) {
-                    const fallBackRes = await getProducts({
-                        limit: 10,
-                        sort: "sold_desc",
-                    });
-
-                    setRecommend(fallBackRes.data.data || []);
-                    return;
-                }
-
-                setRecommend(recommendations);
+                setRecommend(res.data || []);
             } catch(error) {
-                try {
-                    const fallBackRes = await getProducts({
-                        limit: 10,
-                        sort: "sold_desc",
-                    });
-
-                    setRecommend(fallBackRes.data.data || []);
-                } catch(fallbackError) {
-                    console.error("Fetch fallback recommend product render: ", fallbackError);
-                }
+                console.error("Fetch recommend products error:", error);
+                setRecommend([]);
             }
         };
 
