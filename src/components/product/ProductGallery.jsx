@@ -8,7 +8,6 @@ function ProductGallery({ product, selectedColor }) {
     }, [product]);
 
     const images = useMemo(() => [
-        product.thumbnail,
         ...(product.images || []).map(i => i.image_url)
     ], [product]);
 
