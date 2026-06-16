@@ -4,6 +4,7 @@ import { getAddresses, setDefaultAddress, createAddress, updateAddress, deleteAd
 
 import ProfileSidebar from "../../components/profile/ProfileSidebar";
 import AddressModal from "../../components/profile/AddressModal";
+import ConfirmDeleteModal from "../../components/admin/common/ConfirmDeleteModal";
 
 import toast from "react-hot-toast";
 
@@ -14,13 +15,17 @@ import {
     faLocationDot,
     faEdit,
     faTrash
- } from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 
 function AddressPage() {
     const [loading, setLoading] = useState(true);
     const [addresses, setAddresses] = useState([]);
+
     const [openModal, setOpenModal] = useState(false);
     const [editing, setEditing] = useState(null);
+
+    const [deleteItem, setDeleteItem] = useState(null);
+    const [deleting, setDeleting] = useState(false);
 
     const fetchAddresses = async () => {
         try {
@@ -79,13 +84,28 @@ function AddressPage() {
         }
     };
 
-    const handleDelete = async (addressId) => {
+    const handleOpenDelete = (address) => {
+        setDeleteItem(address);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!deleteItem) return;
+
         try {
-            await deleteAddress(addressId);
-            toast.success("Xóa địa chỉ thành công!");
-            setAddresses((prev) => prev.filter(a => a.id !== addressId));
-        } catch(error) {
+            setDeleting(true);
+
+            await deleteAddress(deleteItem.id);
+
+            toast.success("Xóa địa chỉ thành công");
+            setAddresses((prev) => 
+                prev.filter((address) => address.id !== deleteItem.id)
+            );
+
+            setDeleteItem(null);
+        } catch (error) {
             toast.error("Xóa địa chỉ thất bại!");
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -103,9 +123,7 @@ function AddressPage() {
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4 sm:mb-8">
                         <div className="text-center sm:text-left">
                             <h1 className="text-2xl sm:text-3xl font-bold mb-2">Địa chỉ nhận hàng</h1> 
-                            <p className="text-xs sm:text-sm text-gray-500">
-                                Quản lý địa chỉ giao hàng để thuận tiện hơn khi mua sắm.
-                            </p>
+                            <p className="text-xs sm:text-sm text-gray-500">Quản lý địa chỉ giao hàng để thuận tiện hơn khi mua sắm.</p>
                         </div>
 
                         <button 
@@ -118,15 +136,12 @@ function AddressPage() {
                     </div>
 
                     {/* List */}
-                    <div className="space=y=4 sm:space-y-5">
+                    <div className="space-y-4 sm:space-y-5">
                         {addresses.map((address) => (
                             <div
                                 key={address.id}
                                 className={`bg-white rounded-lg px-5 sm:px-6 py-5 sm:py-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] border-l-4
-                                    ${address.is_default
-                                        ? "border-orange-500"
-                                        : "border-transparent"
-                                    }
+                                    ${address.is_default ? "border-orange-500" : "border-transparent"}
                                 `}
                             >
                                 <div className="flex flex-col sm:flex-row justify-between sm:items-stretch gap-4">
@@ -172,7 +187,7 @@ function AddressPage() {
                                             </button>
 
                                             <button
-                                                onClick={() => handleDelete(address.id)}
+                                                onClick={() => handleOpenDelete(address)}
                                                 className="flex items-center gap-1 hover:text-red-500 transition"
                                             >
                                                 <FontAwesomeIcon icon={faTrash} />
@@ -195,9 +210,7 @@ function AddressPage() {
 
                                 <p className="text-sm">Bạn chưa có địa chỉ nào</p>
 
-                                <button className="mt-2 text-orange-500 text-sm font-semibold">
-                                    Thêm địa chỉ mới
-                                </button>
+                                <button className="mt-2 text-orange-500 text-sm font-semibold">Thêm địa chỉ mới</button>
                             </div>
                         )}
                     </div>
@@ -209,6 +222,18 @@ function AddressPage() {
                 onClose={() => setOpenModal(false)}
                 onSubmit={handleSubmit}
                 initialData={editing}
+            />
+
+            <ConfirmDeleteModal
+                open={!!deleteItem}
+                title="Xác nhận xóa địa chỉ"
+                message={deleteItem ? `Bạn chắc muốn xóa địa chỉ của ${deleteItem.receiver_name}?` : "Bạn chắc chắn muốn xóa địa chỉ này?"}
+                loading={deleting}
+                onClose={() => {
+                    if (deleting) return;
+                    setDeleteItem(null);
+                }}
+                onConfirm={handleConfirmDelete}
             />
         </div>
     );

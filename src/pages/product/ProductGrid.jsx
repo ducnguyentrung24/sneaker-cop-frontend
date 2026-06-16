@@ -20,38 +20,11 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
         }));
     };
 
-    const activeTab = 
-        filters.filter === "best_seller"
-            ? "best_seller"
-            : filters.filter === "discount"
-                ? "sale"
-                : "all";
-
-    // const handleSort = (value) => {
-    //     setFilters((prev) => ({
-    //         ...prev,
-    //         sort: value,
-    //         filter: null,
-    //         page: 1,
-    //     }));
-    // };
-
-    // const handleTab = (type) => {
-    //     let newFilters = {
-    //         page: 1,
-    //         sort: "newest",
-    //         filter: null,
-    //     };
-
-    //     if (type === "best_seller") newFilters.filter = "best_seller";
-    //     if (type === "sale") newFilters.filter = "discount";
-
-    //     setFilters((prev) => ({
-    //         ...prev,
-    //         ...newFilters,
-    //         page: 1,
-    //     }));
-    // };
+    const activeTab = filters.filter === "best_seller"
+        ? "best_seller"
+        : filters.filter === "discount"
+            ? "sale"
+            : "all";
 
     const handleSort = (value) => {
         setFilters((prev) => ({
@@ -164,8 +137,8 @@ function ProductGrid({ products = [], pagination = {}, filters, setFilters }) {
                 pagination={pagination} 
                 onPageChange={(newPage) => 
                     setFilters((prev) => ({
-                            ...prev,
-                            page: newPage,
+                        ...prev,
+                        page: newPage,
                     }))
                 } 
             />
