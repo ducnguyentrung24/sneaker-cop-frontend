@@ -70,10 +70,10 @@ function Footer() {
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-4">Hỗ trợ khách hàng</h3>
 
                         <div className="space-y-3 text-sm">
-                            <p className="text-gray-400 hover:text-orange-500 transition cursor-pointer">Chính sách đổi trả</p>
-                            <p className="text-gray-400 hover:text-orange-500 transition cursor-pointer">Chính sách vận chuyển</p>
-                            <p className="text-gray-400 hover:text-orange-500 transition cursor-pointer">Hướng dẫn thanh toán</p>
-                            <p className="text-gray-400 hover:text-orange-500 transition cursor-pointer">Câu hỏi thường gặp</p>
+                            <Link to="/support" className="block text-gray-400 hover:text-orange-500 transition cursor-pointer">Chính sách đổi trả</Link>
+                            <Link to="/support" className="block text-gray-400 hover:text-orange-500 transition cursor-pointer">Chính sách vận chuyển</Link>
+                            <Link to="/support" className="block text-gray-400 hover:text-orange-500 transition cursor-pointer">Hướng dẫn thanh toán</Link>
+                            <Link to="/support" className="block text-gray-400 hover:text-orange-500 transition cursor-pointer">Câu hỏi thường gặp</Link>
                         </div>
                     </div>
 

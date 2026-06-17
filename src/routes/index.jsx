@@ -11,7 +11,7 @@ import ResetPassword from "../pages/auth/ResetPassword";
 import ProductPage from "../pages/product/ProductPage";
 import ProductDetailPage from "../pages/product/ProductDetailPage";
 import StorePage from "../pages/store/StorePage";
-import SupportPage from "../pages/contact/SupportPage";
+import SupportPage from "../pages/support/SupportPage";
 
 import CartPage from "../pages/cart/CartPage";
 
