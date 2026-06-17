@@ -84,7 +84,7 @@ function Footer() {
                         <div className="space-y-4 text-sm text-gray-400">
                             <div className="flex items-start gap-3">
                                 <FontAwesomeIcon icon={faLocationDot} className="text-orange-500 mt-1" />
-                                <span>175 P. Tây Sơn, Kiêm Liên, Hà Nội</span>
+                                <span>175 P. Tây Sơn, Kim Liên, Hà Nội</span>
                             </div>
 
                             <div className="flex items-center gap-3">
