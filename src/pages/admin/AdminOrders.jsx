@@ -32,11 +32,20 @@ function AdminOrders() {
         sort: "updated_at:desc",
     };
 
+    const defaultStatusCounts = {
+        PENDING: 0,
+        PROCESSING: 0,
+        SHIPPING: 0,
+        COMPLETED: 0,
+        CANCELLED: 0,
+    };
+
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false); 
     const [pagination, setPagination] = useState({});
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState(defaultFilters);
+    const [statusCounts, setStatusCounts] = useState(defaultStatusCounts);
 
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [cancelReason, setCancelReason] = useState("");
@@ -57,6 +66,11 @@ function AdminOrders() {
 
             setOrders(res.data?.data || []);
 
+            setStatusCounts({
+                ...defaultStatusCounts,
+                ...(res.data?.status_counts || {}),
+            });
+
             setPagination({
                 ...res.data?.pagination,
                 total_pages: res.data?.pagination?.totalPages || 1,
@@ -64,6 +78,7 @@ function AdminOrders() {
         } catch(error) {
             console.error("Fetch orders error: ", error);
             console.error("Response error data: ", error.response?.data);
+            toast.error("Không thể tải danh sách đơn hàng!");
         } finally {
             setLoading(false);
         }
@@ -125,13 +140,42 @@ function AdminOrders() {
         }
     };
 
+    const totalOrderCount = Object.values(statusCounts).reduce(
+        (sum, count) => sum + Number(count || 0),
+        0
+    );
+
     const statusTabs = [
-        { key: "", label: "Tất cả" },
-        { key: "PENDING", label: "Chờ xử lý" },
-        { key: "PROCESSING", label: "Đang xử lý" },
-        { key: "SHIPPING", label: "Đang giao hàng" },
-        { key: "COMPLETED", label: "Hoàn thành" },
-        { key: "CANCELLED", label: "Đã hủy" },
+        { 
+            key: "", 
+            label: "Tất cả",
+            count: totalOrderCount,
+        },
+        { 
+            key: "PENDING", 
+            label: "Chờ xử lý",
+            count: statusCounts.PENDING,
+        },
+        { 
+            key: "PROCESSING", 
+            label: "Đang xử lý",
+            count: statusCounts.PROCESSING,
+        },
+        { 
+            key: "SHIPPING",
+            label: "Đang giao hàng",
+            count: statusCounts.SHIPPING,
+        },
+        { 
+            key: "COMPLETED", 
+            label: "Hoàn thành",
+            count: statusCounts.COMPLETED,
+        },
+        { 
+            key: "CANCELLED", 
+            label: "Đã hủy",
+            count: statusCounts.CANCELLED,
+        },
     ];
 
     const paymentStatusMap = {
@@ -291,7 +335,7 @@ function AdminOrders() {
                                 : "bg-white text-gray-500 hover:bg-gray-100"
                             }
                     `}>
-                        {tab.label}
+                        {tab.label} ({Number(tab.count || 0)})
                     </button>
                 ))}
             </div>
