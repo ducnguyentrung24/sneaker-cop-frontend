@@ -42,6 +42,7 @@ const AdminProductForm = () => {
     };
 
     const defaultVariantForm = {
+        id: null,
         color: "",
         size: "",
         price: "",
@@ -111,6 +112,7 @@ const AdminProductForm = () => {
 
             setVariants(
                 (product.variants || []).map((variant) => ({
+                    id: variant.id,
                     color: variant.color || "",
                     size: variant.size || "",
                     price: variant.price || "",
@@ -143,6 +145,7 @@ const AdminProductForm = () => {
         setEditingVariantIndex(index);
 
         setVariantForm({
+            id: variant.id,
             color: variant.color || "",
             size: variant.size || "",
             price: variant.price || 0,
@@ -175,6 +178,7 @@ const AdminProductForm = () => {
         }
 
         const payload = {
+            id: variantForm.id,
             color: variantForm.color.trim(),
             size: variantForm.size.trim(),
             price: Number(variantForm.price),
@@ -266,6 +270,7 @@ const AdminProductForm = () => {
                 discount_percent: Number(form.discount_percent) || 0,
                 images: imageUrls,
                 variants: variants.map((variant) => ({
+                    id: variant.id,
                     color: variant.color,
                     size: variant.size,
                     stock: Number(variant.stock),
