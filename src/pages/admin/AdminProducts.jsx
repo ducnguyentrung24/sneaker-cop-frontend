@@ -124,7 +124,7 @@ const AdminProducts = () => {
             else fetchProducts();
         } catch (error) {
             console.error("Error deleting product:", error);
-            toast.error("Không thể xóa sản phẩm");
+            toast.error(error.response?.data?.message || "Không thể xóa sản phẩm");
         } finally {
             setDeleting(false);
         }
