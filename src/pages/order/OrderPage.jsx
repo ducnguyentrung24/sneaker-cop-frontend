@@ -24,6 +24,11 @@ function OrderPage() {
     const [pagination, setPagination] = useState({});
     const [page, setPage] = useState(1);
 
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [cancelReason, setCancelReason] = useState("");
+    const [cancelLoading, setCancelLoading] = useState(false);
+    const [selectedOrderId, setSelectedOrderId] = useState(null);
+
     const tabs = [
         { key: "", label: "Tất cả" },
         { key: "PENDING", label: "Chờ xử lý" },
@@ -70,21 +75,40 @@ function OrderPage() {
         }
     };
 
-    const handleCancelOrder = async (orderId) => {
+    const handleOpenCancelModal = (orderId) => {
+        setSelectedOrderId(orderId);
+        setShowCancelModal(true);
+        setCancelReason("");
+    };
+
+    const handleConfirmCancelOrder = async () => {
+        if (!cancelReason.trim()) {
+            toast.error("Vui lòng nhập lý do hủy đơn hàng.");
+            return;
+        }
+
         try {
-            await cancelOrder(orderId);
+            setCancelLoading(true);
+
+            await cancelOrder(selectedOrderId, cancelReason);
 
             setOrders(prev =>
                 prev.map(order =>
-                    order.id === orderId
+                    order.id === selectedOrderId
                         ? { ...order, status: "CANCELLED" }
                         : order
                 )
             );
             
             toast.success("Hủy đơn hàng thành công!");
+
+            setShowCancelModal(false);
+            setCancelReason("");
+            setSelectedOrderId(null);
         } catch(error) {
-            toast.error("Hủy đơn hàng thất bại.");
+            toast.error(error.response?.data?.message || "Hủy đơn hàng thất bại.");
+        } finally {
+            setCancelLoading(false);
         }
     };
 
@@ -179,7 +203,7 @@ function OrderPage() {
                         <OrderCard 
                             key={order.id} 
                             order={order}
-                            onCancel={handleCancelOrder}
+                            onCancel={handleOpenCancelModal}
                             onBuyAgain={handleBuyAgain}
                         />
                     ))}
@@ -193,6 +217,46 @@ function OrderPage() {
                     />    
                 )}
             </div>
+
+            {/* Cancel Modal */}
+            {showCancelModal && (
+                <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+                        <h2 className="text-lg text-center font-bold uppercase mb-2">Hủy đơn hàng</h2>
+                        <p className="text-sm text-center text-gray-500 mb-5">
+                            Vui lòng nhập lý do hủy đơn hàng. Lý do này sẽ được lưu vào lịch sử trạng thái.
+                        </p>
+
+                        <textarea
+                            value={cancelReason}
+                            onChange={(e) => setCancelReason(e.target.value)}
+                            rows={4}
+                            className="w-full border border-gray-400 rounded-xl px-4 py-3 text-sm outline-none focus:border-red-500 resize-none"
+                        />
+
+                        <div className="flex items-center justify-between gap-3 mt-6">
+                            <button
+                                disabled={cancelLoading}
+                                onClick={() => {
+                                    setShowCancelModal(false);
+                                    setCancelReason("");
+                                }}
+                                className="flex-1 h-11 px-5 rounded-lg border border-gray-500 text-sm font-bold hover:bg-gray-100 disabled:opacity-60 transition"
+                            >
+                                Đóng
+                            </button>
+
+                            <button
+                                disabled={cancelLoading}
+                                onClick={handleConfirmCancelOrder}
+                                className="flex-1 h-11 px-5 rounded-lg bg-red-500 text-white text-sm font-bold hover:opacity-90 disabled:opacity-60 transition"
+                            >
+                                Xác nhận hủy
+                            </button>        
+                        </div>
+                    </div>
+                </div>    
+            )}
         </div>
     );
 };

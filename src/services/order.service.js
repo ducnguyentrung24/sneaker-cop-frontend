@@ -25,8 +25,8 @@ export const getOrderDetail = async (orderId) => {
     return res.data;
 };
 
-export const cancelOrder = async (orderId) => {
-    const res = await axiosInstance.patch(`/orders/${orderId}/cancel`);
+export const cancelOrder = async (orderId, reason) => {
+    const res = await axiosInstance.patch(`/orders/${orderId}/cancel`, { reason });
     return res.data;
 };
 

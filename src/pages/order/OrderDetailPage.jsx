@@ -24,6 +24,10 @@ function OrderDetailPage() {
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [cancelReason, setCancelReason] = useState("");
+    const [cancelLoading, setCancelLoading] = useState(false);
+
     useEffect(() => {
         fetchOrderDetail();
     }, [id]);
@@ -42,8 +46,18 @@ function OrderDetailPage() {
     };
 
     const handleCancelOrder = async () => {
+        if (!cancelReason.trim()) {
+            toast.error("Vui lòng nhập lý do hủy đơn hàng.");
+            return;
+        }
+
         try {
-            await cancelOrder(order.id);
+            setCancelLoading(true);
+
+            await cancelOrder(order.id, cancelReason);
+
+            setShowCancelModal(false);
+            setCancelReason("");
 
             setOrder(prev => ({
                 ...prev,
@@ -52,7 +66,10 @@ function OrderDetailPage() {
 
             toast.success("Hủy đơn hàng thành công!");
         } catch(error) {
+            console.error(error.response?.data?.message || "Hủy đơn hàng thất bại.");
             toast.error("Hủy đơn hàng thất bại.");
+        } finally {
+            setCancelLoading(false);
         }
     };
 
@@ -417,7 +434,8 @@ function OrderDetailPage() {
                             <div className="mt-6">
                                 {(order.status === "PENDING" || order.status === "PROCESSING") && (
                                     <button
-                                        onClick={handleCancelOrder}
+                                        disabled={cancelLoading}
+                                        onClick={() => setShowCancelModal(true)}
                                         className="w-full h-12 border border-red-500 text-red-500 text-sm font-bold uppercase rounded-md hover:bg-red-500 hover:text-white transition"
                                     >
                                         Hủy đơn hàng
@@ -455,6 +473,46 @@ function OrderDetailPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Cancel Modal */}
+            {showCancelModal && (
+                <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+                        <h2 className="text-lg text-center font-bold uppercase mb-2">Hủy đơn hàng</h2>
+                        <p className="text-sm text-center text-gray-500 mb-5">
+                            Vui lòng nhập lý do hủy đơn hàng. Lý do này sẽ được lưu vào lịch sử trạng thái.
+                        </p>
+
+                        <textarea
+                            value={cancelReason}
+                            onChange={(e) => setCancelReason(e.target.value)}
+                            rows={4}
+                            className="w-full border border-gray-400 rounded-xl px-4 py-3 text-sm outline-none focus:border-red-500 resize-none"
+                        />
+
+                        <div className="flex items-center justify-between gap-3 mt-6">
+                            <button
+                                disabled={cancelLoading}
+                                onClick={() => {
+                                    setShowCancelModal(false);
+                                    setCancelReason("");
+                                }}
+                                className="flex-1 h-11 px-5 rounded-lg border border-gray-500 text-sm font-bold hover:bg-gray-100 disabled:opacity-60 transition"
+                            >
+                                Đóng
+                            </button>
+
+                            <button
+                                disabled={cancelLoading}
+                                onClick={handleCancelOrder}
+                                className="flex-1 h-11 px-5 rounded-lg bg-red-500 text-white text-sm font-bold hover:opacity-90 disabled:opacity-60 transition"
+                            >
+                                Xác nhận hủy
+                            </button>        
+                        </div>
+                    </div>
+                </div>    
+            )}
         </div>
     );
 };
