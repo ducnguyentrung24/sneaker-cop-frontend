@@ -219,7 +219,7 @@ function AdminOrders() {
     const orderFlow = {
         PENDING: ["PROCESSING", "CANCELLED"],
         PROCESSING: ["SHIPPING", "CANCELLED"],
-        SHIPPING: ["COMPLETED"],
+        SHIPPING: ["COMPLETED", "CANCELLED"],
         COMPLETED: [],
         CANCELLED: [],
     };
